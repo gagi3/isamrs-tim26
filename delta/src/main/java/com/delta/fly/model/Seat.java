@@ -32,6 +32,9 @@ public class Seat implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    public Seat() {
+    }
+
     public Seat(Integer row, Integer column, Class seatClass) {
         this.row = row;
         this.column = column;

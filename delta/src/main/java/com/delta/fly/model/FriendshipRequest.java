@@ -28,6 +28,9 @@ public class FriendshipRequest implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    public FriendshipRequest() {
+    }
+
     public FriendshipRequest(Passenger sentFrom, Passenger sentTo) {
         this.sentFrom = sentFrom;
         this.sentTo = sentTo;

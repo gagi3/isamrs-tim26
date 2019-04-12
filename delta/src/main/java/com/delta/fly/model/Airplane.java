@@ -26,6 +26,9 @@ public class Airplane implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airplane", cascade = CascadeType.ALL)
     private List<Seat> seats = new ArrayList<>();
 
+    public Airplane() {
+    }
+
     public Airplane(AirlineCompany airlineCompany, String name, List<Seat> seats) {
         this.airlineCompany = airlineCompany;
         this.name = name;

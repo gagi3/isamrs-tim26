@@ -25,6 +25,9 @@ public class Passenger extends User implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    public Passenger() {
+    }
+
     public Passenger(String email, String password, String firstName, String lastName, String city, String phoneNumber, Boolean deleted, List<Ticket> tickets, List<Passenger> friends) {
         super(email, password, firstName, lastName, city, phoneNumber);
         this.deleted = deleted;

@@ -49,6 +49,9 @@ public class Flight implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    public Flight() {
+    }
+
     public Flight(AirlineCompany airlineCompany, Airplane airplane, PlaceAndTime departure, List<PlaceAndTime> transfers, PlaceAndTime arrival, Integer distance, Long travelTime) {
         this.airlineCompany = airlineCompany;
         this.airplane = airplane;

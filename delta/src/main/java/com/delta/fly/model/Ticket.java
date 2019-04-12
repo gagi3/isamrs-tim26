@@ -34,6 +34,9 @@ public class Ticket implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    public Ticket() {
+    }
+
     public Ticket(Flight flight, Seat seat, Double price, Passenger passenger) {
         this.flight = flight;
         this.seat = seat;

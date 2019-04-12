@@ -48,6 +48,9 @@ public class AirlineCompany implements Serializable {
     @Column(name = "luggage_price_by_item", unique = false, nullable = false)
     private Double luggagePriceByItem;
 
+    public AirlineCompany() {
+    }
+
     public AirlineCompany(String name, String address, String description, List<String> destinations, List<Flight> flights, List<Ticket> discountedTickets, List<Airplane> airplanes, Double priceByKm, Double luggagePriceByItem) {
         this.name = name;
         this.address = address;

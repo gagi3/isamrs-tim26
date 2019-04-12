@@ -18,8 +18,8 @@ public abstract class User {
 
     @Email
     @NaturalId
-    @Column(name = "email", unique = true, nullable = false)
-    protected String email;
+    @Column(name = "username", unique = true, nullable = false)
+    protected String username;
 
     @Column(name = "password", unique = false, nullable = false)
     protected String password;
@@ -40,8 +40,11 @@ public abstract class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
 
-    public User(String email, String password, String firstName, String lastName, String city, String phoneNumber) {
-        this.email = email;
+    public User() {
+    }
+
+    public User(String username, String password, String firstName, String lastName, String city, String phoneNumber) {
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,12 +56,12 @@ public abstract class User {
         return id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

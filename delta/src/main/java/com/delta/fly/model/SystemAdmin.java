@@ -17,6 +17,9 @@ public class SystemAdmin extends User implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    public SystemAdmin() {
+    }
+
     public SystemAdmin(String email, String password, String firstName, String lastName, String city, String phoneNumber, Boolean deleted) {
         super(email, password, firstName, lastName, city, phoneNumber);
         this.deleted = deleted;

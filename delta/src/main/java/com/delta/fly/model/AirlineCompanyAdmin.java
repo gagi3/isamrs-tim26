@@ -20,6 +20,9 @@ public class AirlineCompanyAdmin extends User implements Serializable {
     @JoinColumn(name = "airline_company", referencedColumnName = "id")
     private AirlineCompany airlineCompany;
 
+    public AirlineCompanyAdmin() {
+    }
+
     public AirlineCompanyAdmin(String email, String password, String firstName, String lastName, String city, String phoneNumber, Boolean deleted, AirlineCompany airlineCompany) {
         super(email, password, firstName, lastName, city, phoneNumber);
         this.deleted = deleted;

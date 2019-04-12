@@ -28,6 +28,9 @@ public class PlaceAndTime implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    public PlaceAndTime() {
+    }
+
     public PlaceAndTime(String thePlace, Date theTime) {
         this.thePlace = thePlace;
         this.theTime = theTime;
