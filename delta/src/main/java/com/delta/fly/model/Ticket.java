@@ -1,22 +1,52 @@
 package com.delta.fly.model;
 
+import com.delta.fly.enumeration.Class;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "ticket")
 public class Ticket implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "flight", referencedColumnName = "id")
     private Flight flight;
+
+    @OneToOne(targetEntity = Seat.class)
+    @JoinColumn(name = "seat", referencedColumnName = "id")
     private Seat seat;
+
+    @Column(name = "price", unique = false, nullable = false)
     private Double price;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "passenger", referencedColumnName = "id")
     private Passenger passenger;
+
+    @Column(name = "deleted", unique = false, nullable = false)
+    private Boolean deleted;
 
     public Ticket(Flight flight, Seat seat, Double price, Passenger passenger) {
         this.flight = flight;
         this.seat = seat;
         this.price = price;
         this.passenger = passenger;
+        this.deleted = false;
+    }
+
+    public Ticket(Flight flight, Seat seat, Passenger passenger) {
+        this.flight = flight;
+        this.seat = seat;
+        this.passenger = passenger;
+        this.deleted = false;
     }
 
     public Long getId() {
@@ -53,5 +83,13 @@ public class Ticket implements Serializable {
 
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

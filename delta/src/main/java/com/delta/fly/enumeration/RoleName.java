@@ -1,6 +1,6 @@
 package com.delta.fly.enumeration;
 
-public enum Role {
+public enum RoleName {
 
     ROLE_SYSTEMADMIN,
     ROLE_AIRLINECOMPANYADMIN,

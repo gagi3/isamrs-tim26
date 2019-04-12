@@ -1,22 +1,51 @@
 package com.delta.fly.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "airline_company")
 public class AirlineCompany implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
+
+    @Column(name = "airline_company_name", unique = true, nullable = false)
     private String name;
+
+    @Column(name = "address", unique = true, nullable = false)
     private String address;
+
+    @Column(name = "description", unique = false, nullable = false)
     private String description;
+
+    @Column(name = "destinations", unique = false, nullable = false)
+    @ElementCollection(targetClass = String.class)
     private List<String> destinations = new ArrayList<>();
+
+    // Flight - owner
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airlineCompany", cascade = CascadeType.ALL)
     private List<Flight> flights = new ArrayList<>();
+
+    // New table
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "discounted_tickets", joinColumns = @JoinColumn(name = "airline_company_id"), inverseJoinColumns = @JoinColumn(name = "ticket_id"))
     private List<Ticket> discountedTickets = new ArrayList<>();
+
+    // Airplane - owner
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airlineCompany", cascade = CascadeType.ALL)
     private List<Airplane> airplanes = new ArrayList<>();
+
+    @Column(name = "price_by_km", unique = false, nullable = false)
     private Double priceByKm;
+
+    @Column(name = "luggage_price_by_item", unique = false, nullable = false)
     private Double luggagePriceByItem;
 
     public AirlineCompany(String name, String address, String description, List<String> destinations, List<Flight> flights, List<Ticket> discountedTickets, List<Airplane> airplanes, Double priceByKm, Double luggagePriceByItem) {

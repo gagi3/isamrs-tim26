@@ -1,17 +1,29 @@
 package com.delta.fly.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "passenger")
 public class Passenger extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
-    private Boolean deleted;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger", cascade = CascadeType.ALL)
     private List<Ticket> tickets = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = CascadeType.ALL)
     private List<Passenger> friends = new ArrayList<>();
+
+    @Column(name = "deleted", unique = false, nullable = false)
+    private Boolean deleted;
 
     public Passenger(String email, String password, String firstName, String lastName, String city, String phoneNumber, Boolean deleted, List<Ticket> tickets, List<Passenger> friends) {
         super(email, password, firstName, lastName, city, phoneNumber);

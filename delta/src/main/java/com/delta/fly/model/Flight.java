@@ -1,69 +1,83 @@
 package com.delta.fly.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "flight")
 public class Flight implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "airline_company", referencedColumnName = "id")
     private AirlineCompany airlineCompany;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "airplane", referencedColumnName = "id")
     private Airplane airplane;
 
-    private String pointOfDeparture;
-    private Date departureTime;
-    private List<String> transfers = new ArrayList<>();
-    private String destination;
-    private Date arrivalTime;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "departure", referencedColumnName = "id")
+    private PlaceAndTime departure;
 
+    @OneToMany
+    @JoinTable(name = "transfers", joinColumns = @JoinColumn(name = "flight_id"), inverseJoinColumns = @JoinColumn(name = "place_and_time_id"))
+    private List<PlaceAndTime> transfers;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "arrival", referencedColumnName = "id")
+    private PlaceAndTime arrival;
+
+
+    @Column(name = "distance", unique = false, nullable = false)
     private Integer distance;
-    private Long travelTime;
-    private Double ticketPrice;
 
+    @Column(name = "travel_time", unique = false, nullable = false)
+    private Long travelTime;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", cascade = CascadeType.ALL)
     private List<Ticket> tickets = new ArrayList<>();
 
-    public Flight(AirlineCompany airlineCompany, Airplane airplane, String pointOfDeparture, Date departureTime, List<String> transfers, String destination, Date arrivalTime, Integer distance, Long travelTime, Double ticketPrice, List<Ticket> tickets) {
+    @Column(name = "deleted", unique = false, nullable = false)
+    private Boolean deleted;
+
+    public Flight(AirlineCompany airlineCompany, Airplane airplane, PlaceAndTime departure, List<PlaceAndTime> transfers, PlaceAndTime arrival, Integer distance, Long travelTime) {
         this.airlineCompany = airlineCompany;
         this.airplane = airplane;
-        this.pointOfDeparture = pointOfDeparture;
-        this.departureTime = departureTime;
+        this.departure = departure;
         this.transfers = transfers;
-        this.destination = destination;
-        this.arrivalTime = arrivalTime;
+        this.arrival = arrival;
         this.distance = distance;
         this.travelTime = travelTime;
-        this.ticketPrice = ticketPrice;
-        this.tickets = tickets;
+        this.deleted = false;
     }
 
-    public Flight(AirlineCompany airlineCompany, Airplane airplane, String pointOfDeparture, Date departureTime, List<String> transfers, String destination, Date arrivalTime, Integer distance, Long travelTime, Double ticketPrice) {
-        this.airlineCompany = airlineCompany;
+    public Flight(Airplane airplane, PlaceAndTime departure, List<PlaceAndTime> transfers, PlaceAndTime arrival, Integer distance, Long travelTime) {
         this.airplane = airplane;
-        this.pointOfDeparture = pointOfDeparture;
-        this.departureTime = departureTime;
+        this.departure = departure;
         this.transfers = transfers;
-        this.destination = destination;
-        this.arrivalTime = arrivalTime;
+        this.arrival = arrival;
         this.distance = distance;
         this.travelTime = travelTime;
-        this.ticketPrice = ticketPrice;
+        this.deleted = false;
     }
 
-    public Flight(AirlineCompany airlineCompany, Airplane airplane, String pointOfDeparture, Date departureTime, List<String> transfers, String destination, Date arrivalTime, Integer distance, Double ticketPrice) {
+    public Flight(AirlineCompany airlineCompany, Airplane airplane, PlaceAndTime departure, PlaceAndTime arrival, Integer distance, Long travelTime) {
         this.airlineCompany = airlineCompany;
         this.airplane = airplane;
-        this.pointOfDeparture = pointOfDeparture;
-        this.departureTime = departureTime;
-        this.transfers = transfers;
-        this.destination = destination;
-        this.arrivalTime = arrivalTime;
+        this.departure = departure;
+        this.arrival = arrival;
         this.distance = distance;
-        this.travelTime = arrivalTime.getTime() - departureTime.getTime();
-        this.ticketPrice = ticketPrice;
+        this.travelTime = travelTime;
+        this.deleted = false;
     }
 
     public Long getId() {
@@ -86,44 +100,28 @@ public class Flight implements Serializable {
         this.airplane = airplane;
     }
 
-    public String getPointOfDeparture() {
-        return pointOfDeparture;
+    public PlaceAndTime getDeparture() {
+        return departure;
     }
 
-    public void setPointOfDeparture(String pointOfDeparture) {
-        this.pointOfDeparture = pointOfDeparture;
+    public void setDeparture(PlaceAndTime departure) {
+        this.departure = departure;
     }
 
-    public Date getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(Date departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public List<String> getTransfers() {
+    public List<PlaceAndTime> getTransfers() {
         return transfers;
     }
 
-    public void setTransfers(List<String> transfers) {
+    public void setTransfers(List<PlaceAndTime> transfers) {
         this.transfers = transfers;
     }
 
-    public String getDestination() {
-        return destination;
+    public PlaceAndTime getArrival() {
+        return arrival;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public Date getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(Date arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setArrival(PlaceAndTime arrival) {
+        this.arrival = arrival;
     }
 
     public Integer getDistance() {
@@ -142,19 +140,19 @@ public class Flight implements Serializable {
         this.travelTime = travelTime;
     }
 
-    public Double getTicketPrice() {
-        return ticketPrice;
-    }
-
-    public void setTicketPrice(Double ticketPrice) {
-        this.ticketPrice = ticketPrice;
-    }
-
     public List<Ticket> getTickets() {
         return tickets;
     }
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }
