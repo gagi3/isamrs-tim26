@@ -48,6 +48,9 @@ public class AirlineCompany implements Serializable {
     @Column(name = "luggage_price_by_item", unique = false, nullable = false)
     private Double luggagePriceByItem;
 
+    @Column(name = "deleted", unique = false, nullable = false)
+    private Boolean deleted;
+
     public AirlineCompany() {
     }
 
@@ -61,6 +64,7 @@ public class AirlineCompany implements Serializable {
         this.airplanes = airplanes;
         this.priceByKm = priceByKm;
         this.luggagePriceByItem = luggagePriceByItem;
+        this.deleted = false;
     }
 
     public Long getId() {
@@ -137,5 +141,13 @@ public class AirlineCompany implements Serializable {
 
     public void setLuggagePriceByItem(Double luggagePriceByItem) {
         this.luggagePriceByItem = luggagePriceByItem;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

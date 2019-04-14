@@ -35,6 +35,14 @@ public class Seat implements Serializable {
     public Seat() {
     }
 
+    public Seat(Integer row, Integer column, Class seatClass, Airplane airplane) {
+        this.row = row;
+        this.column = column;
+        this.seatClass = seatClass;
+        this.airplane = airplane;
+        this.deleted = true;
+    }
+
     public Seat(Integer row, Integer column, Class seatClass) {
         this.row = row;
         this.column = column;
@@ -74,6 +82,14 @@ public class Seat implements Serializable {
 
     public void setSeatClass(Class seatClass) {
         this.seatClass = seatClass;
+    }
+
+    public Airplane getAirplane() {
+        return airplane;
+    }
+
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
     }
 
     public Boolean getDeleted() {

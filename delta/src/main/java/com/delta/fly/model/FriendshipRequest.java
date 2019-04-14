@@ -65,4 +65,12 @@ public class FriendshipRequest implements Serializable {
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
     }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 }

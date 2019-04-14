@@ -1,11 +1,64 @@
 package com.delta.fly.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.delta.fly.dto.AirlineCompanyRegistrationDTO;
+import com.delta.fly.dto.RegisterDTO;
+import com.delta.fly.exception.InvalidInputException;
+import com.delta.fly.exception.ObjectNotFoundException;
+import com.delta.fly.model.AirlineCompany;
+import com.delta.fly.service.abstraction.AirlineCompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/airline-company")
 public class AirlineCompanyController {
+
+    @Autowired
+    AirlineCompanyService airlineCompanyService;
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<AirlineCompany>> getAll() {
+
+        List<AirlineCompany> companies = airlineCompanyService.findAll();
+
+        return new ResponseEntity<>(companies, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<AirlineCompany> getOne(@PathVariable Long id) throws ObjectNotFoundException {
+
+        AirlineCompany company = airlineCompanyService.getOne(id);
+
+        return new ResponseEntity<>(company, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/addAirlineCompany", method = RequestMethod.POST)
+    public ResponseEntity<AirlineCompany> create(@RequestBody AirlineCompanyRegistrationDTO dto) throws InvalidInputException, ObjectNotFoundException {
+
+        AirlineCompany newAirlineCompany = airlineCompanyService.create(dto);
+
+        return new ResponseEntity<>(newAirlineCompany, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/updateAirlineCompany", method = RequestMethod.POST)
+    public ResponseEntity<AirlineCompany> update(@RequestBody AirlineCompany company) throws ObjectNotFoundException {
+
+        AirlineCompany updateAirlineCompany = airlineCompanyService.update(company);
+
+        return new ResponseEntity<>(updateAirlineCompany, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/deleteAirlineCompany/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
+
+        Boolean delete = airlineCompanyService.delete(id);
+
+        return new ResponseEntity<>(delete, HttpStatus.OK);
+    }
+
 }

@@ -20,11 +20,14 @@ public class Airplane implements Serializable {
     @JoinColumn(name = "airline_company", referencedColumnName = "id")
     private AirlineCompany airlineCompany;
 
-    @Column(name = "airplane_name")
+    @Column(name = "airplane_name", unique = true, nullable = false)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airplane", cascade = CascadeType.ALL)
     private List<Seat> seats = new ArrayList<>();
+
+    @Column(name = "deleted", unique = false, nullable = false)
+    private Boolean deleted;
 
     public Airplane() {
     }
@@ -67,4 +70,13 @@ public class Airplane implements Serializable {
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
     }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
 }
