@@ -17,7 +17,7 @@ import java.util.Optional;
 public class AirlineCompanyServiceImpl implements AirlineCompanyService {
 
     @Autowired
-    AirlineCompanyRepository airlineCompanyRepository;
+    private AirlineCompanyRepository airlineCompanyRepository;
 
     @Override
     public List<AirlineCompany> findAll() {

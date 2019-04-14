@@ -18,7 +18,7 @@ import java.util.List;
 public class PassengerController {
 
     @Autowired
-    PassengerService passengerService;
+    private PassengerService passengerService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Passenger>> getAll() {

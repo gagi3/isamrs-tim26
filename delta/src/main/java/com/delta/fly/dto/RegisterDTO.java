@@ -1,7 +1,5 @@
 package com.delta.fly.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.validation.constraints.NotBlank;
 
 public class RegisterDTO {

@@ -19,7 +19,7 @@ import java.util.Optional;
 public class SystemAdminServiceImpl implements SystemAdminService {
 
     @Autowired
-    SystemAdminRepository systemAdminRepository;
+    private SystemAdminRepository systemAdminRepository;
 
     @Override
     public List<SystemAdmin> findAll() {

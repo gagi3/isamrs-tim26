@@ -7,7 +7,6 @@ import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Airplane;
 import com.delta.fly.model.Seat;
 import com.delta.fly.repository.AirplaneRepository;
-import com.delta.fly.repository.SeatRepository;
 import com.delta.fly.service.abstraction.AirlineCompanyService;
 import com.delta.fly.service.abstraction.AirplaneService;
 import com.delta.fly.service.abstraction.SeatService;
@@ -22,13 +21,13 @@ import java.util.Optional;
 public class AirplaneServiceImpl implements AirplaneService {
 
     @Autowired
-    AirplaneRepository airplaneRepository;
+    private AirplaneRepository airplaneRepository;
 
     @Autowired
-    AirlineCompanyService airlineCompanyService;
+    private AirlineCompanyService airlineCompanyService;
 
     @Autowired
-    SeatService seatService;
+    private SeatService seatService;
 
     @Override
     public List<Airplane> findAll() {

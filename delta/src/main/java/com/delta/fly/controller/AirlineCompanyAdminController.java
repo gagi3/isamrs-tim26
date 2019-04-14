@@ -18,7 +18,7 @@ import java.util.List;
 public class AirlineCompanyAdminController {
 
     @Autowired
-    AirlineCompanyAdminService airlineCompanyAdminService;
+    private AirlineCompanyAdminService airlineCompanyAdminService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<AirlineCompanyAdmin>> getAll() {

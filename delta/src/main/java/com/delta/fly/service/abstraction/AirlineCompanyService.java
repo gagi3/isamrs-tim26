@@ -1,7 +1,6 @@
 package com.delta.fly.service.abstraction;
 
 import com.delta.fly.dto.AirlineCompanyRegistrationDTO;
-import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.AirlineCompany;

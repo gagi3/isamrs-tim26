@@ -1,8 +1,6 @@
 package com.delta.fly.dto;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class FlightDTO {
 
@@ -14,9 +12,6 @@ public class FlightDTO {
     private Integer distance;
     private Long travelTime;
     private Boolean generateTickets;
-
-    public FlightDTO() {
-    }
 
     public Long getAirplaneID() {
         return airplaneID;

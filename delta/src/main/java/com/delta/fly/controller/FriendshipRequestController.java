@@ -18,7 +18,7 @@ import java.util.List;
 public class FriendshipRequestController {
 
     @Autowired
-    FriendshipRequestService friendshipRequestService;
+    private FriendshipRequestService friendshipRequestService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<FriendshipRequest>> getAll() {

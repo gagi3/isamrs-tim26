@@ -19,7 +19,7 @@ import java.util.Optional;
 public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
-    PassengerRepository passengerRepository;
+    private PassengerRepository passengerRepository;
 
     @Override
     public List<Passenger> findAll() {

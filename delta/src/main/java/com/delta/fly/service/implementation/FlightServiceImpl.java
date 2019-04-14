@@ -18,19 +18,19 @@ import java.util.Optional;
 public class FlightServiceImpl implements FlightService {
 
     @Autowired
-    FlightRepository flightRepository;
+    private FlightRepository flightRepository;
 
     @Autowired
-    AirplaneService airplaneService;
+    private AirplaneService airplaneService;
 
     @Autowired
-    AirlineCompanyService airlineCompanyService;
+    private AirlineCompanyService airlineCompanyService;
 
     @Autowired
-    PlaceAndTimeService placeAndTimeService;
+    private PlaceAndTimeService placeAndTimeService;
 
     @Autowired
-    TicketService ticketService;
+    private TicketService ticketService;
 
     @Override
     public List<Flight> findAll() {

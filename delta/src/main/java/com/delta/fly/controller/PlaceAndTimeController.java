@@ -18,7 +18,7 @@ import java.util.List;
 public class PlaceAndTimeController {
 
     @Autowired
-    PlaceAndTimeService placeAndTimeService;
+    private PlaceAndTimeService placeAndTimeService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<PlaceAndTime>> getAll() {

@@ -18,10 +18,10 @@ import java.util.Optional;
 public class SeatServiceImpl implements SeatService {
 
     @Autowired
-    SeatRepository seatRepository;
+    private SeatRepository seatRepository;
 
     @Autowired
-    AirplaneService airplaneService;
+    private AirplaneService airplaneService;
 
     @Override
     public List<Seat> findAll() {

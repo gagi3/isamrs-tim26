@@ -18,7 +18,7 @@ import java.util.List;
 public class FlightController {
 
     @Autowired
-    FlightService flightService;
+    private FlightService flightService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Flight>> getAll() {

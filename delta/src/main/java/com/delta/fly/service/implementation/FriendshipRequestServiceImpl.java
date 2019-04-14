@@ -18,10 +18,10 @@ import java.util.Optional;
 public class FriendshipRequestServiceImpl implements FriendshipRequestService {
 
     @Autowired
-    FriendshipRequestRepository friendshipRequestRepository;
+    private FriendshipRequestRepository friendshipRequestRepository;
 
     @Autowired
-    PassengerService passengerService;
+    private PassengerService passengerService;
 
     @Override
     public List<FriendshipRequest> findAll() {

@@ -7,9 +7,6 @@ public class FriendshipRequestDTO {
     private Boolean accept;
     private Boolean delete;
 
-    public FriendshipRequestDTO() {
-    }
-
     public Long getFromID() {
         return fromID;
     }

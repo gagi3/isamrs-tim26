@@ -1,7 +1,6 @@
 package com.delta.fly.controller;
 
 import com.delta.fly.dto.AirlineCompanyRegistrationDTO;
-import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.AirlineCompany;
@@ -19,7 +18,7 @@ import java.util.List;
 public class AirlineCompanyController {
 
     @Autowired
-    AirlineCompanyService airlineCompanyService;
+    private AirlineCompanyService airlineCompanyService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<AirlineCompany>> getAll() {

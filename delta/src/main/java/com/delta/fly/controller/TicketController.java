@@ -19,7 +19,7 @@ import java.util.List;
 public class TicketController {
 
     @Autowired
-    TicketService ticketService;
+    private TicketService ticketService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Ticket>> getAll() {

@@ -18,7 +18,7 @@ import java.util.List;
 public class SystemAdminController {
 
     @Autowired
-    SystemAdminService systemAdminService;
+    private SystemAdminService systemAdminService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<SystemAdmin>> getAll() {

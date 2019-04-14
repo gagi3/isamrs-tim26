@@ -7,9 +7,6 @@ public class PlaceAndTimeDTO {
     private String thePlace;
     private Date theTime;
 
-    public PlaceAndTimeDTO() {
-    }
-
     public String getThePlace() {
         return thePlace;
     }

@@ -1,7 +1,5 @@
 package com.delta.fly.model;
 
-import com.delta.fly.enumeration.Class;
-
 import javax.persistence.*;
 import java.io.Serializable;
 

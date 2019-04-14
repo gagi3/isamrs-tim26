@@ -17,7 +17,7 @@ import java.util.Optional;
 public class PlaceAndTimeServiceImpl implements PlaceAndTimeService {
 
     @Autowired
-    PlaceAndTimeRepository placeAndTimeRepository;
+    private PlaceAndTimeRepository placeAndTimeRepository;
 
     @Override
     public List<PlaceAndTime> findAll() {

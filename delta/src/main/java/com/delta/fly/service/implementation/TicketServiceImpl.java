@@ -3,7 +3,6 @@ package com.delta.fly.service.implementation;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Flight;
-import com.delta.fly.model.Passenger;
 import com.delta.fly.model.Seat;
 import com.delta.fly.model.Ticket;
 import com.delta.fly.repository.TicketRepository;
@@ -19,7 +18,7 @@ import java.util.Optional;
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
-    TicketRepository ticketRepository;
+    private TicketRepository ticketRepository;
 
     @Override
     public List<Ticket> findAll() {
