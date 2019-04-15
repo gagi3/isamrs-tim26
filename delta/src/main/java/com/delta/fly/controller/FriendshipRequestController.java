@@ -8,6 +8,7 @@ import com.delta.fly.service.abstraction.FriendshipRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class FriendshipRequestController {
     @Autowired
     private FriendshipRequestService friendshipRequestService;
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<FriendshipRequest>> getAll() {
 
@@ -28,6 +30,7 @@ public class FriendshipRequestController {
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<FriendshipRequest> getOne(@PathVariable Long id) throws ObjectNotFoundException {
 
@@ -36,6 +39,7 @@ public class FriendshipRequestController {
         return new ResponseEntity<>(friendshipRequest, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/addFriendshipRequest", method = RequestMethod.POST)
     public ResponseEntity<FriendshipRequest> create(@RequestBody FriendshipRequestDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
@@ -44,6 +48,7 @@ public class FriendshipRequestController {
         return new ResponseEntity<>(newFriendshipRequest, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/updateFriendshipRequest", method = RequestMethod.POST)
     public ResponseEntity<FriendshipRequest> update(@RequestBody FriendshipRequest friendshipRequest) throws ObjectNotFoundException {
 
@@ -52,6 +57,7 @@ public class FriendshipRequestController {
         return new ResponseEntity<>(updateFriendshipRequest, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/deleteFriendshipRequest/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 

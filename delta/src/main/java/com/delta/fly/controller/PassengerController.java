@@ -8,6 +8,7 @@ import com.delta.fly.service.abstraction.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class PassengerController {
         return new ResponseEntity<>(passenger, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/addPassenger", method = RequestMethod.POST)
     public ResponseEntity<Passenger> create(@RequestBody RegisterDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
@@ -44,6 +46,7 @@ public class PassengerController {
         return new ResponseEntity<>(newPassenger, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/updatePassenger", method = RequestMethod.POST)
     public ResponseEntity<Passenger> update(@RequestBody Passenger passenger) throws ObjectNotFoundException {
 
@@ -52,6 +55,7 @@ public class PassengerController {
         return new ResponseEntity<>(updatePassenger, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/deletePassenger/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 

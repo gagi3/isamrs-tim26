@@ -8,6 +8,7 @@ import com.delta.fly.service.abstraction.AirlineCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class AirlineCompanyController {
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/addAirlineCompany", method = RequestMethod.POST)
     public ResponseEntity<AirlineCompany> create(@RequestBody AirlineCompanyRegistrationDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
@@ -44,6 +46,7 @@ public class AirlineCompanyController {
         return new ResponseEntity<>(newAirlineCompany, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/updateAirlineCompany", method = RequestMethod.POST)
     public ResponseEntity<AirlineCompany> update(@RequestBody AirlineCompany company) throws ObjectNotFoundException {
 
@@ -52,6 +55,7 @@ public class AirlineCompanyController {
         return new ResponseEntity<>(updateAirlineCompany, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/deleteAirlineCompany/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 

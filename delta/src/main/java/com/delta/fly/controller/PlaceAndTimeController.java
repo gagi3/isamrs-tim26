@@ -8,6 +8,7 @@ import com.delta.fly.service.abstraction.PlaceAndTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class PlaceAndTimeController {
         return new ResponseEntity<>(placeAndTime, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/addPlaceAndTime", method = RequestMethod.POST)
     public ResponseEntity<PlaceAndTime> create(@RequestBody PlaceAndTimeDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
@@ -44,6 +46,7 @@ public class PlaceAndTimeController {
         return new ResponseEntity<>(newPlaceAndTime, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/updatePlaceAndTime", method = RequestMethod.POST)
     public ResponseEntity<PlaceAndTime> update(@RequestBody PlaceAndTime placeAndTime) throws ObjectNotFoundException, InvalidInputException {
 
@@ -52,6 +55,7 @@ public class PlaceAndTimeController {
         return new ResponseEntity<>(updatePlaceAndTime, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/deletePlaceAndTime/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 

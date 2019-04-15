@@ -126,6 +126,7 @@ public class FlightServiceImpl implements FlightService {
     public boolean delete(Long id) throws ObjectNotFoundException {
         try {
             Flight flight = getOne(id);
+            // TODO: Check if tickets were sold.
             flight.setDeleted(true);
             return flight.getDeleted();
         } catch (ObjectNotFoundException ex) {

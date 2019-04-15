@@ -8,6 +8,7 @@ import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class AirlineCompanyAdminController {
     @Autowired
     private AirlineCompanyAdminService airlineCompanyAdminService;
 
+    @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<AirlineCompanyAdmin>> getAll() {
 
@@ -28,6 +30,7 @@ public class AirlineCompanyAdminController {
         return new ResponseEntity<>(admins, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<AirlineCompanyAdmin> getOne(@PathVariable Long id) throws ObjectNotFoundException {
 
@@ -36,6 +39,7 @@ public class AirlineCompanyAdminController {
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
     @RequestMapping(value = "/addAirlineCompanyAdmin/{companyID}", method = RequestMethod.POST)
     public ResponseEntity<AirlineCompanyAdmin> create(@RequestBody RegisterDTO admin, @PathVariable Long companyID) throws InvalidInputException, ObjectNotFoundException {
 
@@ -44,6 +48,7 @@ public class AirlineCompanyAdminController {
         return new ResponseEntity<>(newAirlineCompanyAdmin, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/updateAirlineCompanyAdmin", method = RequestMethod.POST)
     public ResponseEntity<AirlineCompanyAdmin> update(@RequestBody AirlineCompanyAdmin admin) throws ObjectNotFoundException {
 
@@ -52,6 +57,7 @@ public class AirlineCompanyAdminController {
         return new ResponseEntity<>(updateAirlineCompanyAdmin, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
     @RequestMapping(value = "/deleteAirlineCompanyAdmin/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
