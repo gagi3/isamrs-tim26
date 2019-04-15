@@ -36,6 +36,9 @@ public abstract class User {
     @Column(name = "phone_number", unique = true, nullable = false)
     protected String phoneNumber;
 
+    @Column(name = "activated", unique = false, nullable = false)
+    protected Boolean activated;
+
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, targetEntity = Role.class)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
@@ -102,6 +105,14 @@ public abstract class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Boolean getActivated() {
+        return activated;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
     }
 
     public List<Role> getRoles() {

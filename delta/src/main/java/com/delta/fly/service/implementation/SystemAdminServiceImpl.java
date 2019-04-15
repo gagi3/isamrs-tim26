@@ -9,6 +9,7 @@ import com.delta.fly.model.SystemAdmin;
 import com.delta.fly.repository.SystemAdminRepository;
 import com.delta.fly.service.abstraction.SystemAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import java.util.Optional;
 
 @Service
 public class SystemAdminServiceImpl implements SystemAdminService {
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private SystemAdminRepository systemAdminRepository;
@@ -39,12 +43,13 @@ public class SystemAdminServiceImpl implements SystemAdminService {
             if (!admin.isPresent()) {
                 admin = Optional.of(new SystemAdmin());
                 admin.get().setUsername(dto.getUsername());
-                admin.get().setPassword(dto.getPassword());
+                admin.get().setPassword(encoder.encode(dto.getPassword()));
                 admin.get().setFirstName(dto.getFirstName());
                 admin.get().setLastName(dto.getLastName());
                 admin.get().setPhoneNumber(dto.getPhoneNumber());
                 admin.get().setCity(dto.getCity());
                 admin.get().setRoles(new ArrayList<Role>() {{ add(new Role(RoleName.ROLE_SYSTEMADMIN)); }} );
+                admin.get().setActivated(false);
                 admin.get().setDeleted(false);
             } else {
                 throw new InvalidInputException("Bad email address.");
@@ -69,6 +74,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
                 uAdmin.get().setPassword(admin.getPassword());
                 uAdmin.get().setPhoneNumber(admin.getPhoneNumber());
                 uAdmin.get().setRoles(admin.getRoles());
+                uAdmin.get().setActivated(admin.getActivated());
                 uAdmin.get().setUsername(admin.getUsername());
             } else {
                 throw new ObjectNotFoundException("Bad ID");

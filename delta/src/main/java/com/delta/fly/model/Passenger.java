@@ -11,11 +11,6 @@ public class Passenger extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger", cascade = CascadeType.ALL)
     private List<Ticket> tickets = new ArrayList<>();
 
@@ -24,6 +19,9 @@ public class Passenger extends User implements Serializable {
 
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
+
+    @Column(name = "token", unique = true, nullable = false)
+    protected String token;
 
     public Passenger() {
     }
@@ -72,5 +70,13 @@ public class Passenger extends User implements Serializable {
 
     public void setFriends(List<Passenger> friends) {
         this.friends = friends;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

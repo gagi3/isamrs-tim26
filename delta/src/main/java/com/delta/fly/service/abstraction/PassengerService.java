@@ -13,7 +13,8 @@ public interface PassengerService {
     Passenger getOne(Long id) throws ObjectNotFoundException;
     Passenger create(RegisterDTO dto) throws InvalidInputException;
     Passenger update(Passenger passenger) throws ObjectNotFoundException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+    boolean delete(Long id) throws ObjectNotFoundException;
+    boolean activate(String token) throws InvalidInputException, ObjectNotFoundException;
     //List<Passenger> filterSearch();
     
 }

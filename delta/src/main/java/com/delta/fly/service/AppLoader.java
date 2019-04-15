@@ -4,6 +4,7 @@ import com.delta.fly.enumeration.RoleName;
 import com.delta.fly.model.Role;
 import com.delta.fly.model.SystemAdmin;
 import com.delta.fly.repository.SystemAdminRepository;
+import com.delta.fly.security.TokenUtils;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import java.util.List;
 public class AppLoader implements ApplicationRunner {
 
     private SystemAdminRepository systemAdminRepository;
+    private TokenUtils tokenUtils;
 
     public AppLoader(SystemAdminRepository systemAdminRepository) {
         this.systemAdminRepository = systemAdminRepository;
@@ -27,7 +29,7 @@ public class AppLoader implements ApplicationRunner {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
             Role role = new Role();
-            role.setName(RoleName.ROLE_SYSTEMADMIN);
+            role.setRoleName(RoleName.ROLE_SYSTEMADMIN);
             List<Role> roles = new ArrayList<>();
             roles.add(role);
 
@@ -40,6 +42,7 @@ public class AppLoader implements ApplicationRunner {
             admin.setPhoneNumber("+000 00 000 0000");
             admin.setRoles(roles);
             admin.setDeleted(false);
+            admin.setActivated(false);
 
             systemAdminRepository.save(admin);
             System.out.println("Admin added.");

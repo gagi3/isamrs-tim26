@@ -4,11 +4,12 @@ import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.enumeration.RoleName;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.Passenger;
-import com.delta.fly.model.Role;
+import com.delta.fly.model.*;
 import com.delta.fly.repository.PassengerRepository;
+import com.delta.fly.security.TokenUtils;
 import com.delta.fly.service.abstraction.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +21,15 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
     private PassengerRepository passengerRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
+    private EmailServiceImpl emailService;
+
+    @Autowired
+    private TokenUtils tokenUtils;
 
     @Override
     public List<Passenger> findAll() {
@@ -39,7 +49,7 @@ public class PassengerServiceImpl implements PassengerService {
             if (!passenger.isPresent()) {
                 passenger = Optional.ofNullable(new Passenger());
                 passenger.get().setUsername(dto.getUsername());
-                passenger.get().setPassword(dto.getPassword());
+                passenger.get().setPassword(encoder.encode(dto.getPassword()));
                 passenger.get().setFirstName(dto.getFirstName());
                 passenger.get().setLastName(dto.getLastName());
                 passenger.get().setPhoneNumber(dto.getPhoneNumber());
@@ -47,14 +57,26 @@ public class PassengerServiceImpl implements PassengerService {
                 passenger.get().setFriends(new ArrayList<>());
                 passenger.get().setTickets(new ArrayList<>());
                 passenger.get().setRoles(new ArrayList<Role>() {{ add(new Role(RoleName.ROLE_PASSENGER)); }} );
+                passenger.get().setActivated(false);
                 passenger.get().setDeleted(false);
+                Email email = new Email();
+                String token = tokenUtils.generateToken(UserPrinciple.build(passenger.get()));
+                passenger.get().setToken(token);
+                email.setMessage(emailService.registrationTemplate(passenger.get().getFirstName(), token));
+                email.setSubject("Account activation");
+                email.setTo(passenger.get().getUsername());
+                emailService.send(email);
+            } else if (!passenger.get().getActivated() && tokenUtils.validateToken(passenger.get().getToken(), UserPrinciple.build(passenger.get()))) {
+                throw new InvalidInputException("User already exists. Please follow the link in the email we sent you.");
+            } else if (!passenger.get().getActivated() && !tokenUtils.validateToken(passenger.get().getToken(), UserPrinciple.build(passenger.get()))) {
+                remove(passenger.get().getUsername());
             } else {
                 throw new InvalidInputException("Bad email address.");
             }
             return passengerRepository.save(passenger.get());
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
-            throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!", ex);
+            throw new InvalidInputException("Passenger with email: " + dto.getUsername() + " already exists!", ex);
         }
     }
 
@@ -73,6 +95,7 @@ public class PassengerServiceImpl implements PassengerService {
                 uPassenger.get().setTickets(passenger.getTickets());
                 uPassenger.get().setFriends(passenger.getFriends());
                 uPassenger.get().setRoles(passenger.getRoles());
+                uPassenger.get().setActivated(passenger.getActivated());
                 uPassenger.get().setUsername(passenger.getUsername());
             } else {
                 throw new ObjectNotFoundException("Bad ID");
@@ -94,6 +117,30 @@ public class PassengerServiceImpl implements PassengerService {
             ex.printStackTrace();
             throw new ObjectNotFoundException("Admin with ID: " + id + " not found!", ex);
         }
+    }
+
+    private void remove(String email) {
+        Optional<Passenger> passenger = passengerRepository.findByUsername(email);
+        passenger.ifPresent(value -> passengerRepository.delete(value));
+    }
+
+    @Override
+    public boolean activate(String token) throws InvalidInputException, ObjectNotFoundException {
+        String username = tokenUtils.getUsernameFromToken(token);
+        Optional<Passenger> passenger = passengerRepository.findByUsername(username);
+        if (passenger.isPresent()) {
+            if (!token.equals(passenger.get().getToken())) {
+                throw new InvalidInputException("Activation link mismatch!");
+            }
+            passenger.get().setActivated(true);
+            if (!tokenUtils.validateToken(token, UserPrinciple.build(passenger.get()))) {
+                throw new InvalidInputException("Activation link has expired. Please try registering again. Make sure you activate your account within 5 hours of the registration.");
+            }
+        } else {
+            throw new ObjectNotFoundException("Passenger not found");
+        }
+        update(passenger.get());
+        return passenger.get().getActivated();
     }
     
 }

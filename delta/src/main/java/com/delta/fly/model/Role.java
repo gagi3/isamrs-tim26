@@ -15,24 +15,24 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @NaturalId
-    private RoleName name;
+    private RoleName roleName;
 
     public Role() {
     }
 
-    public Role(RoleName name) {
-        this.name = name;
+    public Role(RoleName roleName) {
+        this.roleName = roleName;
     }
 
     public Long getId() {
         return id;
     }
 
-    public RoleName getName() {
-        return name;
+    public RoleName getRoleName() {
+        return roleName;
     }
 
-    public void setName(RoleName name) {
-        this.name = name;
+    public void setRoleName(RoleName roleName) {
+        this.roleName = roleName;
     }
 }

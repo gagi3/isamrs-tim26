@@ -11,6 +11,7 @@ import com.delta.fly.repository.AirlineCompanyAdminRepository;
 import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
 import com.delta.fly.service.abstraction.AirlineCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import java.util.Optional;
 
 @Service
 public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminService {
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private AirlineCompanyAdminRepository airlineCompanyAdminRepository;
@@ -46,15 +50,18 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
             if (!admin.isPresent()) {
                 admin = Optional.of(new AirlineCompanyAdmin());
                 admin.get().setUsername(dto.getUsername());
-                admin.get().setPassword(dto.getPassword());
+                admin.get().setPassword(encoder.encode(dto.getPassword()));
                 admin.get().setFirstName(dto.getFirstName());
                 admin.get().setLastName(dto.getLastName());
                 admin.get().setPhoneNumber(dto.getPhoneNumber());
                 admin.get().setCity(dto.getCity());
                 admin.get().setRoles(new ArrayList<Role>() {{ add(new Role(RoleName.ROLE_AIRLINECOMPANYADMIN)); }} );
+                admin.get().setActivated(false);
                 admin.get().setDeleted(false);
                 if (company.isPresent()) {
                     admin.get().setAirlineCompany(company.get());
+                } else if (airlineCompanyID == 0L) {
+                    admin.get().setAirlineCompany(null);
                 } else {
                     throw new ObjectNotFoundException("Airline company doesn't exist.");
                 }
@@ -85,6 +92,7 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
                 uAdmin.get().setPassword(admin.getPassword());
                 uAdmin.get().setPhoneNumber(admin.getPhoneNumber());
                 uAdmin.get().setRoles(admin.getRoles());
+                uAdmin.get().setActivated(admin.getActivated());
                 uAdmin.get().setUsername(admin.getUsername());
             } else {
                 throw new ObjectNotFoundException("Bad ID");
