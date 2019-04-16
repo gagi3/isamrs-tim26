@@ -25,7 +25,7 @@ public class EmailServiceImpl {
         return "Dear " + name + ",\n\n"
                 + "Thank you for registering on our website.\n\n"
                 + "In order to complete your registration, click on the link below.\n\n"
-                + "http://localhost:8080/api/user/validate/token=" + link + "\n\n"
+                + "http://localhost:4200/api/user/validate/token=" + link + "\n\n"
                 + "Sincerely yours,\n\n"
                 + "Delta";
     }
