@@ -11,20 +11,27 @@ export class ValidateComponent implements OnInit {
 
   location: string;
   token: string;
+  validated = false;
 
   constructor(private router: Router, private registerService: RegisterService) { }
-
-  ngOnInit() {
+  validate() {
     this.location = this.router.url;
-    this.token = this.location.substr(15);
+    this.token = this.location.substr(16);
     this.registerService.validate(this.token).subscribe(
       data => {
         window.alert('Validation was successful!');
-        this.router.navigateByUrl('/');
+        this.validated = true;
       }, error => {
         window.alert(error.error.errorMessage);
       }
     );
+  }
+  reroute() {
+    this.router.navigateByUrl('/');
+  }
+
+  ngOnInit() {
+    this.validate();
   }
 
 }

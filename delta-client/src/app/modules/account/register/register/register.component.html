@@ -1,3 +1,86 @@
-<p>
-  register works!
-</p>
+<html>
+
+  <body>
+
+    <div *ngIf = "isRegistered; else signupForm">
+      Your registration is successful. Please login!
+    </div>
+
+
+
+    <ng-template #signupForm>
+      <div class="container-all">
+        <div class="row col-sm-6" style="max-width:350px;">
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+            <div class="form-group">
+              <div class="text-desc">
+                REGISTER
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="username"> Email</label>
+              <input type="email" class="form-control" name="email" [(ngModel)]="registerDTO.username" #username="ngModel" required email />
+              <div *ngIf="f.submitted && username.invalid">
+                <div *ngIf="username.errors.required">Email is required!</div>
+                <div *ngIf="username.errors.email">Email must be a valid email address.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" [(ngModel)]="registerDTO.password" #password="ngModel"
+                     required minlength="6" />
+              <div *ngIf="f.submitted && password.invalid">
+                <div *ngIf="password.errors.required">Password is required</div>
+                <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="firstName">Your name</label>
+              <input type="text" class="form-control" name="firstName" [(ngModel)]="registerDTO.firstName" #firstName="ngModel" required />
+              <div *ngIf="f.submitted && firstName.invalid">
+                <div *ngIf="firstName.errors.required">Name is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Your last name</label>
+              <input type="text" class="form-control" name="lastName" [(ngModel)]="registerDTO.lastName" #lastName="ngModel" required />
+              <div *ngIf="f.submitted && lastName.invalid">
+                <div *ngIf="lastName.errors.required">Last name is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="city">Your city</label>
+              <input type="text" class="form-control" name="city" [(ngModel)]="registerDTO.city" #city="ngModel" required />
+              <div *ngIf="f.submitted && city.invalid">
+                <div *ngIf="city.errors.required">Address is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="registerDTO.phoneNumber" #phoneNumber="ngModel" required minlength="9"/>
+              <div *ngIf="f.submitted && phoneNumber.invalid">
+                <div *ngIf="phoneNumber.errors.required">Phone number is required</div>
+                <div *ngIf="phoneNumber.errors.minlength">Phone number must be at least 9 digits long</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button class="signupbtn btn" >REGISTER</button>
+              <div *ngIf="f.submitted && failed" class="alert alert-warning">
+                Signup failed!<br/>{{errorMessage}}
+              </div>
+              <button class="cancelbtn btn" (click)="cancel()">CANCEL</button>
+              <button class="loginbtn btn" (click)="login()">LOGIN</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-template>
+
+  </body>
+
+</html>

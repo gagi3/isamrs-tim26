@@ -8,6 +8,7 @@ import {AdministrationModule} from './modules/administration/administration.modu
 import {ConsumptionModule} from './modules/consumption/consumption.module';
 import {ModerationModule} from './modules/moderation/moderation.module';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {HttpClientModule} from '@angular/common/http';
     AccountModule,
     AdministrationModule,
     ConsumptionModule,
-    ModerationModule
+    ModerationModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

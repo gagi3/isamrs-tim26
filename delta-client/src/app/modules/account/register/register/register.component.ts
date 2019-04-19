@@ -20,6 +20,9 @@ export class RegisterComponent implements OnInit {
   cancel() {
     this.router.navigateByUrl('');
   }
+  login() {
+    this.router.navigateByUrl('/login');
+  }
   onSubmit() {
     this.type = this.router.url.substr(8);
     console.log('Type: ' + this.type);
@@ -39,7 +42,6 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.onSubmit();
   }
 
 }

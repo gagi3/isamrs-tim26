@@ -20,8 +20,12 @@ const routes: Routes = [
     path: 'signup/airline-company-admin',
     component: RegisterComponent
   },
+  // {
+  //   path: 'validate/token',
+  //   component: ValidateComponent
+  // },
   {
-    path: 'validate/token=',
+    path: 'validate/token/:tkn',
     component: ValidateComponent
   }
 ];
