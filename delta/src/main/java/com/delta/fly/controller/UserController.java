@@ -1,5 +1,7 @@
 package com.delta.fly.controller;
 
+import com.delta.fly.dto.JwtResponse;
+import com.delta.fly.dto.LoginDTO;
 import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
@@ -8,12 +10,18 @@ import com.delta.fly.model.Passenger;
 import com.delta.fly.model.SystemAdmin;
 import com.delta.fly.model.User;
 import com.delta.fly.repository.UserRepository;
+import com.delta.fly.security.TokenUtils;
 import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
 import com.delta.fly.service.abstraction.PassengerService;
 import com.delta.fly.service.abstraction.SystemAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +32,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/api/user")
 public class UserController {
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Autowired
     private UserRepository userRepository;
@@ -39,6 +50,20 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private TokenUtils tokenUtils;
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDTO loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginRequest.getUsername(), loginRequest.getPassword()
+        ));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenUtils.generateToken(authentication);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+    }
 
     @PostMapping("/signup/{type}")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDTO request, @PathVariable String type) throws InvalidInputException, ObjectNotFoundException {

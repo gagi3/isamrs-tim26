@@ -1,9 +1,11 @@
 package com.delta.fly.security;
 
+import com.delta.fly.model.UserPrinciple;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -69,6 +71,13 @@ public class TokenUtils {
         claims.put("created", new Date(System.currentTimeMillis()));
         return Jwts.builder().setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
+    }
+
+    public String generateToken(Authentication authentication) {
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        return Jwts.builder().setSubject((userPrinciple.getUsername())).setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 

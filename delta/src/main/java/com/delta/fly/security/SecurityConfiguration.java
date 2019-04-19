@@ -69,7 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/api/user/login", "/api/user/signup/passenger", "/api/user/validate/*").permitAll()
+                    .antMatchers("/api/user/signin", "/api/user/signup/passenger", "/api/user/validate/*").permitAll()
                     .anyRequest().authenticated();
 
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
