@@ -21,11 +21,10 @@ export class RegisterComponent implements OnInit {
     this.router.navigateByUrl('');
   }
   login() {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/signin');
   }
   onSubmit() {
     this.type = this.router.url.substr(8);
-    console.log('Type: ' + this.type);
     this.registerService.register(this.registerDTO, this.type).subscribe(
       data => {
         window.alert('Registration was successful! Please check your email.');

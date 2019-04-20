@@ -11,12 +11,11 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  form: any = {};
   isLoggedIn = false;
   failed = false;
   errorMessage = '';
   roles: string[] = [];
-  private loginDTO: LoginDTO;
+  private loginDTO: LoginDTO = new LoginDTO();
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any, private dialogRef: MatDialogRef<any>,
               private loginService: LoginService, private tokenStorage: TokenStorageService,
@@ -29,16 +28,14 @@ export class LoginComponent implements OnInit {
     }
   }
   onSubmit() {
-    this.loginDTO = new LoginDTO(this.form.username, this.form.password);
     this.loginService.attemptAuth(this.loginDTO).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUsername(data.username);
         this.tokenStorage.saveAuthorities(data.authorities);
         this.isLoggedIn = true;
         this.failed = false;
         this.roles = this.tokenStorage.getAuthorities();
-        this.dialogRef.close();
         this.roles.every( role => {
           if (role === 'ROLE_AIRLINECOMPANYADMIN') {
             this.router.navigateByUrl('administration');
@@ -62,6 +59,12 @@ export class LoginComponent implements OnInit {
 
   reload() {
     window.location.reload();
+  }
+  cancel() {
+    this.router.navigateByUrl('');
+  }
+  register() {
+    this.router.navigateByUrl('/signup/passenger');
   }
 
 }

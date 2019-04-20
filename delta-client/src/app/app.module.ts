@@ -11,6 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {RoleGuardService} from './modules/shared/role-guard.service';
 import {httpInterceptorProviders} from './modules/shared/auth-interceptor';
+import {MatDialogModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import {httpInterceptorProviders} from './modules/shared/auth-interceptor';
     ModerationModule,
     FormsModule
   ],
-  providers: [RoleGuardService, httpInterceptorProviders],
+  providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
