@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {RegisterComponent} from './modules/account/register/register/register.component';
 import {ValidateComponent} from './modules/account/register/validate/validate.component';
+import {LoginComponent} from './modules/account/login/login/login.component';
 
 const routes: Routes = [
   // {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'signup/airline-company-admin',
     component: RegisterComponent
+  },
+  {
+    path: 'signin',
+    component: LoginComponent
   },
   // {
   //   path: 'validate/token',
