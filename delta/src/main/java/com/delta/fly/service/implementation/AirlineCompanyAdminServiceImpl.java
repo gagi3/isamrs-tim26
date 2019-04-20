@@ -8,6 +8,7 @@ import com.delta.fly.model.AirlineCompany;
 import com.delta.fly.model.AirlineCompanyAdmin;
 import com.delta.fly.model.Role;
 import com.delta.fly.repository.AirlineCompanyAdminRepository;
+import com.delta.fly.repository.RoleRepository;
 import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
 import com.delta.fly.service.abstraction.AirlineCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
 
     @Autowired
     private AirlineCompanyService airlineCompanyService;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public List<AirlineCompanyAdmin> findAll() {
@@ -55,7 +59,14 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
                 admin.get().setLastName(dto.getLastName());
                 admin.get().setPhoneNumber(dto.getPhoneNumber());
                 admin.get().setCity(dto.getCity());
-                admin.get().setRoles(new ArrayList<Role>() {{ add(new Role(RoleName.ROLE_AIRLINECOMPANYADMIN)); }} );
+                Optional<Role> role = roleRepository.findByRoleName(RoleName.ROLE_AIRLINECOMPANYADMIN);
+                if (role.isPresent()) {
+                    admin.get().setRoles(new ArrayList<Role>() {{ add(role.get()); }});
+                } else {
+                    admin.get().setRoles(new ArrayList<Role>() {{
+                        add(new Role(RoleName.ROLE_AIRLINECOMPANYADMIN));
+                    }});
+                }
                 admin.get().setActivated(false);
                 admin.get().setDeleted(false);
                 if (company.isPresent()) {

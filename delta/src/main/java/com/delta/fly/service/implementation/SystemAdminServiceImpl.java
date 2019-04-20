@@ -6,6 +6,7 @@ import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Role;
 import com.delta.fly.model.SystemAdmin;
+import com.delta.fly.repository.RoleRepository;
 import com.delta.fly.repository.SystemAdminRepository;
 import com.delta.fly.service.abstraction.SystemAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class SystemAdminServiceImpl implements SystemAdminService {
 
     @Autowired
     private SystemAdminRepository systemAdminRepository;
+
+    private RoleRepository roleRepository;
 
     @Override
     public List<SystemAdmin> findAll() {
@@ -48,7 +51,14 @@ public class SystemAdminServiceImpl implements SystemAdminService {
                 admin.get().setLastName(dto.getLastName());
                 admin.get().setPhoneNumber(dto.getPhoneNumber());
                 admin.get().setCity(dto.getCity());
-                admin.get().setRoles(new ArrayList<Role>() {{ add(new Role(RoleName.ROLE_SYSTEMADMIN)); }} );
+                Optional<Role> role = roleRepository.findByRoleName(RoleName.ROLE_SYSTEMADMIN);
+                if (role.isPresent()) {
+                    admin.get().setRoles(new ArrayList<Role>() {{ add(role.get()); }});
+                } else {
+                    admin.get().setRoles(new ArrayList<Role>() {{
+                        add(new Role(RoleName.ROLE_SYSTEMADMIN));
+                    }});
+                }
                 admin.get().setActivated(false);
                 admin.get().setDeleted(false);
             } else {

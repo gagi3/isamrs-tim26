@@ -14,8 +14,9 @@ public enum RoleName {
                 return "ROLE_SYSTEMADMIN";
             case ROLE_AIRLINECOMPANYADMIN:
                 return "ROLE_AIRLINECOMPANYADMIN";
+            default:
+                return "";
         }
-        return "";
     }
 
 }

@@ -4,8 +4,12 @@ import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.enumeration.RoleName;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.*;
+import com.delta.fly.model.Email;
+import com.delta.fly.model.Passenger;
+import com.delta.fly.model.Role;
+import com.delta.fly.model.UserPrinciple;
 import com.delta.fly.repository.PassengerRepository;
+import com.delta.fly.repository.RoleRepository;
 import com.delta.fly.security.TokenUtils;
 import com.delta.fly.service.abstraction.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,9 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
     private TokenUtils tokenUtils;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public List<Passenger> findAll() {
@@ -56,7 +63,14 @@ public class PassengerServiceImpl implements PassengerService {
                 passenger.get().setCity(dto.getCity());
                 passenger.get().setFriends(new ArrayList<>());
                 passenger.get().setTickets(new ArrayList<>());
-                passenger.get().setRoles(new ArrayList<Role>() {{ add(new Role(RoleName.ROLE_PASSENGER)); }} );
+                Optional<Role> role = roleRepository.findByRoleName(RoleName.ROLE_PASSENGER);
+                if (role.isPresent()) {
+                    passenger.get().setRoles(new ArrayList<Role>() {{ add(role.get()); }});
+                } else {
+                    passenger.get().setRoles(new ArrayList<Role>() {{
+                        add(new Role(RoleName.ROLE_PASSENGER));
+                    }});
+                }
                 passenger.get().setActivated(false);
                 passenger.get().setDeleted(false);
                 Email email = new Email();

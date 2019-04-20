@@ -4,7 +4,6 @@ import com.delta.fly.enumeration.RoleName;
 import com.delta.fly.model.Role;
 import com.delta.fly.model.SystemAdmin;
 import com.delta.fly.repository.SystemAdminRepository;
-import com.delta.fly.security.TokenUtils;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +16,6 @@ import java.util.List;
 public class AppLoader implements ApplicationRunner {
 
     private SystemAdminRepository systemAdminRepository;
-    private TokenUtils tokenUtils;
 
     public AppLoader(SystemAdminRepository systemAdminRepository) {
         this.systemAdminRepository = systemAdminRepository;

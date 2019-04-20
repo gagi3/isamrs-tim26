@@ -5,11 +5,7 @@ import com.delta.fly.dto.LoginDTO;
 import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.AirlineCompanyAdmin;
-import com.delta.fly.model.Passenger;
-import com.delta.fly.model.SystemAdmin;
 import com.delta.fly.model.User;
-import com.delta.fly.repository.UserRepository;
 import com.delta.fly.security.TokenUtils;
 import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
 import com.delta.fly.service.abstraction.PassengerService;
@@ -22,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,10 +29,7 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserRepository userRepository;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private AirlineCompanyAdminService airlineCompanyAdminService;
@@ -47,9 +39,6 @@ public class UserController {
 
     @Autowired
     private SystemAdminService systemAdminService;
-
-    @Autowired
-    private PasswordEncoder encoder;
 
     @Autowired
     private TokenUtils tokenUtils;
