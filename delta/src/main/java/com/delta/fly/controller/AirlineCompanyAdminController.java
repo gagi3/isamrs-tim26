@@ -39,8 +39,17 @@ public class AirlineCompanyAdminController {
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
+    @RequestMapping(value = "/get/{username}", method = RequestMethod.GET)
+    public ResponseEntity<AirlineCompanyAdmin> getByUsername(@PathVariable String username) throws ObjectNotFoundException {
+
+        AirlineCompanyAdmin admin = airlineCompanyAdminService.getByUsername(username);
+
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
-    @RequestMapping(value = "/addAirlineCompanyAdmin/{companyID}", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/{companyID}", method = RequestMethod.POST)
     public ResponseEntity<AirlineCompanyAdmin> create(@RequestBody RegisterDTO admin, @PathVariable Long companyID) throws InvalidInputException, ObjectNotFoundException {
 
         AirlineCompanyAdmin newAirlineCompanyAdmin = airlineCompanyAdminService.create(admin, companyID);
@@ -49,7 +58,7 @@ public class AirlineCompanyAdminController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/updateAirlineCompanyAdmin", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<AirlineCompanyAdmin> update(@RequestBody AirlineCompanyAdmin admin) throws ObjectNotFoundException {
 
         AirlineCompanyAdmin updateAirlineCompanyAdmin = airlineCompanyAdminService.update(admin);
@@ -58,7 +67,7 @@ public class AirlineCompanyAdminController {
     }
 
     @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
-    @RequestMapping(value = "/deleteAirlineCompanyAdmin/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
         Boolean delete = airlineCompanyAdminService.delete(id);

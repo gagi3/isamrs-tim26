@@ -40,7 +40,16 @@ public class SystemAdminController {
     }
 
     @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
-    @RequestMapping(value = "/addSystemAdmin", method = RequestMethod.POST)
+    @RequestMapping(value = "/get/{username}", method = RequestMethod.GET)
+    public ResponseEntity<SystemAdmin> getOne(@PathVariable String username) throws ObjectNotFoundException {
+
+        SystemAdmin systemAdmin = systemAdminService.getByUsername(username);
+
+        return new ResponseEntity<>(systemAdmin, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<SystemAdmin> create(@RequestBody RegisterDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
         SystemAdmin newSystemAdmin = systemAdminService.create(dto);
@@ -49,7 +58,7 @@ public class SystemAdminController {
     }
 
     @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
-    @RequestMapping(value = "/updateSystemAdmin", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<SystemAdmin> update(@RequestBody SystemAdmin systemAdmin) throws ObjectNotFoundException {
 
         SystemAdmin updateSystemAdmin = systemAdminService.update(systemAdmin);
@@ -58,7 +67,7 @@ public class SystemAdminController {
     }
 
     @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
-    @RequestMapping(value = "/deleteSystemAdmin/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
         Boolean delete = systemAdminService.delete(id);

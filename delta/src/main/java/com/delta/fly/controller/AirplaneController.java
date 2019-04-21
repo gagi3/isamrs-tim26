@@ -38,7 +38,7 @@ public class AirplaneController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/addAirplane", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Airplane> create(@RequestBody AirplaneDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
         Airplane newAirplane = airplaneService.create(dto);
@@ -47,7 +47,7 @@ public class AirplaneController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/updateAirplane", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Airplane> update(@RequestBody Airplane airplane) throws ObjectNotFoundException {
 
         Airplane updateAirplane = airplaneService.update(airplane);
@@ -56,7 +56,7 @@ public class AirplaneController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/deleteAirplane/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
         Boolean delete = airplaneService.delete(id);

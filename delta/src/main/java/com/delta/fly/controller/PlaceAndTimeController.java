@@ -38,7 +38,7 @@ public class PlaceAndTimeController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/addPlaceAndTime", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<PlaceAndTime> create(@RequestBody PlaceAndTimeDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
         PlaceAndTime newPlaceAndTime = placeAndTimeService.create(dto);
@@ -47,7 +47,7 @@ public class PlaceAndTimeController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/updatePlaceAndTime", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<PlaceAndTime> update(@RequestBody PlaceAndTime placeAndTime) throws ObjectNotFoundException, InvalidInputException {
 
         PlaceAndTime updatePlaceAndTime = placeAndTimeService.update(placeAndTime);
@@ -56,7 +56,7 @@ public class PlaceAndTimeController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/deletePlaceAndTime/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
         Boolean delete = placeAndTimeService.delete(id);

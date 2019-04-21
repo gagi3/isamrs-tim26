@@ -45,6 +45,11 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
     }
 
     @Override
+    public AirlineCompanyAdmin getByUsername(String username) throws ObjectNotFoundException {
+        return airlineCompanyAdminRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("Admin with email: " + username + " not found!"));
+    }
+
+    @Override
     public AirlineCompanyAdmin create(RegisterDTO dto, Long airlineCompanyID) throws ObjectNotFoundException, InvalidInputException {
         Optional<AirlineCompanyAdmin> admin;
         Optional<AirlineCompany> company;
@@ -100,7 +105,7 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
                 uAdmin.get().setCity(admin.getCity());
                 uAdmin.get().setFirstName(admin.getFirstName());
                 uAdmin.get().setLastName(admin.getLastName());
-                uAdmin.get().setPassword(admin.getPassword());
+                uAdmin.get().setPassword(encoder.encode(admin.getPassword()));
                 uAdmin.get().setPhoneNumber(admin.getPhoneNumber());
                 uAdmin.get().setRoles(admin.getRoles());
                 uAdmin.get().setActivated(admin.getActivated());

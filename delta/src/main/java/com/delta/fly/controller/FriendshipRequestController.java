@@ -40,7 +40,7 @@ public class FriendshipRequestController {
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
-    @RequestMapping(value = "/addFriendshipRequest", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<FriendshipRequest> create(@RequestBody FriendshipRequestDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
         FriendshipRequest newFriendshipRequest = friendshipRequestService.create(dto);
@@ -49,7 +49,7 @@ public class FriendshipRequestController {
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
-    @RequestMapping(value = "/updateFriendshipRequest", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<FriendshipRequest> update(@RequestBody FriendshipRequest friendshipRequest) throws ObjectNotFoundException {
 
         FriendshipRequest updateFriendshipRequest = friendshipRequestService.update(friendshipRequest);
@@ -58,7 +58,7 @@ public class FriendshipRequestController {
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
-    @RequestMapping(value = "/deleteFriendshipRequest/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
         Boolean delete = friendshipRequestService.delete(id);

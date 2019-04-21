@@ -11,6 +11,9 @@ public interface PassengerService {
 
     List<Passenger> findAll();
     Passenger getOne(Long id) throws ObjectNotFoundException;
+
+    Passenger getByUsername(String username) throws ObjectNotFoundException;
+
     Passenger create(RegisterDTO dto) throws InvalidInputException;
     Passenger update(Passenger passenger) throws ObjectNotFoundException;
     boolean delete(Long id) throws ObjectNotFoundException;

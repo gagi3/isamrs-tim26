@@ -45,7 +45,12 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public Passenger getOne(Long id) throws ObjectNotFoundException {
-        return passengerRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Admin with ID: " + id + " not found!"));
+        return passengerRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Passenger with ID: " + id + " not found!"));
+    }
+
+    @Override
+    public Passenger getByUsername(String username) throws ObjectNotFoundException {
+        return passengerRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("Passenger with email: " + username + " not found!"));
     }
 
     @Override
@@ -104,7 +109,7 @@ public class PassengerServiceImpl implements PassengerService {
                 uPassenger.get().setCity(passenger.getCity());
                 uPassenger.get().setFirstName(passenger.getFirstName());
                 uPassenger.get().setLastName(passenger.getLastName());
-                uPassenger.get().setPassword(passenger.getPassword());
+                uPassenger.get().setPassword(encoder.encode(passenger.getPassword()));
                 uPassenger.get().setPhoneNumber(passenger.getPhoneNumber());
                 uPassenger.get().setTickets(passenger.getTickets());
                 uPassenger.get().setFriends(passenger.getFriends());
@@ -116,7 +121,7 @@ public class PassengerServiceImpl implements PassengerService {
             }
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
-            throw new ObjectNotFoundException("Admin with ID: " + passenger.getId() + " not found!", ex);
+            throw new ObjectNotFoundException("Passenger with ID: " + passenger.getId() + " not found!", ex);
         }
         return passengerRepository.save(uPassenger.get());
     }
@@ -129,7 +134,7 @@ public class PassengerServiceImpl implements PassengerService {
             return passenger.getDeleted();
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
-            throw new ObjectNotFoundException("Admin with ID: " + id + " not found!", ex);
+            throw new ObjectNotFoundException("Passenger with ID: " + id + " not found!", ex);
         }
     }
 
@@ -151,7 +156,7 @@ public class PassengerServiceImpl implements PassengerService {
                 throw new InvalidInputException("Activation link has expired. Please try registering again. Make sure you activate your account within 5 hours of the registration.");
             }
         } else {
-            throw new ObjectNotFoundException("Passenger not found");
+            throw new ObjectNotFoundException("Passenger not found!");
         }
         update(passenger.get());
         return passenger.get().getActivated();

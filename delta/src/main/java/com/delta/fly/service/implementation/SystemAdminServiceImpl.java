@@ -39,6 +39,11 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     }
 
     @Override
+    public SystemAdmin getByUsername(String username) throws ObjectNotFoundException {
+        return systemAdminRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("Admin with username: " + username + " not found!"));
+    }
+
+    @Override
     public SystemAdmin create(RegisterDTO dto) throws InvalidInputException {
         Optional<SystemAdmin> admin;
         try {
@@ -81,7 +86,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
                 uAdmin.get().setCity(admin.getCity());
                 uAdmin.get().setFirstName(admin.getFirstName());
                 uAdmin.get().setLastName(admin.getLastName());
-                uAdmin.get().setPassword(admin.getPassword());
+                uAdmin.get().setPassword(encoder.encode(admin.getPassword()));
                 uAdmin.get().setPhoneNumber(admin.getPhoneNumber());
                 uAdmin.get().setRoles(admin.getRoles());
                 uAdmin.get().setActivated(admin.getActivated());

@@ -39,7 +39,7 @@ public class TicketController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/addTicket", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Ticket> create(@RequestBody Flight flight, @RequestBody Seat seat) throws InvalidInputException, ObjectNotFoundException {
 
         Ticket newTicket = ticketService.create(flight, seat);
@@ -48,7 +48,7 @@ public class TicketController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/updateTicket", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Ticket> update(@RequestBody Ticket ticket) throws ObjectNotFoundException {
 
         Ticket updateTicket = ticketService.update(ticket);
@@ -57,7 +57,7 @@ public class TicketController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/deleteTicket/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
         Boolean delete = ticketService.delete(id);

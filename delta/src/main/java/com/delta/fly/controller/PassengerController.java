@@ -37,8 +37,20 @@ public class PassengerController {
         return new ResponseEntity<>(passenger, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get/{username:.+}")
+    public ResponseEntity<Passenger> getOneByUsername(@PathVariable String username) throws ObjectNotFoundException {
+
+        System.out.println("Username: " + username);
+        Passenger passenger = passengerService.getByUsername(username);
+        if (passenger == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(passenger, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
-    @RequestMapping(value = "/addPassenger", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Passenger> create(@RequestBody RegisterDTO dto) throws InvalidInputException, ObjectNotFoundException {
 
         Passenger newPassenger = passengerService.create(dto);
@@ -47,7 +59,7 @@ public class PassengerController {
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
-    @RequestMapping(value = "/updatePassenger", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Passenger> update(@RequestBody Passenger passenger) throws ObjectNotFoundException {
 
         Passenger updatePassenger = passengerService.update(passenger);
@@ -56,7 +68,7 @@ public class PassengerController {
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
-    @RequestMapping(value = "/deletePassenger/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) throws ObjectNotFoundException {
 
         Boolean delete = passengerService.delete(id);
