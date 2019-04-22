@@ -1,0 +1,27 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+body {
+  font-family: "Helvetica Neue LT Pro - Ultra Light", Arial, sans-serif;
+  background-image: linear-gradient(to bottom right, #993399, #3385ff, #00ffa5);
+  background-attachment: fixed;
+  color: white;
+  overflow: auto;
+}
+html {
+  height: 100%;
+  width: 100%;
+}
+
+@font-face {
+  font-family: "Helvetica Neue LT Pro - Ultra Light";
+  src: url("assets/fonts/HelveticaNeueLTPro-UltLt.otf");
+}
+
+@font-face {
+  font-family: "Helvetica Neue LT Pro - Medium";
+  src: url("assets/fonts/HelveticaNeueLTPro-Md.otf");
+}
+
+@font-face {
+  font-family: "Helvetica Neue LT Pro - Light";
+  src: url("assets/fonts/HelveticaNeueLTPro-Lt.otf");
+}

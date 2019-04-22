@@ -1,0 +1,58 @@
+<html>
+
+  <body>
+
+    <div *ngIf = "isLoggedIn; else loginForm">
+      Login successful. Welcome!
+    </div>
+
+
+
+    <ng-template #loginForm>
+      <div class="container-all">
+        <mat-dialog-actions>
+          <div class="row col-sm-6" style="max-width:350px;">
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+              <div class="form-group">
+                <div class="text-desc">
+                  LOGIN
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="username"> Email</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="loginDTO.username" #username="ngModel" required email />
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required">Email is required!</div>
+                  <div *ngIf="username.errors.email">Email must be a valid email address.</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" [(ngModel)]="loginDTO.password" #password="ngModel"
+                       required minlength="6" />
+                <div *ngIf="f.submitted && password.invalid">
+                  <div *ngIf="password.errors.required">Password is required</div>
+                  <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button class="signinbtn btn" >LOGIN</button>
+                <div *ngIf="f.submitted && failed" class="alert alert-warning">
+                  Login failed!<br/>{{errorMessage}}
+                </div>
+                <button class="cancelbtn btn" (click)="cancel()">CANCEL</button>
+                <button class="loginbtn btn" (click)="register()">REGISTER</button>
+              </div>
+            </form>
+          </div>
+        </mat-dialog-actions>
+      </div>
+    </ng-template>
+
+  </body>
+
+</html>

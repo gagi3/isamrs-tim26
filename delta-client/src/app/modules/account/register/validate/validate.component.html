@@ -1,0 +1,22 @@
+<div *ngIf="validated; else validateForm">
+  Validation successful!
+</div>
+
+<ng-template #validateForm>
+  <div class="container-all">
+    <div class="row col-sm-6" style="max-width:350px;">
+      <div class="form-group">
+        <div class="text-desc">Thank you for validating your account.</div>
+      </div>
+      <div class="form-group">
+        <div class="text-desc">You can now enjoy the full functionality of our app.</div>
+      </div>
+      <div class="form-group">
+        <div class="text-desc">Click the button below to continue browsing.</div>
+      </div>
+      <div class="form-group">
+        <button class="validatebtn btn" (click)="reroute()">MAIN PAGE</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
