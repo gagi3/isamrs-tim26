@@ -1,4 +1,4 @@
-import {AirlineCompany} from '../../../../shared/airline-company';
+import {AirlineCompany} from '../../../../shared/model/airline-company';
 
 export class AirlineCompanyAdmin {
   id: BigInteger;

@@ -1,4 +1,4 @@
-import {Ticket} from '../../../../shared/ticket';
+import {Ticket} from '../../../../shared/model/ticket';
 
 
 export class Passenger {
