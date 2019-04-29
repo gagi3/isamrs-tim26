@@ -1,5 +1,7 @@
 package com.delta.fly.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class AirlineCompany implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "airline_company_name", unique = true, nullable = false)
+    @Column(name = "company_name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "address", unique = true, nullable = false)
@@ -27,6 +29,7 @@ public class AirlineCompany implements Serializable {
 
     @Column(name = "destinations", unique = false, nullable = false)
     @ElementCollection(targetClass = String.class)
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private List<String> destinations = new ArrayList<>();
 
     // Flight - owner

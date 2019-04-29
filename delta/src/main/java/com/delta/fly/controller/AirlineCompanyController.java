@@ -37,7 +37,7 @@ public class AirlineCompanyController {
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
+    @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<AirlineCompany> create(@RequestBody AirlineCompanyRegistrationDTO dto) throws InvalidInputException, ObjectNotFoundException {
 

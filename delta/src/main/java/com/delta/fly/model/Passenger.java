@@ -20,9 +20,6 @@ public class Passenger extends User implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
-    @Column(name = "token", unique = true, nullable = false)
-    protected String token;
-
     public Passenger() {
     }
 
@@ -72,11 +69,4 @@ public class Passenger extends User implements Serializable {
         this.friends = friends;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

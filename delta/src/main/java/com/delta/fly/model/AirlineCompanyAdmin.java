@@ -15,7 +15,7 @@ public class AirlineCompanyAdmin extends User implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
-    @JoinColumn(name = "airline_company", referencedColumnName = "id")
+    @JoinColumn(name = "company", referencedColumnName = "id")
     private AirlineCompany airlineCompany;
 
     public AirlineCompanyAdmin() {

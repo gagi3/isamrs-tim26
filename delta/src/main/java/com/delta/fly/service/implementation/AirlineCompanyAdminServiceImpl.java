@@ -50,12 +50,10 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
     }
 
     @Override
-    public AirlineCompanyAdmin create(RegisterDTO dto, Long airlineCompanyID) throws ObjectNotFoundException, InvalidInputException {
+    public AirlineCompanyAdmin create(RegisterDTO dto) throws ObjectNotFoundException, InvalidInputException {
         Optional<AirlineCompanyAdmin> admin;
-        Optional<AirlineCompany> company;
         try {
             admin = airlineCompanyAdminRepository.findByUsername(dto.getUsername());
-            company = Optional.ofNullable(airlineCompanyService.getOne(airlineCompanyID));
             if (!admin.isPresent()) {
                 admin = Optional.of(new AirlineCompanyAdmin());
                 admin.get().setUsername(dto.getUsername());
@@ -74,13 +72,6 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
                 }
                 admin.get().setActivated(false);
                 admin.get().setDeleted(false);
-                if (company.isPresent()) {
-                    admin.get().setAirlineCompany(company.get());
-                } else if (airlineCompanyID == 0L) {
-                    admin.get().setAirlineCompany(null);
-                } else {
-                    throw new ObjectNotFoundException("Airline company doesn't exist.");
-                }
             } else {
                 throw new InvalidInputException("Bad email address.");
             }
@@ -88,9 +79,6 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
             throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!", ex);
-        } catch (ObjectNotFoundException ex) {
-            ex.printStackTrace();
-            throw new ObjectNotFoundException("Airline company with ID: " + airlineCompanyID + " not found!", ex);
         }
     }
 

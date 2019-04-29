@@ -80,15 +80,10 @@ public class PassengerServiceImpl implements PassengerService {
                 passenger.get().setDeleted(false);
                 Email email = new Email();
                 String token = tokenUtils.generateToken(UserPrinciple.build(passenger.get()));
-                passenger.get().setToken(token);
                 email.setMessage(emailService.registrationTemplate(passenger.get().getFirstName(), token));
                 email.setSubject("Account activation");
                 email.setTo(passenger.get().getUsername());
                 emailService.send(email);
-            } else if (!passenger.get().getActivated() && tokenUtils.validateToken(passenger.get().getToken(), UserPrinciple.build(passenger.get()))) {
-                throw new InvalidInputException("User already exists. Please follow the link in the email we sent you.");
-            } else if (!passenger.get().getActivated() && !tokenUtils.validateToken(passenger.get().getToken(), UserPrinciple.build(passenger.get()))) {
-                remove(passenger.get().getUsername());
             } else {
                 throw new InvalidInputException("Bad email address.");
             }
@@ -148,9 +143,6 @@ public class PassengerServiceImpl implements PassengerService {
         String username = tokenUtils.getUsernameFromToken(token);
         Optional<Passenger> passenger = passengerRepository.findByUsername(username);
         if (passenger.isPresent()) {
-            if (!token.equals(passenger.get().getToken())) {
-                throw new InvalidInputException("Activation link mismatch!");
-            }
             passenger.get().setActivated(true);
             if (!tokenUtils.validateToken(token, UserPrinciple.build(passenger.get()))) {
                 throw new InvalidInputException("Activation link has expired. Please try registering again. Make sure you activate your account within 5 hours of the registration.");

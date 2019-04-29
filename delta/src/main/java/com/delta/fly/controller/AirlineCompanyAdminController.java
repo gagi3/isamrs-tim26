@@ -49,10 +49,10 @@ public class AirlineCompanyAdminController {
     }
 
     @PreAuthorize("hasRole('ROLE_SYSTEMADMIN')")
-    @RequestMapping(value = "/add/{companyID}", method = RequestMethod.POST)
-    public ResponseEntity<AirlineCompanyAdmin> create(@RequestBody RegisterDTO admin, @PathVariable Long companyID) throws InvalidInputException, ObjectNotFoundException {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseEntity<AirlineCompanyAdmin> create(@RequestBody RegisterDTO admin) throws InvalidInputException, ObjectNotFoundException {
 
-        AirlineCompanyAdmin newAirlineCompanyAdmin = airlineCompanyAdminService.create(admin, companyID);
+        AirlineCompanyAdmin newAirlineCompanyAdmin = airlineCompanyAdminService.create(admin);
 
         return new ResponseEntity<>(newAirlineCompanyAdmin, HttpStatus.OK);
     }

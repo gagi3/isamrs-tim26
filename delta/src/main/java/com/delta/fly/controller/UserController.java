@@ -62,7 +62,7 @@ public class UserController {
                 user = Optional.ofNullable(systemAdminService.create(request));
                 break;
             case "airline-company-admin":
-                user = Optional.ofNullable(airlineCompanyAdminService.create(request, 0L));
+                user = Optional.ofNullable(airlineCompanyAdminService.create(request));
                 break;
             case "passenger":
                 user = Optional.ofNullable(passengerService.create(request));
