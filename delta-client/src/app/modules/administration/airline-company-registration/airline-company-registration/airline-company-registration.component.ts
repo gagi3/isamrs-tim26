@@ -29,6 +29,7 @@ export class AirlineCompanyRegistrationComponent implements OnInit {
         console.log(data);
         this.isRegistered = true;
         this.failed = false;
+        this.router.navigateByUrl('');
       }, error => {
         console.log(error);
         this.errorMessage = error.errorMessage;
