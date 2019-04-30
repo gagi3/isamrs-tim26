@@ -58,6 +58,10 @@ public class PassengerServiceImpl implements PassengerService {
         Optional<Passenger> passenger;
         try {
             passenger = passengerRepository.findByUsername(dto.getUsername());
+            Boolean p = passengerRepository.existsByPhoneNumber(dto.getPhoneNumber());
+            if (p) {
+                throw new InvalidInputException("Passenger with phone number: " + dto.getPhoneNumber() + " already exists!");
+            }
             if (!passenger.isPresent()) {
                 passenger = Optional.ofNullable(new Passenger());
                 passenger.get().setUsername(dto.getUsername());
@@ -85,12 +89,12 @@ public class PassengerServiceImpl implements PassengerService {
                 email.setTo(passenger.get().getUsername());
                 emailService.send(email);
             } else {
-                throw new InvalidInputException("Bad email address.");
+                throw new InvalidInputException("Passenger with email: " + dto.getUsername() + " already exists!");
             }
             return passengerRepository.save(passenger.get());
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
-            throw new InvalidInputException("Passenger with email: " + dto.getUsername() + " already exists!", ex);
+            throw new InvalidInputException("Invalid input!", ex);
         }
     }
 

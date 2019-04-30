@@ -26,6 +26,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     @Autowired
     private SystemAdminRepository systemAdminRepository;
 
+    @Autowired
     private RoleRepository roleRepository;
 
     @Override
@@ -48,6 +49,10 @@ public class SystemAdminServiceImpl implements SystemAdminService {
         Optional<SystemAdmin> admin;
         try {
             admin = systemAdminRepository.findByUsername(dto.getUsername());
+            Boolean s = systemAdminRepository.existsByPhoneNumber(dto.getPhoneNumber());
+            if (s) {
+                throw new InvalidInputException("System admin with phone number: " + dto.getPhoneNumber() + " already exists!");
+            }
             if (!admin.isPresent()) {
                 admin = Optional.of(new SystemAdmin());
                 admin.get().setUsername(dto.getUsername());
@@ -67,12 +72,12 @@ public class SystemAdminServiceImpl implements SystemAdminService {
                 admin.get().setActivated(false);
                 admin.get().setDeleted(false);
             } else {
-                throw new InvalidInputException("Bad email address.");
+                throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!");
             }
             return systemAdminRepository.save(admin.get());
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
-            throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!", ex);
+            throw new InvalidInputException("Invalid input!", ex);
         }
     }
 

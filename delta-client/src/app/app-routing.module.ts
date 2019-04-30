@@ -6,12 +6,17 @@ import {LoginComponent} from './modules/account/login/login/login.component';
 import {PassengerProfileComponent} from './modules/account/profile/passenger-profile/passenger-profile.component';
 import {AirlineCompanyAdminProfileComponent} from './modules/account/profile/airline-company-admin-profile/airline-company-admin-profile.component';
 import {SystemAdminProfileComponent} from './modules/account/profile/system-admin-profile/system-admin-profile.component';
+import {AirlineCompanyRegistrationComponent} from './modules/administration/airline-company-registration/airline-company-registration/airline-company-registration.component';
 
 const routes: Routes = [
   // {
   //   path: 'signup',
   //   component: RegisterComponent
   // },
+  {
+    path: 'airline-company/add',
+    component: AirlineCompanyRegistrationComponent
+  },
   {
     path: 'signup/passenger',
     component: RegisterComponent

@@ -13,5 +13,6 @@ public interface SystemAdminRepository extends JpaRepository<SystemAdmin, Long> 
     Optional<SystemAdmin> findByUsername(String email);
     Optional<SystemAdmin> findByUsernameAndDeletedIsFalse(String email);
     Optional<SystemAdmin> findByUsernameAndDeletedIsTrue(String email);
+    Boolean existsByPhoneNumber(String number);
 
 }

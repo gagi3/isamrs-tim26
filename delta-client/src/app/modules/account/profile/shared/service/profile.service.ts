@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class ProfileService {
   token: string = this.tokenStorage.getToken();
-  headers: HttpHeaders = new HttpHeaders({'AuthToken': this.token });
+  headers: HttpHeaders = new HttpHeaders({AuthToken: this.token });
   passengerURL = 'http://localhost:8080/api/passenger';
   airlineCompanyAdminURL = 'http://localhost:8080/api/airline-company-admin';
   systemAdminURL = 'http://localhost:8080/api/system-admin';

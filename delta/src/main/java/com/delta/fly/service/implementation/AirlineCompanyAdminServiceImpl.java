@@ -54,6 +54,10 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
         Optional<AirlineCompanyAdmin> admin;
         try {
             admin = airlineCompanyAdminRepository.findByUsername(dto.getUsername());
+            Boolean a = airlineCompanyAdminRepository.existsAirlineCompanyAdminByPhoneNumber(dto.getPhoneNumber());
+            if (a) {
+                throw new InvalidInputException("Admin with phone number: " + dto.getPhoneNumber() + " already exists!");
+            }
             if (!admin.isPresent()) {
                 admin = Optional.of(new AirlineCompanyAdmin());
                 admin.get().setUsername(dto.getUsername());
@@ -73,12 +77,12 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
                 admin.get().setActivated(false);
                 admin.get().setDeleted(false);
             } else {
-                throw new InvalidInputException("Bad email address.");
+                throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!");
             }
             return airlineCompanyAdminRepository.save(admin.get());
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
-            throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!", ex);
+            throw new InvalidInputException("Invalid input!", ex);
         }
     }
 

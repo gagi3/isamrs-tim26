@@ -1,0 +1,166 @@
+<html>
+
+<body>
+
+<div *ngIf = "isRegistered; else signupForm">
+  Your registration is successful. Please login!
+</div>
+
+
+
+<ng-template #signupForm>
+  <div class="container-all">
+    <div class="row col-sm-6" style="max-width:350px;">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+        <div class="form-group">
+          <div class="text-desc">
+            REGISTER
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Company name</label>
+          <input type="text" class="form-control" name="name" [(ngModel)]="registrationDTO.name" #name="ngModel" required />
+          <div *ngIf="f.submitted && name.invalid">
+            <div *ngIf="name.errors.required">Company name is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Company address</label>
+          <input type="text" class="form-control" name="address" [(ngModel)]="registrationDTO.address" #address="ngModel" required />
+          <div *ngIf="f.submitted && address.invalid">
+            <div *ngIf="address.errors.required">Address is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">About the company</label>
+          <input type="text" class="form-control" name="description" [(ngModel)]="registrationDTO.description" #description="ngModel" required />
+          <div *ngIf="f.submitted && description.invalid">
+            <div *ngIf="description.errors.required">Description is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="registrationDTO.destinations[0]" #destinations="ngModel" required />
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="registrationDTO.destinations[1]" #destinations="ngModel" required />
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="registrationDTO.destinations[2]" #destinations="ngModel" required />
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="registrationDTO.destinations[3]" #destinations="ngModel" required />
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="registrationDTO.destinations[4]" #destinations="ngModel" required />
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="priceByKm">Base price (by km)</label>
+          <input type="number" class="form-control" name="priceByKm" [(ngModel)]="registrationDTO.priceByKm" #priceByKm="ngModel" required minlength="9"/>
+          <div *ngIf="f.submitted && priceByKm.invalid">
+            <div *ngIf="priceByKm.errors.required">Price is required</div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="luggagePriceByItem">Luggage price (by item)</label>
+          <input type="number" class="form-control" name="priceByKm" [(ngModel)]="registrationDTO.luggagePriceByItem" #luggagePriceByItem="ngModel" required minlength="9"/>
+          <div *ngIf="f.submitted && luggagePriceByItem.invalid">
+            <div *ngIf="luggagePriceByItem.errors.required">Luggage price is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username"> Email</label>
+          <input type="email" class="form-control" name="email" [(ngModel)]="registrationDTO.admin.username" #username="ngModel" required email />
+          <div *ngIf="f.submitted && username.invalid">
+            <div *ngIf="username.errors.required">Email is required!</div>
+            <div *ngIf="username.errors.email">Email must be a valid email address.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="registrationDTO.admin.password" #password="ngModel"
+                 required minlength="6" />
+          <div *ngIf="f.submitted && password.invalid">
+            <div *ngIf="password.errors.required">Password is required</div>
+            <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Your name</label>
+          <input type="text" class="form-control" name="firstName" [(ngModel)]="registrationDTO.admin.firstName" #firstName="ngModel" required />
+          <div *ngIf="f.submitted && firstName.invalid">
+            <div *ngIf="firstName.errors.required">Name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Your last name</label>
+          <input type="text" class="form-control" name="lastName" [(ngModel)]="registrationDTO.admin.lastName" #lastName="ngModel" required />
+          <div *ngIf="f.submitted && lastName.invalid">
+            <div *ngIf="lastName.errors.required">Last name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="city">Your city</label>
+          <input type="text" class="form-control" name="city" [(ngModel)]="registrationDTO.admin.city" #city="ngModel" required />
+          <div *ngIf="f.submitted && city.invalid">
+            <div *ngIf="city.errors.required">Address is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="registrationDTO.admin.phoneNumber" #phoneNumber="ngModel" required minlength="9"/>
+          <div *ngIf="f.submitted && phoneNumber.invalid">
+            <div *ngIf="phoneNumber.errors.required">Phone number is required</div>
+            <div *ngIf="phoneNumber.errors.minlength">Phone number must be at least 9 digits long</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="signupbtn btn" >REGISTER</button>
+          <div *ngIf="f.submitted && failed" class="alert alert-warning">
+            Registration failed!<br/>{{errorMessage}}
+          </div>
+          <button class="cancelbtn btn" (click)="cancel()">CANCEL</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+</body>
+
+</html>
