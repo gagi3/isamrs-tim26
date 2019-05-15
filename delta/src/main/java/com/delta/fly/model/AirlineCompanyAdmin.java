@@ -1,9 +1,6 @@
 package com.delta.fly.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -15,6 +12,7 @@ public class AirlineCompanyAdmin extends User implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    @OneToOne
     @JoinColumn(name = "company", referencedColumnName = "id")
     private AirlineCompany airlineCompany;
 
