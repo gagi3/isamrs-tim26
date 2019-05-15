@@ -4,6 +4,7 @@ import com.delta.fly.dto.AirplaneDTO;
 import com.delta.fly.dto.SeatDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
+import com.delta.fly.model.AirlineCompany;
 import com.delta.fly.model.Airplane;
 import com.delta.fly.model.Seat;
 import com.delta.fly.repository.AirplaneRepository;
@@ -48,13 +49,17 @@ public class AirplaneServiceImpl implements AirplaneService {
                 airplane.get().setName(dto.getName());
                 airplane.get().setDeleted(false);
                 try {
-                    airlineCompanyService.getOne(dto.getCompanyID());
+                    AirlineCompany company = airlineCompanyService.getOne(dto.getCompanyID());
+                    airplane.get().setAirlineCompany(company);
                 } catch (ObjectNotFoundException ex) {
                     throw new ObjectNotFoundException("Airline company not found!", ex);
                 }
                 List<Seat> seats = new ArrayList<>();
                 for (SeatDTO seatDTO : dto.getSeats()) {
-                    Seat s = seatService.create(seatDTO);
+                    Seat s = new Seat();
+                    s.setAirplane(airplane.get());
+                    s = seatService.create(seatDTO, airplane.get());
+                    s.setAirplane(airplane.get());
                     seats.add(s);
                 }
                 airplane.get().setSeats(seats);

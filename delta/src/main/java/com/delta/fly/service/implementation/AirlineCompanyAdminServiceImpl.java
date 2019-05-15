@@ -4,7 +4,6 @@ import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.enumeration.RoleName;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.AirlineCompany;
 import com.delta.fly.model.AirlineCompanyAdmin;
 import com.delta.fly.model.Role;
 import com.delta.fly.repository.AirlineCompanyAdminRepository;
