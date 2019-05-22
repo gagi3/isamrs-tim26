@@ -36,7 +36,12 @@ export class ProfileService {
     const url = this.airlineCompanyAdminURL + '/update';
     return this.http.post<AirlineCompanyAdmin>(url, admin, httpOptions);
   }
-  public getAirlineCompanyAdminByUsername(username: string) {
+  public getAirlineCompanyAdminByUsername(username: string): Observable<AirlineCompanyAdmin> {
+    httpOptions.headers.set('AuthToken', this.token);
+    const url = this.airlineCompanyAdminURL + '/get/';
+    return this.http.get<AirlineCompanyAdmin>(url + username, httpOptions);
+  }
+  public getAirlineCompanyAdminByEmail(username: string): Observable<AirlineCompanyAdmin> {
     httpOptions.headers.set('AuthToken', this.token);
     const url = this.airlineCompanyAdminURL + '/get/';
     return this.http.get<AirlineCompanyAdmin>(url + username, httpOptions);

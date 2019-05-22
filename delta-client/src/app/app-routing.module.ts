@@ -7,6 +7,7 @@ import {PassengerProfileComponent} from './modules/account/profile/passenger-pro
 import {AirlineCompanyAdminProfileComponent} from './modules/account/profile/airline-company-admin-profile/airline-company-admin-profile.component';
 import {SystemAdminProfileComponent} from './modules/account/profile/system-admin-profile/system-admin-profile.component';
 import {AirlineCompanyRegistrationComponent} from './modules/administration/airline-company-registration/airline-company-registration/airline-company-registration.component';
+import {AddAirplaneComponent} from './modules/moderation/airplane/add-airplane/add-airplane.component';
 
 const routes: Routes = [
   // {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'airline-company/add',
     component: AirlineCompanyRegistrationComponent
+  },
+  {
+    path: 'airplane/add',
+    component: AddAirplaneComponent
   },
   {
     path: 'signup/passenger',
