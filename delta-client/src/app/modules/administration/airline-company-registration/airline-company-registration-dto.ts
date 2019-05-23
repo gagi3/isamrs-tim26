@@ -5,7 +5,5 @@ export class AirlineCompanyRegistrationDTO {
   address = '';
   description = '';
   destinations: string[] = [''];
-  priceByKm: number;
-  luggagePriceByItem: number;
   admin: RegisterDTO = new RegisterDTO();
 }

@@ -47,19 +47,13 @@ public class AirlineCompany implements Serializable {
     @JsonIgnore
     private List<Airplane> airplanes = new ArrayList<>();
 
-    @Column(name = "price_by_km", unique = false, nullable = false)
-    private Double priceByKm;
-
-    @Column(name = "luggage_price_by_item", unique = false, nullable = false)
-    private Double luggagePriceByItem;
-
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
     public AirlineCompany() {
     }
 
-    public AirlineCompany(String name, String address, String description, List<String> destinations, List<Flight> flights, List<Ticket> discountedTickets, List<Airplane> airplanes, Double priceByKm, Double luggagePriceByItem) {
+    public AirlineCompany(String name, String address, String description, List<String> destinations, List<Flight> flights, List<Ticket> discountedTickets, List<Airplane> airplanes) {
         this.name = name;
         this.address = address;
         this.description = description;
@@ -67,8 +61,6 @@ public class AirlineCompany implements Serializable {
         this.flights = flights;
         this.discountedTickets = discountedTickets;
         this.airplanes = airplanes;
-        this.priceByKm = priceByKm;
-        this.luggagePriceByItem = luggagePriceByItem;
         this.deleted = false;
     }
 
@@ -130,22 +122,6 @@ public class AirlineCompany implements Serializable {
 
     public void setAirplanes(List<Airplane> airplanes) {
         this.airplanes = airplanes;
-    }
-
-    public Double getPriceByKm() {
-        return priceByKm;
-    }
-
-    public void setPriceByKm(Double priceByKm) {
-        this.priceByKm = priceByKm;
-    }
-
-    public Double getLuggagePriceByItem() {
-        return luggagePriceByItem;
-    }
-
-    public void setLuggagePriceByItem(Double luggagePriceByItem) {
-        this.luggagePriceByItem = luggagePriceByItem;
     }
 
     public Boolean getDeleted() {

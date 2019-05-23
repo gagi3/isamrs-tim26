@@ -11,8 +11,6 @@ public class AirlineCompanyRegistrationDTO {
     private String description;
     @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private List<String> destinations;
-    private Double priceByKm;
-    private Double luggagePriceByItem;
     private RegisterDTO admin;
 
     public String getName() {
@@ -45,22 +43,6 @@ public class AirlineCompanyRegistrationDTO {
 
     public void setDestinations(List<String> destinations) {
         this.destinations = destinations;
-    }
-
-    public Double getPriceByKm() {
-        return priceByKm;
-    }
-
-    public void setPriceByKm(Double priceByKm) {
-        this.priceByKm = priceByKm;
-    }
-
-    public Double getLuggagePriceByItem() {
-        return luggagePriceByItem;
-    }
-
-    public void setLuggagePriceByItem(Double luggagePriceByItem) {
-        this.luggagePriceByItem = luggagePriceByItem;
     }
 
     public RegisterDTO getAdmin() {

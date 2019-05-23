@@ -84,23 +84,6 @@
         </div>
 
         <div class="form-group">
-          <label for="priceByKm">Base price (by km)</label>
-          <input type="number" class="form-control" name="priceByKm" [(ngModel)]="registrationDTO.priceByKm" #priceByKm="ngModel" required minlength="9"/>
-          <div *ngIf="f.submitted && priceByKm.invalid">
-            <div *ngIf="priceByKm.errors.required">Price is required</div>
-          </div>
-        </div>
-
-
-        <div class="form-group">
-          <label for="luggagePriceByItem">Luggage price (by item)</label>
-          <input type="number" class="form-control" name="priceByKm" [(ngModel)]="registrationDTO.luggagePriceByItem" #luggagePriceByItem="ngModel" required minlength="9"/>
-          <div *ngIf="f.submitted && luggagePriceByItem.invalid">
-            <div *ngIf="luggagePriceByItem.errors.required">Luggage price is required</div>
-          </div>
-        </div>
-
-        <div class="form-group">
           <label for="username"> Email</label>
           <input type="email" class="form-control" name="email" [(ngModel)]="registrationDTO.admin.username" #username="ngModel" required email />
           <div *ngIf="f.submitted && username.invalid">

@@ -11,7 +11,5 @@ export class AirlineCompany {
   flights: Flight[];
   discountedTickets: Ticket[];
   airplanes: Airplane[];
-  priceByKm: number;
-  luggagePriceByKm: number;
   deleted: boolean;
 }

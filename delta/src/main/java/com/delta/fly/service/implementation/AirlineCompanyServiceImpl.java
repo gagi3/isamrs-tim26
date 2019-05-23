@@ -46,9 +46,7 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
                 AirlineCompanyAdmin admin = airlineCompanyAdminService.create(dto.getAdmin());
                 company = Optional.of(new AirlineCompany());
                 company.get().setDeleted(false);
-                company.get().setPriceByKm(dto.getPriceByKm());
                 company.get().setName(dto.getName());
-                company.get().setLuggagePriceByItem(dto.getLuggagePriceByItem());
                 List<String> dests = new ArrayList<>(dto.getDestinations());
                 company.get().setDestinations(dests);
                 company.get().setDescription(dto.getDescription());
@@ -77,9 +75,7 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
                 uCompany.get().setDestinations(company.getDestinations());
                 uCompany.get().setDiscountedTickets(company.getDiscountedTickets());
                 uCompany.get().setFlights(company.getFlights());
-                uCompany.get().setLuggagePriceByItem(company.getLuggagePriceByItem());
                 uCompany.get().setName(company.getName());
-                uCompany.get().setPriceByKm(company.getPriceByKm());
                 uCompany.get().setDeleted(company.getDeleted());
             } else {
                 throw new ObjectNotFoundException("Bad ID!");
