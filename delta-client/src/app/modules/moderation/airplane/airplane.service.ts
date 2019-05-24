@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TokenStorageService} from '../../shared/token-storage.service';
 import {AirplaneDTO} from './airplane-dto';
 import {Airplane} from '../../shared/model/airplane';
 import {Observable} from 'rxjs';
-import {AirlineCompany} from '../../shared/model/airline-company';
 import {AirlineCompanyAdmin} from '../../account/profile/shared/model/airline-company-admin';
 import {ProfileService} from '../../account/profile/shared/service/profile.service';
-import {map} from 'rxjs/operators';
+
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})
 };

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '../shared/service/profile.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
 import {Passenger} from '../shared/model/passenger';

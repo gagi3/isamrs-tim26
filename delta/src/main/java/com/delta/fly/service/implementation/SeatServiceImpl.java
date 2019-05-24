@@ -6,7 +6,6 @@ import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Airplane;
 import com.delta.fly.model.Seat;
 import com.delta.fly.repository.SeatRepository;
-import com.delta.fly.service.abstraction.AirplaneService;
 import com.delta.fly.service.abstraction.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +18,6 @@ public class SeatServiceImpl implements SeatService {
 
     @Autowired
     private SeatRepository seatRepository;
-
-    @Autowired
-    private AirplaneService airplaneService;
 
     @Override
     public List<Seat> findAll() {

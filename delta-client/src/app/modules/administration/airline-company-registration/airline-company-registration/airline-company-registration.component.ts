@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AirlineCompanyRegistrationDTO} from '../airline-company-registration-dto';
 import {Router} from '@angular/router';
 import {AirlineCompanyRegistrationService} from '../airline-company-registration.service';

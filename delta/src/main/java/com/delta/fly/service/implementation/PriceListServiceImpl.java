@@ -3,15 +3,12 @@ package com.delta.fly.service.implementation;
 import com.delta.fly.dto.PriceListDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.*;
-import com.delta.fly.repository.AirlineCompanyAdminRepository;
+import com.delta.fly.model.AirlineCompany;
+import com.delta.fly.model.AirlineCompanyAdmin;
+import com.delta.fly.model.PriceList;
 import com.delta.fly.repository.PriceListRepository;
-import com.delta.fly.service.abstraction.AirlineCompanyService;
 import com.delta.fly.service.abstraction.PriceListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +19,6 @@ public class PriceListServiceImpl implements PriceListService {
 
     @Autowired
     private PriceListRepository repository;
-
-    @Autowired
-    private AirlineCompanyService airlineCompanyService;
-
-    @Autowired
-    private AirlineCompanyAdminRepository adminRepository;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;

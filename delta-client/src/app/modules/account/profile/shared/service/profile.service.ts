@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Passenger} from '../model/passenger';
 import {AirlineCompanyAdmin} from '../model/airline-company-admin';

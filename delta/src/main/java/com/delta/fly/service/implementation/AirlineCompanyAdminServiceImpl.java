@@ -9,7 +9,6 @@ import com.delta.fly.model.Role;
 import com.delta.fly.repository.AirlineCompanyAdminRepository;
 import com.delta.fly.repository.RoleRepository;
 import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
-import com.delta.fly.service.abstraction.AirlineCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,9 +25,6 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
 
     @Autowired
     private AirlineCompanyAdminRepository airlineCompanyAdminRepository;
-
-    @Autowired
-    private AirlineCompanyService airlineCompanyService;
 
     @Autowired
     private RoleRepository roleRepository;
