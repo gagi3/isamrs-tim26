@@ -2,7 +2,6 @@ package com.delta.fly.dto;
 
 public class PriceListDTO {
 
-    private Long companyID;
     private Double priceByKm;
     private Double priceByLuggageItem;
     private Double businessClassPriceCoefficient;
@@ -11,14 +10,6 @@ public class PriceListDTO {
     private Double discountPercentage;
 
     public PriceListDTO() {
-    }
-
-    public Long getCompanyID() {
-        return companyID;
-    }
-
-    public void setCompanyID(Long companyID) {
-        this.companyID = companyID;
     }
 
     public Double getPriceByKm() {

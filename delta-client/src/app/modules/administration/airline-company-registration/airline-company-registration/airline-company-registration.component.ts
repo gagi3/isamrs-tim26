@@ -25,7 +25,6 @@ export class AirlineCompanyRegistrationComponent implements OnInit {
     this.registerService.register(this.registrationDTO).subscribe(
       data => {
         window.alert('Registration was successful!');
-        console.log(data);
         this.isRegistered = true;
         this.failed = false;
         this.router.navigateByUrl('');

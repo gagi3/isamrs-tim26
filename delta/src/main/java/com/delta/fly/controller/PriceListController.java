@@ -48,7 +48,7 @@ public class PriceListController {
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResponseEntity<PriceList> update(@RequestBody PriceList priceList) throws ObjectNotFoundException {
+    public ResponseEntity<PriceList> update(@RequestBody PriceList priceList) throws ObjectNotFoundException, InvalidInputException {
 
         PriceList updatePriceList = priceListService.update(priceList);
 

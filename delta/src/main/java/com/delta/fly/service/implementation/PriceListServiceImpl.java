@@ -11,6 +11,7 @@ import com.delta.fly.service.abstraction.PriceListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,10 @@ public class PriceListServiceImpl implements PriceListService {
     private AirlineCompanyService airlineCompanyService;
 
     @Autowired
-    AirlineCompanyAdminRepository adminRepository;
+    private AirlineCompanyAdminRepository adminRepository;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     public List<PriceList> findAll() {
@@ -44,14 +48,14 @@ public class PriceListServiceImpl implements PriceListService {
         Optional<AirlineCompany> company;
         Optional<AirlineCompanyAdmin> admin;
         try {
-            company = Optional.ofNullable(airlineCompanyService.getOne(dto.getCompanyID()));
-            admin = adminRepository.findByUsername(getUser());
-            if (repository.findByAirlineCompanyId(dto.getCompanyID()) != null) {
-                throw new InvalidInputException("Price List for company with ID: " + dto.getCompanyID() + " already exists!");
+            admin = Optional.ofNullable(userDetailsService.getAdmin());
+            company = Optional.ofNullable(admin.get().getAirlineCompany());
+            if (!admin.isPresent()) {
+                throw new ObjectNotFoundException("Admin not found!");
             } else if (!company.isPresent()) {
-                throw new ObjectNotFoundException("Company with ID: " + dto.getCompanyID() + " not found!");
-            } else if (!admin.isPresent()) {
-                throw new ObjectNotFoundException("Admin with email: " + dto.getCompanyID() + " not found!");
+                throw new ObjectNotFoundException("Company not found!");
+            } else if (repository.findByAirlineCompanyId(company.get().getId()) != null) {
+                throw new InvalidInputException("Price List for company with ID: " + company.get().getId() + " already exists!");
             } else if (admin.get().getAirlineCompany() != company.get()) {
                 throw new InvalidInputException("This admin doesn't moderate this company: " + company.get().getName() + "!");
             } else {
@@ -76,12 +80,18 @@ public class PriceListServiceImpl implements PriceListService {
     }
 
     @Override
-    public PriceList update(PriceList priceList) throws ObjectNotFoundException {
+    public PriceList update(PriceList priceList) throws ObjectNotFoundException, InvalidInputException {
         Optional<PriceList> uPriceList;
+        Optional<AirlineCompanyAdmin> admin;
         try {
+            admin = Optional.ofNullable(userDetailsService.getAdmin());
             uPriceList = Optional.ofNullable(getOne(priceList.getId()));
-            if (!uPriceList.isPresent()) {
+            if (!admin.isPresent()) {
+                throw new ObjectNotFoundException("Admin not found!");
+            } else if (!uPriceList.isPresent()) {
                 throw new ObjectNotFoundException("Price List with ID: " + priceList.getId() + " not found!");
+            } else if (!admin.get().getAirlineCompany().equals(uPriceList.get().getAirlineCompany())) {
+                throw new InvalidInputException("This admin doesn't moderate this company: " + uPriceList.get().getAirlineCompany() + "!");
             } else {
                 uPriceList.get().setAirlineCompany(priceList.getAirlineCompany());
                 uPriceList.get().setDeleted(priceList.getDeleted());
@@ -96,6 +106,9 @@ public class PriceListServiceImpl implements PriceListService {
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);
+        } catch (InvalidInputException e) {
+            e.printStackTrace();
+            throw new InvalidInputException(e);
         }
     }
 
@@ -110,8 +123,4 @@ public class PriceListServiceImpl implements PriceListService {
         }
     }
 
-    private String getUser() {
-        UserPrinciple details = (UserPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return details.getUsername();
-    }
 }
