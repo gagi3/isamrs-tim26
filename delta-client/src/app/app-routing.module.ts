@@ -9,6 +9,7 @@ import {SystemAdminProfileComponent} from './modules/account/profile/system-admi
 import {AirlineCompanyRegistrationComponent} from './modules/administration/airline-company-registration/airline-company-registration/airline-company-registration.component';
 import {AddAirplaneComponent} from './modules/moderation/airplane/add-airplane/add-airplane.component';
 import {AddPriceListComponent} from './modules/moderation/price-list/add-price-list/add-price-list.component';
+import {EditPriceListComponent} from './modules/moderation/price-list/edit-price-list/edit-price-list.component';
 
 const routes: Routes = [
   // {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'price-list/add',
     component: AddPriceListComponent
+  },
+  {
+    path: 'price-list/edit',
+    component: EditPriceListComponent
   },
   {
     path: 'airplane/add',

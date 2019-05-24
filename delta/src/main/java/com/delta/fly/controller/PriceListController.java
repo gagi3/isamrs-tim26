@@ -37,6 +37,14 @@ public class PriceListController {
         return new ResponseEntity<>(priceList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public ResponseEntity<PriceList> getThis() throws ObjectNotFoundException {
+
+        PriceList priceList = priceListService.getThis();
+
+        return new ResponseEntity<>(priceList, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<PriceList> create(@RequestBody PriceListDTO dto) throws InvalidInputException, ObjectNotFoundException {

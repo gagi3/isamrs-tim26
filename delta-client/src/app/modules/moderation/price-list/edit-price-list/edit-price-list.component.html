@@ -1,0 +1,54 @@
+<html>
+
+<body>
+
+  <div class="container-all">
+    <div class="row col-sm-6" style="max-width:350px;">
+
+        <div class="form-group">
+          <div class="text-desc">
+            EDIT PRICE LIST
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="priceByKm">Price by 1 km</label>
+          <input type="number" class="form-control" name="priceByKm" [(ngModel)]="priceList.priceByKm" [disabled]="true" #inputEl1 required />
+        </div>
+
+        <div class="form-group">
+          <label for="priceByLuggageItem">Price per 1 luggage item</label>
+          <input type="number" class="form-control" name="priceByLuggageItem" [(ngModel)]="priceList.priceByLuggageItem" [disabled]="true" #inputEl2 required />
+        </div>
+
+        <div class="form-group">
+          <label for="businessClassPriceCoefficient">Business class price coefficient</label>
+          <input type="number" class="form-control" name="businessClassPriceCoefficient" [(ngModel)]="priceList.businessClassPriceCoefficient" [disabled]="true" #inputEl3 required />
+        </div>
+
+        <div class="form-group">
+          <label for="economyClassPriceCoefficient">Economy class price coefficient</label>
+          <input type="number" class="form-control" name="economyClassPriceCoefficient" [(ngModel)]="priceList.economyClassPriceCoefficient" [disabled]="true" #inputEl4 required />
+        </div>
+
+        <div class="form-group">
+          <label for="firstClassPriceCoefficient">First class price coefficient</label>
+          <input type="number" class="form-control" name="firstClassPriceCoefficient" [(ngModel)]="priceList.firstClassPriceCoefficient" [disabled]="true" #inputEl5 required />
+        </div>
+
+        <div class="form-group">
+          <label for="discountPercentage">Discount percentage</label>
+          <input type="number" class="form-control" name="discountPercentage" [(ngModel)]="priceList.discountPercentage" [disabled]="true" #inputEl6 required />
+        </div>
+
+        <div class="form-group">
+          <button class="signupbtn btn" type="submit" (click)="onSubmit()">SAVE</button>
+          <button class="cancelbtn btn" type="button" (click)="cancel()">CANCEL</button>
+          <button class="loginbtn btn" type="button" (click)="edit()">EDIT</button>
+        </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

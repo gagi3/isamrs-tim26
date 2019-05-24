@@ -27,6 +27,10 @@ export class PriceListService {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.get<PriceList>(this.URL + '/' + ID, httpOptions);
   }
+  getThis(): Observable<PriceList> {
+    httpOptions.headers.set('AuthToken', this.token);
+    return this.http.get<PriceList>(this.URL + '/get', httpOptions);
+  }
   create(dto: PriceListDTO): Observable<PriceList> {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.post<PriceList>(this.URL + '/add', dto, httpOptions);

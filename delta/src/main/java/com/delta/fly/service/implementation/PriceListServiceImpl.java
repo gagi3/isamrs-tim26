@@ -43,6 +43,25 @@ public class PriceListServiceImpl implements PriceListService {
     }
 
     @Override
+    public PriceList getThis() throws ObjectNotFoundException {
+        Optional<PriceList> priceList;
+        Optional<AirlineCompany> company;
+        Optional<AirlineCompanyAdmin> admin;
+        try {
+            admin = Optional.ofNullable(userDetailsService.getAdmin());
+            company = Optional.ofNullable(admin.get().getAirlineCompany());
+            priceList = Optional.ofNullable(repository.findByAirlineCompany(company.get()));
+            if (!priceList.isPresent()) {
+                throw new ObjectNotFoundException("Price List for this company doesn't exist!");
+            }
+            return priceList.get();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
     public PriceList create(PriceListDTO dto) throws ObjectNotFoundException, InvalidInputException {
         Optional<PriceList> priceList;
         Optional<AirlineCompany> company;

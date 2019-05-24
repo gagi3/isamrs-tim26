@@ -5,9 +5,10 @@ import {FormsModule} from '@angular/forms';
 import {RoleGuardService} from '../../shared/role-guard.service';
 import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule} from '@angular/material';
+import { EditPriceListComponent } from './edit-price-list/edit-price-list.component';
 
 @NgModule({
-  declarations: [AddPriceListComponent],
+  declarations: [AddPriceListComponent, EditPriceListComponent],
   imports: [
     CommonModule,
     FormsModule
