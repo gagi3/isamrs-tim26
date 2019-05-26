@@ -5,7 +5,6 @@ import java.util.List;
 public class FlightDTO {
 
     private Long airplaneID;
-    private Long airlineCompanyID;
     private PlaceAndTimeDTO departure;
     private PlaceAndTimeDTO arrival;
     private List<PlaceAndTimeDTO> transfers;
@@ -19,14 +18,6 @@ public class FlightDTO {
 
     public void setAirplaneID(Long airplaneID) {
         this.airplaneID = airplaneID;
-    }
-
-    public Long getAirlineCompanyID() {
-        return airlineCompanyID;
-    }
-
-    public void setAirlineCompanyID(Long airlineCompanyID) {
-        this.airlineCompanyID = airlineCompanyID;
     }
 
     public PlaceAndTimeDTO getDeparture() {

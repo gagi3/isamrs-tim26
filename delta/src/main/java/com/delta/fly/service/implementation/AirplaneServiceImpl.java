@@ -8,7 +8,6 @@ import com.delta.fly.model.AirlineCompany;
 import com.delta.fly.model.Airplane;
 import com.delta.fly.model.Seat;
 import com.delta.fly.repository.AirplaneRepository;
-import com.delta.fly.service.abstraction.AirlineCompanyService;
 import com.delta.fly.service.abstraction.AirplaneService;
 import com.delta.fly.service.abstraction.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class AirplaneServiceImpl implements AirplaneService {
     private AirplaneRepository airplaneRepository;
 
     @Autowired
-    private AirlineCompanyService airlineCompanyService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private SeatService seatService;
@@ -49,7 +48,7 @@ public class AirplaneServiceImpl implements AirplaneService {
                 airplane.get().setName(dto.getName());
                 airplane.get().setDeleted(false);
                 try {
-                    AirlineCompany company = airlineCompanyService.getOne(dto.getCompanyID());
+                    AirlineCompany company = userDetailsService.getAdmin().getAirlineCompany();
                     airplane.get().setAirlineCompany(company);
                 } catch (ObjectNotFoundException ex) {
                     throw new ObjectNotFoundException("Airline company not found!", ex);
@@ -72,7 +71,7 @@ public class AirplaneServiceImpl implements AirplaneService {
             throw new InvalidInputException("Airplane with name: " + dto.getName() + " already exists!", ex);
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
-            throw new ObjectNotFoundException("Airline company with ID: " + dto.getCompanyID() + " doesn't exist!", ex);
+            throw new ObjectNotFoundException("Airline company doesn't exist!", ex);
         }
     }
 

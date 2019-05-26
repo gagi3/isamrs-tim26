@@ -6,7 +6,10 @@ import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.*;
 import com.delta.fly.repository.FlightRepository;
-import com.delta.fly.service.abstraction.*;
+import com.delta.fly.service.abstraction.AirplaneService;
+import com.delta.fly.service.abstraction.FlightService;
+import com.delta.fly.service.abstraction.PlaceAndTimeService;
+import com.delta.fly.service.abstraction.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +27,13 @@ public class FlightServiceImpl implements FlightService {
     private AirplaneService airplaneService;
 
     @Autowired
-    private AirlineCompanyService airlineCompanyService;
-
-    @Autowired
     private PlaceAndTimeService placeAndTimeService;
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     public List<Flight> findAll() {
@@ -48,13 +51,16 @@ public class FlightServiceImpl implements FlightService {
         Optional<AirlineCompany> company;
         Optional<Airplane> airplane;
         try {
-            company = Optional.ofNullable(airlineCompanyService.getOne(dto.getAirlineCompanyID()));
+            company = Optional.ofNullable(userDetailsService.getAdmin().getAirlineCompany());
             if (!company.isPresent()) {
-                throw new ObjectNotFoundException("Airline company with ID: " + dto.getAirlineCompanyID() + " not found!");
+                throw new ObjectNotFoundException("Airline company not found!");
             }
             airplane = Optional.ofNullable(airplaneService.getOne(dto.getAirplaneID()));
             if (!airplane.isPresent()) {
                 throw new ObjectNotFoundException("Airplane with ID: " + dto.getAirplaneID() + " not found!");
+            }
+            if (!company.get().getAirplanes().contains(airplane.get())) {
+                throw new InvalidInputException("Airplane doesn't belong to this company.");
             }
             PlaceAndTime dep = new PlaceAndTime(dto.getDeparture().getThePlace(), dto.getDeparture().getTheTime());
             PlaceAndTime arr = new PlaceAndTime(dto.getArrival().getThePlace(), dto.getArrival().getTheTime());
@@ -90,6 +96,9 @@ public class FlightServiceImpl implements FlightService {
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);
+        } catch (InvalidInputException ex) {
+            ex.printStackTrace();
+            throw new InvalidInputException(ex);
         }
     }
 
