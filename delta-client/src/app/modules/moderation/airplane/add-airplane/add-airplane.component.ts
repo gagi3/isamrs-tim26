@@ -5,8 +5,6 @@ import {AirplaneService} from '../airplane.service';
 import {SeatDTO} from '../seat-dto';
 import {SeatClass} from '../../../shared/enumeration/seat-class.enum';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
-import {TokenStorageService} from '../../../shared/token-storage.service';
-import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 
 @Component({
   selector: 'app-add-airplane',
@@ -15,7 +13,6 @@ import {ProfileService} from '../../../account/profile/shared/service/profile.se
 })
 export class AddAirplaneComponent implements OnInit {
   dto: AirplaneDTO = new AirplaneDTO();
-  companyID: BigInteger;
   username = '';
   admin: AirlineCompanyAdmin = new AirlineCompanyAdmin();
   added = false;
@@ -26,27 +23,12 @@ export class AddAirplaneComponent implements OnInit {
   seatClass: SeatClass;
   errorMessage = '';
 
-  constructor(private router: Router, private service: AirplaneService, private tokenStorage: TokenStorageService, private profileService: ProfileService) { }
+  constructor(private router: Router, private service: AirplaneService) { }
 
   cancel() {
     this.router.navigateByUrl('');
   }
-  getCompany() {
-    this.username = this.tokenStorage.getUsername();
-    this.profileService.getAirlineCompanyAdminByEmail(this.username).subscribe(
-      data => {
-        this.admin = data;
-        this.companyID = data.airlineCompany.id;
-        this.setCompanyData(data.airlineCompany.id);
-      }
-    );
-  }
-  setCompanyData(id: BigInteger) {
-    this.companyID = id;
-    this.dto.companyID = id;
-  }
   ngOnInit() {
-    this.getCompany();
   }
   create() {
     const row = [];
