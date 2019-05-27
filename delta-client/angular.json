@@ -130,6 +130,134 @@
           }
         }
       }
+    },
+    "PlaceAndTime": {
+      "root": "projects/PlaceAndTime/",
+      "sourceRoot": "projects/PlaceAndTime/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/PlaceAndTime",
+            "index": "projects/PlaceAndTime/src/index.html",
+            "main": "projects/PlaceAndTime/src/main.ts",
+            "polyfills": "projects/PlaceAndTime/src/polyfills.ts",
+            "tsConfig": "projects/PlaceAndTime/tsconfig.app.json",
+            "assets": [
+              "projects/PlaceAndTime/src/favicon.ico",
+              "projects/PlaceAndTime/src/assets"
+            ],
+            "styles": [
+              "projects/PlaceAndTime/src/styles.css"
+            ],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/PlaceAndTime/src/environments/environment.ts",
+                  "with": "projects/PlaceAndTime/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "PlaceAndTime:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "PlaceAndTime:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "PlaceAndTime:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/PlaceAndTime/src/test.ts",
+            "polyfills": "projects/PlaceAndTime/src/polyfills.ts",
+            "tsConfig": "projects/PlaceAndTime/tsconfig.spec.json",
+            "karmaConfig": "projects/PlaceAndTime/karma.conf.js",
+            "styles": [
+              "projects/PlaceAndTime/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/PlaceAndTime/src/favicon.ico",
+              "projects/PlaceAndTime/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/PlaceAndTime/tsconfig.app.json",
+              "projects/PlaceAndTime/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "PlaceAndTime-e2e": {
+      "root": "projects/PlaceAndTime-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/PlaceAndTime-e2e/protractor.conf.js",
+            "devServerTarget": "PlaceAndTime:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "PlaceAndTime:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/PlaceAndTime-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "delta-client"

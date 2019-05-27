@@ -1,5 +1,8 @@
 package com.delta.fly.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ public class AirlineCompany implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "airline_company_name", unique = true, nullable = false)
+    @Column(name = "company_name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "address", unique = true, nullable = false)
@@ -27,6 +30,7 @@ public class AirlineCompany implements Serializable {
 
     @Column(name = "destinations", unique = false, nullable = false)
     @ElementCollection(targetClass = String.class)
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private List<String> destinations = new ArrayList<>();
 
     // Flight - owner
@@ -40,13 +44,8 @@ public class AirlineCompany implements Serializable {
 
     // Airplane - owner
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airlineCompany", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Airplane> airplanes = new ArrayList<>();
-
-    @Column(name = "price_by_km", unique = false, nullable = false)
-    private Double priceByKm;
-
-    @Column(name = "luggage_price_by_item", unique = false, nullable = false)
-    private Double luggagePriceByItem;
 
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
@@ -54,7 +53,7 @@ public class AirlineCompany implements Serializable {
     public AirlineCompany() {
     }
 
-    public AirlineCompany(String name, String address, String description, List<String> destinations, List<Flight> flights, List<Ticket> discountedTickets, List<Airplane> airplanes, Double priceByKm, Double luggagePriceByItem) {
+    public AirlineCompany(String name, String address, String description, List<String> destinations, List<Flight> flights, List<Ticket> discountedTickets, List<Airplane> airplanes) {
         this.name = name;
         this.address = address;
         this.description = description;
@@ -62,8 +61,6 @@ public class AirlineCompany implements Serializable {
         this.flights = flights;
         this.discountedTickets = discountedTickets;
         this.airplanes = airplanes;
-        this.priceByKm = priceByKm;
-        this.luggagePriceByItem = luggagePriceByItem;
         this.deleted = false;
     }
 
@@ -125,22 +122,6 @@ public class AirlineCompany implements Serializable {
 
     public void setAirplanes(List<Airplane> airplanes) {
         this.airplanes = airplanes;
-    }
-
-    public Double getPriceByKm() {
-        return priceByKm;
-    }
-
-    public void setPriceByKm(Double priceByKm) {
-        this.priceByKm = priceByKm;
-    }
-
-    public Double getLuggagePriceByItem() {
-        return luggagePriceByItem;
-    }
-
-    public void setLuggagePriceByItem(Double luggagePriceByItem) {
-        this.luggagePriceByItem = luggagePriceByItem;
     }
 
     public Boolean getDeleted() {

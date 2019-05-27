@@ -4,17 +4,8 @@ import java.util.List;
 
 public class AirplaneDTO {
 
-    private Long companyID;
     private String name;
     private List<SeatDTO> seats;
-
-    public Long getCompanyID() {
-        return companyID;
-    }
-
-    public void setCompanyID(Long companyID) {
-        this.companyID = companyID;
-    }
 
     public String getName() {
         return name;

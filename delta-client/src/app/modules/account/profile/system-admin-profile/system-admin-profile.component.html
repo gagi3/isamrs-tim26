@@ -43,9 +43,6 @@
     <div class="form-group">
       <label for="phoneNumber">Phone Number</label>
       <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="systemAdmin.phoneNumber" minlength="9" [disabled]="true" #inputEl5 />
-      <div *ngIf="phoneNumber.invalid">
-        <div *ngIf="phoneNumber.errors.minlength">Phone number must be at least 9 digits long</div>
-      </div>
     </div>
 
     <div class="form-group">

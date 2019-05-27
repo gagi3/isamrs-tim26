@@ -4,7 +4,9 @@ import com.delta.fly.dto.AirlineCompanyRegistrationDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.AirlineCompany;
+import com.delta.fly.model.AirlineCompanyAdmin;
 import com.delta.fly.repository.AirlineCompanyRepository;
+import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
 import com.delta.fly.service.abstraction.AirlineCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
 
     @Autowired
     private AirlineCompanyRepository airlineCompanyRepository;
+
+    @Autowired
+    private AirlineCompanyAdminService airlineCompanyAdminService;
 
     @Override
     public List<AirlineCompany> findAll() {
@@ -38,17 +43,18 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
             } else if (airlineCompanyRepository.findByName(dto.getName()).isPresent()) {
                 throw new InvalidInputException("Name " + dto.getName() + " in use!");
             } else {
+                AirlineCompanyAdmin admin = airlineCompanyAdminService.create(dto.getAdmin());
                 company = Optional.of(new AirlineCompany());
                 company.get().setDeleted(false);
-                company.get().setPriceByKm(dto.getPriceByKm());
                 company.get().setName(dto.getName());
-                company.get().setLuggagePriceByItem(dto.getLuggagePriceByItem());
-                company.get().setDestinations(dto.getDestinations());
+                List<String> dests = new ArrayList<>(dto.getDestinations());
+                company.get().setDestinations(dests);
                 company.get().setDescription(dto.getDescription());
                 company.get().setAddress(dto.getAddress());
                 company.get().setFlights(new ArrayList<>());
                 company.get().setDiscountedTickets(new ArrayList<>());
                 company.get().setAirplanes(new ArrayList<>());
+                admin.setAirlineCompany(company.get());
                 return airlineCompanyRepository.save(company.get());
             }
         } catch (InvalidInputException ex) {
@@ -69,9 +75,7 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
                 uCompany.get().setDestinations(company.getDestinations());
                 uCompany.get().setDiscountedTickets(company.getDiscountedTickets());
                 uCompany.get().setFlights(company.getFlights());
-                uCompany.get().setLuggagePriceByItem(company.getLuggagePriceByItem());
                 uCompany.get().setName(company.getName());
-                uCompany.get().setPriceByKm(company.getPriceByKm());
                 uCompany.get().setDeleted(company.getDeleted());
             } else {
                 throw new ObjectNotFoundException("Bad ID!");

@@ -6,7 +6,6 @@ import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Airplane;
 import com.delta.fly.model.Seat;
 import com.delta.fly.repository.SeatRepository;
-import com.delta.fly.service.abstraction.AirplaneService;
 import com.delta.fly.service.abstraction.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +18,6 @@ public class SeatServiceImpl implements SeatService {
 
     @Autowired
     private SeatRepository seatRepository;
-
-    @Autowired
-    private AirplaneService airplaneService;
 
     @Override
     public List<Seat> findAll() {
@@ -36,24 +32,24 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public Seat create(SeatDTO dto) throws ObjectNotFoundException, InvalidInputException {
         Optional<Seat> seat;
-        Optional<Airplane> airplane;
-        try {
-            airplane = Optional.ofNullable(airplaneService.getOne(dto.getAirplaneID()));
-            if (airplane.isPresent()) {
-                seat = Optional.ofNullable(new Seat());
-                seat.get().setAirplane(airplane.get());
-                seat.get().setDeleted(false);
-                seat.get().setColumn(dto.getColNo());
-                seat.get().setRow(dto.getRowNo());
-                seat.get().setSeatClass(dto.getSeatClass());
-                return seatRepository.save(seat.get());
-            } else {
-                throw new ObjectNotFoundException("Airplane with ID: " + dto.getAirplaneID() + " not found!");
-            }
-        } catch (ObjectNotFoundException ex) {
-            ex.printStackTrace();
-            throw new ObjectNotFoundException("Airplane with ID: " + dto.getAirplaneID() + " not found!", ex);
-        }
+        seat = Optional.ofNullable(new Seat());
+        seat.get().setDeleted(false);
+        seat.get().setColumn(dto.getColNo());
+        seat.get().setRow(dto.getRowNo());
+        seat.get().setSeatClass(dto.getSeatClass());
+        return seatRepository.save(seat.get());
+    }
+
+    @Override
+    public Seat create(SeatDTO dto, Airplane airplane) {
+        Optional<Seat> seat;
+        seat = Optional.ofNullable(new Seat());
+        seat.get().setDeleted(false);
+        seat.get().setColumn(dto.getColNo());
+        seat.get().setRow(dto.getRowNo());
+        seat.get().setSeatClass(dto.getSeatClass());
+        seat.get().setAirplane(airplane);
+        return seatRepository.save(seat.get());
     }
 
     @Override

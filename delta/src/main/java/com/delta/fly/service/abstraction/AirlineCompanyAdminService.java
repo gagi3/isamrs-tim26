@@ -14,7 +14,7 @@ public interface AirlineCompanyAdminService {
 
     AirlineCompanyAdmin getByUsername(String username) throws ObjectNotFoundException;
 
-    AirlineCompanyAdmin create(RegisterDTO dto, Long airlineCompanyID) throws ObjectNotFoundException, InvalidInputException;
+    AirlineCompanyAdmin create(RegisterDTO dto) throws ObjectNotFoundException, InvalidInputException;
     AirlineCompanyAdmin update(AirlineCompanyAdmin admin) throws ObjectNotFoundException;
     boolean delete (Long id) throws ObjectNotFoundException;
     //List<AirlineCompanyAdmin> filterSearch();

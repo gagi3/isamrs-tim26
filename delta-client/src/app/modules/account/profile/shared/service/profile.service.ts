@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Passenger} from '../model/passenger';
 import {AirlineCompanyAdmin} from '../model/airline-company-admin';
@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class ProfileService {
   token: string = this.tokenStorage.getToken();
-  headers: HttpHeaders = new HttpHeaders({'AuthToken': this.token });
+  headers: HttpHeaders = new HttpHeaders({AuthToken: this.token });
   passengerURL = 'http://localhost:8080/api/passenger';
   airlineCompanyAdminURL = 'http://localhost:8080/api/airline-company-admin';
   systemAdminURL = 'http://localhost:8080/api/system-admin';
@@ -36,7 +36,12 @@ export class ProfileService {
     const url = this.airlineCompanyAdminURL + '/update';
     return this.http.post<AirlineCompanyAdmin>(url, admin, httpOptions);
   }
-  public getAirlineCompanyAdminByUsername(username: string) {
+  public getAirlineCompanyAdminByUsername(username: string): Observable<AirlineCompanyAdmin> {
+    httpOptions.headers.set('AuthToken', this.token);
+    const url = this.airlineCompanyAdminURL + '/get/';
+    return this.http.get<AirlineCompanyAdmin>(url + username, httpOptions);
+  }
+  public getAirlineCompanyAdminByEmail(username: string): Observable<AirlineCompanyAdmin> {
     httpOptions.headers.set('AuthToken', this.token);
     const url = this.airlineCompanyAdminURL + '/get/';
     return this.http.get<AirlineCompanyAdmin>(url + username, httpOptions);

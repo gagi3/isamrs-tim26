@@ -1,15 +1,15 @@
-import {AirlineCompany} from '../../../../shared/airline-company';
+import {AirlineCompany} from '../../../../shared/model/airline-company';
 
 export class AirlineCompanyAdmin {
   id: BigInteger;
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  city: string;
-  phoneNumber: string;
-  activated: boolean;
+  username: '';
+  password: '';
+  firstName: '';
+  lastName: '';
+  city: '';
+  phoneNumber: '0000000000';
+  activated: true;
   roles: string[];
-  deleted: boolean;
+  deleted: false;
   airlineCompany: AirlineCompany;
 }

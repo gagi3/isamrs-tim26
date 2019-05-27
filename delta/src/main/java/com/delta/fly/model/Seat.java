@@ -25,8 +25,8 @@ public class Seat implements Serializable {
     @Column(name = "seat_class", unique = false, nullable = false)
     private Class seatClass;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "airplane", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)/*(optional = false)*/
+    @JoinColumn(name = "airplane", referencedColumnName = "id", nullable = true)
     private Airplane airplane;
 
     @Column(name = "deleted", unique = false, nullable = false)

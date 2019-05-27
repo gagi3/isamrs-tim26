@@ -4,18 +4,9 @@ import com.delta.fly.enumeration.Class;
 
 public class SeatDTO {
 
-    private Long airplaneID;
     private Integer rowNo;
     private Integer colNo;
     private Class seatClass;
-
-    public Long getAirplaneID() {
-        return airplaneID;
-    }
-
-    public void setAirplaneID(Long airplaneID) {
-        this.airplaneID = airplaneID;
-    }
 
     public Integer getRowNo() {
         return rowNo;

@@ -4,13 +4,11 @@ import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.enumeration.RoleName;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.AirlineCompany;
 import com.delta.fly.model.AirlineCompanyAdmin;
 import com.delta.fly.model.Role;
 import com.delta.fly.repository.AirlineCompanyAdminRepository;
 import com.delta.fly.repository.RoleRepository;
 import com.delta.fly.service.abstraction.AirlineCompanyAdminService;
-import com.delta.fly.service.abstraction.AirlineCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,9 +25,6 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
 
     @Autowired
     private AirlineCompanyAdminRepository airlineCompanyAdminRepository;
-
-    @Autowired
-    private AirlineCompanyService airlineCompanyService;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -50,12 +45,14 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
     }
 
     @Override
-    public AirlineCompanyAdmin create(RegisterDTO dto, Long airlineCompanyID) throws ObjectNotFoundException, InvalidInputException {
+    public AirlineCompanyAdmin create(RegisterDTO dto) throws ObjectNotFoundException, InvalidInputException {
         Optional<AirlineCompanyAdmin> admin;
-        Optional<AirlineCompany> company;
         try {
             admin = airlineCompanyAdminRepository.findByUsername(dto.getUsername());
-            company = Optional.ofNullable(airlineCompanyService.getOne(airlineCompanyID));
+            Boolean a = airlineCompanyAdminRepository.existsAirlineCompanyAdminByPhoneNumber(dto.getPhoneNumber());
+            if (a) {
+                throw new InvalidInputException("Admin with phone number: " + dto.getPhoneNumber() + " already exists!");
+            }
             if (!admin.isPresent()) {
                 admin = Optional.of(new AirlineCompanyAdmin());
                 admin.get().setUsername(dto.getUsername());
@@ -74,23 +71,13 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
                 }
                 admin.get().setActivated(false);
                 admin.get().setDeleted(false);
-                if (company.isPresent()) {
-                    admin.get().setAirlineCompany(company.get());
-                } else if (airlineCompanyID == 0L) {
-                    admin.get().setAirlineCompany(null);
-                } else {
-                    throw new ObjectNotFoundException("Airline company doesn't exist.");
-                }
             } else {
-                throw new InvalidInputException("Bad email address.");
+                throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!");
             }
             return airlineCompanyAdminRepository.save(admin.get());
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
-            throw new InvalidInputException("Admin with email: " + dto.getUsername() + " already exists!", ex);
-        } catch (ObjectNotFoundException ex) {
-            ex.printStackTrace();
-            throw new ObjectNotFoundException("Airline company with ID: " + airlineCompanyID + " not found!", ex);
+            throw new InvalidInputException("Invalid input!", ex);
         }
     }
 
