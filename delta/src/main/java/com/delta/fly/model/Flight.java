@@ -1,5 +1,7 @@
 package com.delta.fly.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public class Flight implements Serializable {
     private Long travelTime;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
     @Column(name = "deleted", unique = false, nullable = false)

@@ -6,6 +6,7 @@ import {SeatDTO} from '../seat-dto';
 import {SeatClass} from '../../../shared/enumeration/seat-class.enum';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 
+
 @Component({
   selector: 'app-add-airplane',
   templateUrl: './add-airplane.component.html',

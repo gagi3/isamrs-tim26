@@ -20,6 +20,7 @@ public class Airplane implements Serializable {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "airline_company", referencedColumnName = "id")
+    @JsonIgnore
     private AirlineCompany airlineCompany;
 
     @Column(name = "airplane_name", unique = true, nullable = false)

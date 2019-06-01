@@ -3,10 +3,7 @@ package com.delta.fly.service.implementation;
 import com.delta.fly.enumeration.Class;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.Flight;
-import com.delta.fly.model.PriceList;
-import com.delta.fly.model.Seat;
-import com.delta.fly.model.Ticket;
+import com.delta.fly.model.*;
 import com.delta.fly.repository.PriceListRepository;
 import com.delta.fly.repository.TicketRepository;
 import com.delta.fly.service.abstraction.TicketService;
@@ -41,7 +38,8 @@ public class TicketServiceImpl implements TicketService {
         Optional<Ticket> ticket;
         Optional<PriceList> priceList;
         try {
-            priceList = Optional.ofNullable(priceListRepository.findByAirlineCompany(flight.getAirlineCompany()));
+//            priceList = priceListRepository.findByAirlineCompanyId(flight.getAirlineCompany().getId());
+            priceList = Optional.ofNullable(priceListRepository.findPriceListByAirlineCompany(flight.getAirlineCompany()));
             if (!flight.getAirplane().getSeats().contains(seat)) {
                 throw new InvalidInputException("Chosen seat doesn't exist in this airplane!");
             }
@@ -53,10 +51,10 @@ public class TicketServiceImpl implements TicketService {
             }
             ticket = Optional.ofNullable(new Ticket());
             ticket.get().setSeat(seat);
-            ticket.get().setPrice(setPrice(priceList.get(), seat));
+            ticket.get().setPrice(setPrice(priceList.get(), seat, flight));
             ticket.get().setFlight(flight);
             ticket.get().setDeleted(false);
-            ticket.get().setPassenger(null);
+//            ticket.get().setPassenger(null);
             return ticketRepository.save(ticket.get());
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
@@ -99,7 +97,7 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-    private Double setPrice(PriceList priceList, Seat seat) {
+    private Double setPrice(PriceList priceList, Seat seat, Flight flight) {
         Double price = priceList.getPriceByKm();
         Class seatClass = seat.getSeatClass();
         if (seatClass.equals(Class.BUSINESS)) {
@@ -109,6 +107,6 @@ public class TicketServiceImpl implements TicketService {
         } else if (seatClass.equals(Class.FIRST)) {
             price *= priceList.getFirstClassPriceCoefficient();
         }
-        return price;
+        return price * flight.getDistance();
     }
 }

@@ -41,7 +41,7 @@ public class PriceListServiceImpl implements PriceListService {
         try {
             admin = Optional.ofNullable(userDetailsService.getAdmin());
             company = Optional.ofNullable(admin.get().getAirlineCompany());
-            priceList = Optional.ofNullable(repository.findByAirlineCompany(company.get()));
+            priceList = repository.findByAirlineCompany(company.get());
             if (!priceList.isPresent()) {
                 throw new ObjectNotFoundException("Price List for this company doesn't exist!");
             }

@@ -78,6 +78,8 @@ public class FlightServiceImpl implements FlightService {
             PlaceAndTime arrival = placeAndTimeService.create(dto.getArrival());
             flight.get().setArrival(arrival);
             flight.get().setTransfers(new ArrayList<>());
+            flight.get().setAirplane(airplane.get());
+            flight.get().setAirlineCompany(company.get());
             if (dto.getTransfers().size() > 0) {
                 for (PlaceAndTimeDTO pat : dto.getTransfers()) {
                     PlaceAndTime transfer = placeAndTimeService.create(pat);
