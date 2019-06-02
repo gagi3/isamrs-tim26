@@ -19,6 +19,7 @@ public class PlaceAndTimeDTO {
         this.thePlace = thePlace;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy. HH:mm")
     public Date getTheTime() {
         return theTime;
     }

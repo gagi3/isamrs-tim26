@@ -2,7 +2,6 @@ package com.delta.fly.model;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
 

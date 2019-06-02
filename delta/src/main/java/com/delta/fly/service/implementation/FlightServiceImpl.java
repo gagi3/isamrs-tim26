@@ -138,11 +138,16 @@ public class FlightServiceImpl implements FlightService {
         try {
             Flight flight = getOne(id);
             // TODO: Check if tickets were sold.
+            for (Ticket ticket : flight.getTickets()) {
+                if (ticket.getPassenger() != null) {
+                    throw new ObjectNotFoundException("Tickets were sold for this flight!");
+                }
+            }
             flight.setDeleted(true);
             return flight.getDeleted();
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
-            throw new ObjectNotFoundException("Flight with ID: " + id + " not found!", ex);
+            throw new ObjectNotFoundException(ex);
         }
     }
 
@@ -159,6 +164,14 @@ public class FlightServiceImpl implements FlightService {
         if (departure.getTheTime().after(arrival.getTheTime())) {
             throw new InvalidInputException("Departure date can't be after arrival date.");
         }
+//        for (Flight flight: company.getFlights()) {
+//            if (flight.getAirplane().equals(airplane)) {
+//                if (flight.getDeparture().getTheTime().before(departure.getTheTime()) ||
+//                    flight.getArrival().getTheTime().after(departure.getTheTime())) {
+//
+//                }
+//            }
+//        }
         if (transfers.size() > 0) {
             for (PlaceAndTime pat : transfers) {
                 if (!company.getDestinations().contains(pat.getThePlace())) {

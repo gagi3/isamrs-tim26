@@ -1,0 +1,118 @@
+<html>
+
+<body>
+
+<div *ngIf = "added; else flightForm">
+  Price list added successfully.
+</div>
+
+
+
+<ng-template #flightForm>
+  <div class="container-all">
+    <div class="row col-sm-6" style="max-width:350px;">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+        <div class="form-group">
+          <div class="text-desc">
+            ADD FLIGHT
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="airplaneID">Airplane</label>
+          <label>
+            <select [(ngModel)]="DTO.airplaneID" [ngModelOptions]="{standalone: true}" name="airplane" required>
+              <option *ngFor="let airplane of airplanes" [ngValue]="airplane.id" [value]="airplane.id" >{{airplane.name}}</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="thePlace1">Departure place</label>
+          <label>
+            <select [(ngModel)]="DTO.departure.thePlace" [ngModelOptions]="{standalone: true}" name="departure" required>
+              <option *ngFor="let departure of destinations" [ngValue]="departure" [value]="departure" >{{departure}}</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="theTime1">Departure time</label>
+          <input type="datetime-local" class="form-control" name="theTime1" [(ngModel)]="DTO.departure.theTime" required />
+        </div>
+
+        <button class="loginbtn" (click)="plusOne()">Add a destination</button>
+
+        <div class="form-group" *ngIf="DTO.transfers.length >= 1" >
+          <label for="thePlace2">Transfer place 1</label>1
+          <label>
+            <select *ngIf="DTO.transfers?.length" [(ngModel)]="DTO.transfers[0].thePlace" [ngModelOptions]="{standalone: true}" name="transfer" required>
+              <option *ngFor="let transfer of destinations" [ngValue]="transfer" [value]="transfer" >{{transfer}}</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-group" *ngIf="DTO.transfers.length >= 1">
+          <label for="theTime2">Transfer time 1</label>
+          <input  *ngIf="DTO.transfers?.length" type="datetime-local" class="form-control" name="departure" [(ngModel)]="DTO.transfers[0].theTime" />
+        </div>
+
+        <div class="form-group" *ngIf="DTO.transfers.length >= 2" >
+          <label for="thePlace3">Transfer place 2</label>
+          <label>
+            <select *ngIf="DTO.transfers?.length" [(ngModel)]="DTO.transfers[1].thePlace" [ngModelOptions]="{standalone: true}" name="transfer" required>
+              <option *ngFor="let transfer of destinations" [ngValue]="transfer" [value]="transfer" >{{transfer}}</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-group" *ngIf="DTO.transfers.length >= 2" >
+          <label for="theTime3">Transfer time 2</label>
+          <input  *ngIf="DTO.transfers?.length" type="datetime-local" class="form-control" name="departure" [(ngModel)]="DTO.transfers[1].theTime" />
+        </div>
+
+        <div class="form-group">
+          <label for="thePlace4">Arrival place</label>
+          <label>
+            <select [(ngModel)]="DTO.arrival.thePlace" [ngModelOptions]="{standalone: true}" name="arrival" required>
+              <option *ngFor="let arrival of destinations" [ngValue]="arrival" [value]="arrival" >{{arrival}}</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="theTime4">Arrival time</label>
+          <input type="datetime-local" class="form-control" name="arrival" [(ngModel)]="DTO.arrival.theTime" required />
+        </div>
+
+        <div class="form-group">
+          <label for="distance">Distance</label>
+          <input type="number" class="form-control" name="distance" [(ngModel)]="DTO.distance" required />
+        </div>
+
+        <div class="form-group">
+          <label for="travelTime">Travel time</label>
+          <input type="number" class="form-control" name="travelTime" [(ngModel)]="DTO.travelTime" required />
+        </div>
+
+        <div class="form-group">
+          <label for="generateTickets">Generate tickets?</label>
+          <input type="checkbox" class="form-control" name="generateTickets" [(ngModel)]="DTO.generateTickets" ng-true-value="true" ng-false-value="false" required />
+        </div>
+
+        <div class="form-group">
+          <button class="signupbtn btn" >ADD</button>
+          <div *ngIf="f.submitted && failed" class="alert alert-warning">
+            Failed!<br/>{{errorMessage}}
+          </div>
+          <button class="cancelbtn btn" (click)="cancel()">CANCEL</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+</body>
+
+</html>

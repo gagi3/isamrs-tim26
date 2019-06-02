@@ -81,7 +81,8 @@ html {
 }
 
 /* Full-width input fields */
-input[type=text], input[type=password], input[type=email], input[type = number], input [type=date], select, option {
+input[type=text], input[type=password], input[type=email], input[type = number], input [type=datetime-local],
+input[type=checkbox], select, option {
   width: 100%;
   border-radius: 25px;
   padding: 15px;

@@ -54,7 +54,6 @@ export class AddAirplaneComponent implements OnInit {
     this.service.add(this.dto).subscribe(
       data => {
         window.alert('Registration was successful!');
-        console.log(data);
         this.added = true;
         this.failed = false;
         this.router.navigateByUrl('');

@@ -5,7 +5,6 @@ import {AirplaneDTO} from './airplane-dto';
 import {Airplane} from '../../shared/model/airplane';
 import {Observable} from 'rxjs';
 import {AirlineCompanyAdmin} from '../../account/profile/shared/model/airline-company-admin';
-import {ProfileService} from '../../account/profile/shared/service/profile.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})
@@ -20,7 +19,7 @@ export class AirplaneService {
   private addAirplaneURL = 'http://localhost:8080/api/airplane/add';
   admin: AirlineCompanyAdmin;
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private service: ProfileService) {
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
     httpOptions.headers.set('AuthToken', this.token);
   }
   add(dto: AirplaneDTO): Observable<Airplane> {

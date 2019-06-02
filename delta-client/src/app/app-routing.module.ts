@@ -10,6 +10,7 @@ import {AirlineCompanyRegistrationComponent} from './modules/administration/airl
 import {AddAirplaneComponent} from './modules/moderation/airplane/add-airplane/add-airplane.component';
 import {AddPriceListComponent} from './modules/moderation/price-list/add-price-list/add-price-list.component';
 import {EditPriceListComponent} from './modules/moderation/price-list/edit-price-list/edit-price-list.component';
+import {AddFlightComponent} from "./modules/moderation/flight/add-flight/add-flight.component";
 
 const routes: Routes = [
   // {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'airline-company/add',
     component: AirlineCompanyRegistrationComponent
+  },
+  {
+    path: 'flight/add',
+    component: AddFlightComponent
   },
   {
     path: 'price-list/add',
