@@ -6,9 +6,10 @@ import {RoleGuardService} from '../../shared/role-guard.service';
 import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule, MatSelectModule} from '@angular/material';
 import {DateTimeFormatPipe} from '../../shared/date-time-format.pipe';
+import { EditFlightComponent } from './edit-flight/edit-flight.component';
 
 @NgModule({
-  declarations: [AddFlightComponent],
+  declarations: [AddFlightComponent, EditFlightComponent],
   imports: [
     CommonModule,
     FormsModule,

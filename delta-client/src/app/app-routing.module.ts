@@ -11,6 +11,7 @@ import {AddAirplaneComponent} from './modules/moderation/airplane/add-airplane/a
 import {AddPriceListComponent} from './modules/moderation/price-list/add-price-list/add-price-list.component';
 import {EditPriceListComponent} from './modules/moderation/price-list/edit-price-list/edit-price-list.component';
 import {AddFlightComponent} from "./modules/moderation/flight/add-flight/add-flight.component";
+import {EditFlightComponent} from "./modules/moderation/flight/edit-flight/edit-flight.component";
 
 const routes: Routes = [
   // {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'flight/add',
     component: AddFlightComponent
+  },
+  {
+    path: 'flight/update',
+    component: EditFlightComponent
   },
   {
     path: 'price-list/add',
@@ -53,10 +58,6 @@ const routes: Routes = [
     path: 'signin',
     component: LoginComponent
   },
-  // {
-  //   path: 'validate/token',
-  //   component: ValidateComponent
-  // },
   {
     path: 'validate/token/:tkn',
     component: ValidateComponent
