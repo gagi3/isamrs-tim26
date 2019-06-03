@@ -81,6 +81,9 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             uAirplane = Optional.ofNullable(getOne(airplane.getId()));
             if (uAirplane.isPresent() && !uAirplane.get().getDeleted()) {
+                if (!userDetailsService.getAdmin().getAirlineCompany().getAirplanes().contains(uAirplane.get())) {
+                    throw new ObjectNotFoundException("Admin's airline company doesn't have this airplane.");
+                }
                 uAirplane.get().setName(airplane.getName());
                 uAirplane.get().setSeats(airplane.getSeats());
                 uAirplane.get().setAirlineCompany(airplane.getAirlineCompany());

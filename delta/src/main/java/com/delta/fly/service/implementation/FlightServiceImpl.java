@@ -110,6 +110,12 @@ public class FlightServiceImpl implements FlightService {
         try {
             uFlight = Optional.ofNullable(getOne(flight.getId()));
             if (uFlight.isPresent()) {
+                if (!userDetailsService.getAdmin().getAirlineCompany().getFlights().contains(uFlight.get())) {
+                    throw new InvalidInputException("Admin's company doesn't have this flight.");
+                }
+                if (!userDetailsService.getAdmin().getAirlineCompany().getAirplanes().contains(flight.getAirplane())) {
+                    throw new InvalidInputException("Admin's company doesn't have this airplane.");
+                }
                 checks(flight.getArrival(), flight.getDeparture(), flight.getTransfers(), flight.getAirlineCompany(), flight.getAirplane());
                 uFlight.get().setAirlineCompany(flight.getAirlineCompany());
                 uFlight.get().setAirplane(flight.getAirplane());
