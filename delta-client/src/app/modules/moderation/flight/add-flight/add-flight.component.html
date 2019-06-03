@@ -45,7 +45,7 @@
         <button class="loginbtn" (click)="plusOne()">Add a destination</button>
 
         <div class="form-group" *ngIf="DTO.transfers.length >= 1" >
-          <label for="thePlace2">Transfer place 1</label>1
+          <label for="thePlace2">Transfer place 1</label>
           <label>
             <select *ngIf="DTO.transfers?.length" [(ngModel)]="DTO.transfers[0].thePlace" [ngModelOptions]="{standalone: true}" name="transfer" required>
               <option *ngFor="let transfer of destinations" [ngValue]="transfer" [value]="transfer" >{{transfer}}</option>
