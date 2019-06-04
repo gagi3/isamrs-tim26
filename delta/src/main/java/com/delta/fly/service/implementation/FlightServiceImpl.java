@@ -143,7 +143,10 @@ public class FlightServiceImpl implements FlightService {
     public boolean delete(Long id) throws ObjectNotFoundException {
         try {
             Flight flight = getOne(id);
-            // TODO: Check if tickets were sold.
+            if (!userDetailsService.getAdmin().getAirlineCompany().getFlights().contains(flight)) {
+                throw new ObjectNotFoundException("This admin's company doesn't have that flight!");
+            }
+            // Checking if tickets were sold.
             for (Ticket ticket : flight.getTickets()) {
                 if (ticket.getPassenger() != null) {
                     throw new ObjectNotFoundException("Tickets were sold for this flight!");
