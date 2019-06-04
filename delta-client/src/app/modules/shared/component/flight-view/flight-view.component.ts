@@ -75,7 +75,7 @@ export class FlightViewComponent implements OnInit {
     this.passenger = passenger;
   }
   edit(flight: Flight) {
-    if (this.admin !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
+    if (this.admin.airlineCompany !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
@@ -93,6 +93,20 @@ export class FlightViewComponent implements OnInit {
       );
     } else {
       console.log('The flight does not belong to your company.');
+    }
+  }
+  delete(flight: Flight) {
+    if (this.admin.airlineCompany !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
+      this.service.delete(flight.id).subscribe(
+        data => {
+          if (data === true) {
+            alert('Flight was deleted.');
+            this.router.navigateByUrl('flight/view');
+          } else {
+            alert('Deletion was unsuccessful.');
+          }
+        }
+      );
     }
   }
   reserveTickets(flight: Flight) {
