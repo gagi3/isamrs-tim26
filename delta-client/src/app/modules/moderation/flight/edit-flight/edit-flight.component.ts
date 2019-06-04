@@ -79,6 +79,7 @@ export class EditFlightComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.dialogRef.updateSize('80%', '80%');
     this.username = this.tokenStorage.getUsername();
     this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
       data => {
@@ -87,7 +88,7 @@ export class EditFlightComponent implements OnInit {
         this.getDestinations(data);
       }
     );
-    this.DTO = this.data;
+    this.DTO = this.data.flight;
   }
   getDestinations(admin: AirlineCompanyAdmin) {
     this.destinations = admin.airlineCompany.destinations;

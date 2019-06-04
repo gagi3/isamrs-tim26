@@ -13,11 +13,13 @@ import {RoleGuardService} from './modules/shared/role-guard.service';
 import {httpInterceptorProviders} from './modules/shared/auth-interceptor';
 import {MatDialogModule} from '@angular/material';
 import {DateTimeFormatPipe} from './modules/shared/date-time-format.pipe';
+import { FlightViewComponent } from './modules/shared/component/flight-view/flight-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    FlightViewComponent
   ],
   imports: [
     BrowserModule,

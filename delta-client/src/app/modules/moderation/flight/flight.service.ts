@@ -24,7 +24,7 @@ export class FlightService {
     httpOptions.headers.set('AuthToken', this.token);
   }
   get(): Observable<Flight[]> {
-    httpOptions.headers.set('AuthToken', this.token);
+    // httpOptions.headers.set('AuthToken', this.token);
     return this.http.get<Flight[]>(this.URL, httpOptions);
   }
   getOne(ID: BigInteger): Observable<Flight> {

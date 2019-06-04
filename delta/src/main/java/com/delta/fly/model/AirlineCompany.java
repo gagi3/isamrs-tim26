@@ -35,7 +35,7 @@ public class AirlineCompany implements Serializable {
 
     // Flight - owner
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airlineCompany", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
     private List<Flight> flights = new ArrayList<>();
 
     // New table

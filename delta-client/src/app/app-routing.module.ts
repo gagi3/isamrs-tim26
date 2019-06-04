@@ -12,6 +12,7 @@ import {AddPriceListComponent} from './modules/moderation/price-list/add-price-l
 import {EditPriceListComponent} from './modules/moderation/price-list/edit-price-list/edit-price-list.component';
 import {AddFlightComponent} from "./modules/moderation/flight/add-flight/add-flight.component";
 import {EditFlightComponent} from "./modules/moderation/flight/edit-flight/edit-flight.component";
+import {FlightViewComponent} from "./modules/shared/component/flight-view/flight-view.component";
 
 const routes: Routes = [
   // {
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'flight/update',
     component: EditFlightComponent
+  },
+  {
+    path: 'flight/view',
+    component: FlightViewComponent
   },
   {
     path: 'price-list/add',

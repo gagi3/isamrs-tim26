@@ -87,7 +87,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/api/user/signin", "/api/user/signup/passenger", "/api/user/validate/*").permitAll()
+                    .antMatchers(
+                            "/api/user/signin",
+                            "/api/user/signup/passenger",
+                            "/api/user/validate/*",
+                            "/api/flight"
+                    ).permitAll()
                     .anyRequest().authenticated()
                 .and().headers().cacheControl().disable()
                 .and().requestCache().disable();
