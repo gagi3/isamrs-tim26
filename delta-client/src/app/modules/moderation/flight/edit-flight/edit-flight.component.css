@@ -10,7 +10,7 @@ html {
   /*filter: blur(95px);*/
 }
 
-.container-all:before {
+.container-all:before .mat-dialog-container {
   content: '';
   overflow:auto;
   top: 0;
@@ -31,13 +31,18 @@ html {
   filter: blur(0.1px);
 }
 
-.container-all {
+.container-all .mat-dialog-container {
   overflow: auto;
   background: inherit;
   height: 1080px;
   width: 40%;
   padding-top: 4%;
   margin: 0 auto 0 auto;
+}
+
+.mat-dialog-container {
+  filter: blur(0.1px);
+  background: inherit;
 }
 
 .row {

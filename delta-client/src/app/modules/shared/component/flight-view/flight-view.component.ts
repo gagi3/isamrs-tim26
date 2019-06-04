@@ -8,6 +8,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material';
 import {EditFlightComponent} from '../../../moderation/flight/edit-flight/edit-flight.component';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
+import {PlaceAndTime} from '../../model/place-and-time';
 
 @Component({
   selector: 'app-flight-view',
@@ -15,8 +16,8 @@ import {Passenger} from '../../../account/profile/shared/model/passenger';
   styleUrls: ['./flight-view.component.css']
 })
 export class FlightViewComponent implements OnInit {
-  admin: AirlineCompanyAdmin = new AirlineCompanyAdmin();
-  passenger: Passenger = new Passenger();
+  admin: AirlineCompanyAdmin;
+  passenger: Passenger;
   flights: Flight[] = [];
   read = false;
   errorMessage = '';
@@ -30,20 +31,20 @@ export class FlightViewComponent implements OnInit {
   }
   loadAll() {
     this.whosInCharge();
-    if (this.admin.airlineCompany !== undefined) {
-      // this.flights = this.admin.airlineCompany.flights;
-      this.read = true;
-    } else {
-      this.service.get().subscribe(
-        data => {
-          this.flights = data;
-          this.read = true;
-        }, error => {
-          this.errorMessage = error.errorMessage;
-          alert(this.errorMessage);
-        }
-      );
-    }
+    // if (this.admin !== undefined) {
+    //   // this.flights = this.admin.airlineCompany.flights;
+    //   this.read = true;
+    // } else {
+    //   this.service.get().subscribe(
+    //     data => {
+    //       this.flights = data;
+    //       this.read = true;
+    //     }, error => {
+    //       this.errorMessage = error.errorMessage;
+    //       alert(this.errorMessage);
+    //     }
+    //   );
+    // }
   }
   whosInCharge() {
     this.username = this.tokenStorage.getUsername();
@@ -64,15 +65,65 @@ export class FlightViewComponent implements OnInit {
         }
       );
     } else {
+      this.setVisitor();
       alert('You are not signed in. You can only browse flights.');
+    }
+  }
+  setEmpty() {
+    for (const flight of this.flights) {
+      if (flight.transfers[0] === undefined) {
+        flight.transfers[0] = new PlaceAndTime();
+      }
+      if (flight.transfers[1] === undefined) {
+        flight.transfers[1] = new PlaceAndTime();
+      }
     }
   }
   setAdmin(admin: AirlineCompanyAdmin) {
     this.admin = admin;
-    this.flights = admin.airlineCompany.flights;
+    // this.flights = admin.airlineCompany.flights;
+    for (let i = 0; i < admin.airlineCompany.flights.length; i++) {
+      if (admin.airlineCompany.flights[i].deleted === false) {
+        this.flights.push(admin.airlineCompany.flights[i]);
+      }
+    }
+    console.log(this.flights);
+    this.read = true;
+    this.setEmpty();
   }
   setPassenger(passenger: Passenger) {
     this.passenger = passenger;
+    this.service.get().subscribe(
+      data => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].deleted === false) {
+            this.flights.push(data[i]);
+          }
+        }
+        this.read = true;
+      }, error => {
+        this.errorMessage = error.errorMessage;
+        alert(this.errorMessage);
+      }
+    );
+    this.setEmpty();
+  }
+  setVisitor() {
+    this.service.get().subscribe(
+      data => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].deleted === false) {
+            this.flights.push(data[i]);
+            console.log(data[i]);
+          }
+        }
+        this.read = true;
+      }, error => {
+        this.errorMessage = error.errorMessage;
+        alert(this.errorMessage);
+      }
+    );
+    this.setEmpty();
   }
   edit(flight: Flight) {
     if (this.admin.airlineCompany !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
@@ -101,6 +152,8 @@ export class FlightViewComponent implements OnInit {
         data => {
           if (data === true) {
             alert('Flight was deleted.');
+            this.loadAll();
+            // location.reload();
             this.router.navigateByUrl('flight/view');
           } else {
             alert('Deletion was unsuccessful.');

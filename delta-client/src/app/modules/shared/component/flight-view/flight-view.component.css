@@ -9,8 +9,48 @@ html {
   background: inherit;
   /*filter: blur(95px);*/
 }
+.table-cell {
+  height: 64px;
+  max-height: 64px;
+  overflow: hidden;
+}
+table, .table-hover {
+  width: 100%;
+  display: table;
+  float: left;
+}
+table, .container-all:before {
+  height: 100%;
+}
+td {
+  display: table-cell;
+  text-align: center;
+  height: 64px;
+  vertical-align: middle;
+}
+.buttons{
+  display: inline-block;
+  vertical-align: middle;
+}
+tr {
+  display: table-row;
+  max-height: 64px;
+  height: 64px;
+  text-align: center;
+}
 
-.container-all:before {
+thead, tbody {
+  width: 100%;
+  /*height: 100%;*/
+}
+
+.container-all:before ~table {
+  /*height: 100%;*/
+  float: left;
+}
+
+.container-all:before, .mat-dialog-container {
+  float: left;
   content: '';
   overflow:auto;
   top: 0;
@@ -19,8 +59,8 @@ html {
   bottom: 0;
   background: inherit;
   position: absolute;
-  height: 950px;
-  width: 25%;
+  /*height: auto;*/
+  width: 100%;
   border-radius: 15px;
   margin: 0 auto 0 auto;
   margin-top: 4%;
@@ -31,11 +71,11 @@ html {
   filter: blur(0.1px);
 }
 
-.container-all {
+.container-all, .mat-dialog-container {
   overflow: auto;
   background: inherit;
   height: 1080px;
-  width: 40%;
+  width: 100%;
   padding-top: 4%;
   margin: 0 auto 0 auto;
 }
@@ -96,7 +136,7 @@ hr {
 /* Set a style for all buttons */
 button {
   font-family: "Helvetica Neue LT Pro - Light", Arial, sans-serif;
-  font-size: 110%;
+  font-size: 100%;
   background: inherit;
   color: white;
   border-radius: 25px;
@@ -160,7 +200,7 @@ button:hover {
 /* Float cancel and signup buttons and add an equal width */
 .cancelbtn, .signupbtn, .loginbtn {
   float: left;
-  width: 100%;
+  width: 100px;
   transition-delay: 0.1s;
   transform: perspective(1px) translateZ(0);
   transition-duration: 0.3s;
@@ -197,25 +237,25 @@ button:hover {
 
 @media screen and (max-width: 1500px) {
   .container-all:before {
-    width: 400px;
-    height: 950px;
+    width: 100%;
+    height: inherit;
   }
 }
 
 @media screen and (max-width: 1500px) {
   .container-all {
     width: 100%;
-    height: 100%;
+    height: inherit;
   }
 }
 
 @media screen and (max-width: 1000px) {
   .container-all {
     width: 100%;
-    height: 100%;
+    height: inherit;
   }
   .container-all:before {
     width: 100%;
-    height: 950px;
+    height: inherit;
   }
 }

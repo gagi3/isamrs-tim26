@@ -18,7 +18,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 export class EditFlightComponent implements OnInit {
   airplanes: Airplane[];
   airplane: Airplane = new Airplane();
-  selectedAirplane: Airplane = new Airplane();
+  selectedAirplane: Airplane;
   destinations: string[];
   DTO: Flight = new Flight();
   allAirplanes: [] = [];
@@ -28,48 +28,14 @@ export class EditFlightComponent implements OnInit {
   failed = false;
   errorMessage = '';
   show = 'flight';
-  @ViewChild('inputEl1') public inputEl1: ElementRef;
-  @ViewChild('inputEl2') public inputEl2: ElementRef;
-  @ViewChild('inputEl3') public inputEl3: ElementRef;
-  @ViewChild('inputEl4') public inputEl4: ElementRef;
-  @ViewChild('inputEl5') public inputEl5: ElementRef;
-  @ViewChild('inputEl6') public inputEl6: ElementRef;
-  @ViewChild('inputEl7') public inputEl7: ElementRef;
-  @ViewChild('inputEl8') public inputEl8: ElementRef;
-  @ViewChild('inputEl9') public inputEl9: ElementRef;
-  @ViewChild('inputEl10') public inputEl10: ElementRef;
-  @ViewChild('inputEl11') public inputEl11: ElementRef;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: FlightService, private tokenStorage: TokenStorageService,
               private adminService: ProfileService, private datePipe: DateTimeFormatPipe) { }
   edit() {
-    this.show = 'change';
-    this.inputEl1.nativeElement.disabled = false;
-    this.inputEl2.nativeElement.disabled = false;
-    this.inputEl3.nativeElement.disabled = false;
-    this.inputEl4.nativeElement.disabled = false;
-    this.inputEl5.nativeElement.disabled = false;
-    this.inputEl6.nativeElement.disabled = false;
-    this.inputEl7.nativeElement.disabled = false;
-    this.inputEl8.nativeElement.disabled = false;
-    this.inputEl9.nativeElement.disabled = false;
-    this.inputEl10.nativeElement.disabled = false;
-    this.inputEl11.nativeElement.disabled = false;
   }
   cancel() {
-    this.show = 'flight';
-    this.inputEl1.nativeElement.disabled = true;
-    this.inputEl2.nativeElement.disabled = true;
-    this.inputEl3.nativeElement.disabled = true;
-    this.inputEl4.nativeElement.disabled = true;
-    this.inputEl5.nativeElement.disabled = true;
-    this.inputEl6.nativeElement.disabled = true;
-    this.inputEl7.nativeElement.disabled = true;
-    this.inputEl8.nativeElement.disabled = true;
-    this.inputEl9.nativeElement.disabled = true;
-    this.inputEl10.nativeElement.disabled = true;
-    this.inputEl11.nativeElement.disabled = true;
+    this.dialogRef.close();
   }
   plusOne() {
     if (this.DTO.transfers.length < 2) {
@@ -79,7 +45,7 @@ export class EditFlightComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.dialogRef.updateSize('80%', '80%');
+    this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
     this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
       data => {
@@ -96,20 +62,34 @@ export class EditFlightComponent implements OnInit {
   getAirplanes(admin: AirlineCompanyAdmin) {
     this.airplanes = admin.airlineCompany.airplanes;
   }
+  deserializeArrival() {
+    this.DTO.arrival.theTime = this.datePipe.transform(this.DTO.arrival.theTime);
+  }
+  deserializeDeparture() {
+    this.DTO.departure.theTime = this.datePipe.transform(this.DTO.departure.theTime);
+  }
+  deserializeTP1() {
+    this.DTO.transfers[0].theTime = this.datePipe.transform(this.DTO.transfers[0].theTime);
+  }
+  deserializeTP2() {
+    this.DTO.transfers[1].theTime = this.datePipe.transform(this.DTO.transfers[1].theTime);
+  }
   onSubmit() {
     const check = this.check();
-    this.DTO.arrival.theTime = this.datePipe.transform(this.DTO.arrival.theTime);
-    this.DTO.departure.theTime = this.datePipe.transform(this.DTO.departure.theTime);
-    // @ts-ignore
-    for (let i = 0; i < this.DTO.transfers.length; i++) {
-      this.DTO.transfers[i].theTime = this.datePipe.transform(this.DTO.transfers[i].theTime);
-    }
+    console.log(this.DTO);
+    // this.DTO.arrival.theTime = this.datePipe.transform(this.DTO.arrival.theTime);
+    // this.DTO.departure.theTime = this.datePipe.transform(this.DTO.departure.theTime);
+    // // @ts-ignore
+    // for (let i = 0; i < this.DTO.transfers.length; i++) {
+    //   this.DTO.transfers[i].theTime = this.datePipe.transform(this.DTO.transfers[i].theTime);
+    // }
     if (check === false) {
       this.service.update(this.DTO).subscribe(
         data => {
           this.added = true;
-          window.alert('Registration was successful!');
+          window.alert('Update was successful!');
           this.router.navigateByUrl('');
+          this.dialogRef.close();
         }, error => {
           this.errorMessage = error.errorMessage;
           this.added = false;

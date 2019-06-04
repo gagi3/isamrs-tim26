@@ -37,7 +37,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<Flight> findAll() {
-        return flightRepository.findAllByDeletedIsFalse();
+        return flightRepository.findFlightsByDeletedFalse();
     }
 
     @Override
@@ -107,20 +107,25 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Flight update(Flight flight) throws ObjectNotFoundException, InvalidInputException {
         Optional<Flight> uFlight;
+        Optional<Airplane> airplane;
+        Optional<AirlineCompany> company;
         try {
             uFlight = Optional.ofNullable(getOne(flight.getId()));
-            if (uFlight.isPresent()) {
-                if (!userDetailsService.getAdmin().getAirlineCompany().getFlights().contains(uFlight.get())) {
+            airplane = Optional.ofNullable(airplaneService.getOne(flight.getAirplane().getId()));
+            company = Optional.ofNullable(userDetailsService.getAdmin().getAirlineCompany());
+            if (uFlight.isPresent() && airplane.isPresent() && company.isPresent()) {
+                if (!company.get().getFlights().contains(uFlight.get())) {
                     throw new InvalidInputException("Admin's company doesn't have this flight.");
                 }
-                if (!userDetailsService.getAdmin().getAirlineCompany().getAirplanes().contains(flight.getAirplane())) {
+                if (!company.get().getAirplanes().contains(airplane.get())) {
+                    System.out.println(userDetailsService.getAdmin().getAirlineCompany().getAirplanes());
                     throw new InvalidInputException("Admin's company doesn't have this airplane.");
                 }
-                checks(flight.getArrival(), flight.getDeparture(), flight.getTransfers(), flight.getAirlineCompany(), flight.getAirplane());
-                uFlight.get().setAirlineCompany(flight.getAirlineCompany());
-                uFlight.get().setAirplane(flight.getAirplane());
-                uFlight.get().setArrival(flight.getArrival());
-                uFlight.get().setDeparture(flight.getDeparture());
+                checks(flight.getArrival(), flight.getDeparture(), flight.getTransfers(), company.get(), airplane.get());
+                uFlight.get().setAirlineCompany(company.get());
+                uFlight.get().setAirplane(airplane.get());
+                uFlight.get().setArrival(placeAndTimeService.update(flight.getArrival()));
+                uFlight.get().setDeparture(placeAndTimeService.update(flight.getDeparture()));
                 uFlight.get().setDistance(flight.getDistance());
                 uFlight.get().setTickets(flight.getTickets());
                 uFlight.get().setTransfers(flight.getTransfers());
@@ -152,7 +157,11 @@ public class FlightServiceImpl implements FlightService {
                     throw new ObjectNotFoundException("Tickets were sold for this flight!");
                 }
             }
+            for (Ticket ticket : new ArrayList<>(flight.getTickets())) {
+                ticketService.delete(ticket.getId());
+            }
             flight.setDeleted(true);
+            flightRepository.save(flight);
             return flight.getDeleted();
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();

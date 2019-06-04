@@ -94,6 +94,7 @@ public class TicketServiceImpl implements TicketService {
         try {
             Ticket ticket = getOne(id);
             ticket.setDeleted(true);
+            ticketRepository.save(ticket);
             return ticket.getDeleted();
         } catch (ObjectNotFoundException ex) {
             throw new ObjectNotFoundException("Ticket with ID: " + id + " doesn't exist!");

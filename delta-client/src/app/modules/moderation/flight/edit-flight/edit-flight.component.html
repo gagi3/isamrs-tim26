@@ -3,7 +3,7 @@
 <body>
 
 <div *ngIf = "added; else flightForm">
-  Price list edited successfully.
+  Flight edited successfully.
 </div>
 
 
@@ -20,9 +20,18 @@
         </div>
 
         <div class="form-group">
+          <label for="airplane">Airplane</label>
+          <label>
+            <select [(ngModel)]="DTO.airplane" [ngModelOptions]="{standalone: true}" name="airplane" required>
+              <option *ngFor="let airplane of airplanes" [ngValue]="airplane" >{{airplane.name}}</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-group">
           <label for="thePlace1">Departure place</label>
           <label>
-            <select [(ngModel)]="DTO.departure.thePlace" [ngModelOptions]="{standalone: true}" name="departure" #inputEl1 required>
+            <select [(ngModel)]="DTO.departure.thePlace" [ngModelOptions]="{standalone: true}" name="departure" required>
               <option *ngFor="let departure of destinations" [ngValue]="departure" [value]="departure" >{{departure}}</option>
             </select>
           </label>
@@ -30,15 +39,15 @@
 
         <div class="form-group">
           <label for="theTime1">Departure time</label>
-          <input type="datetime-local" class="form-control" name="theTime1" [(ngModel)]="DTO.departure.theTime" #inputEl2 required />
+          <input type="datetime-local" class="form-control" name="theTime1" [(ngModel)]="DTO.departure.theTime" (change)="deserializeDeparture()" required />
         </div>
 
-        <button *ngIf="DTO.transfers.length < 2" class="loginbtn" (click)="plusOne()" #inputEl3 >Add a destination</button>
+        <button *ngIf="DTO.transfers.length < 2" class="loginbtn" (click)="plusOne()" >Add a destination</button>
 
         <div class="form-group" *ngIf="DTO.transfers.length >= 1" >
           <label for="thePlace2">Transfer place 1</label>
           <label>
-            <select *ngIf="DTO.transfers?.length" [(ngModel)]="DTO.transfers[0].thePlace" [ngModelOptions]="{standalone: true}" #inputEl4 name="transfer" required>
+            <select *ngIf="DTO.transfers?.length" [(ngModel)]="DTO.transfers[0].thePlace" [ngModelOptions]="{standalone: true}" name="transfer" required>
               <option *ngFor="let transfer of destinations" [ngValue]="transfer" [value]="transfer" >{{transfer}}</option>
             </select>
           </label>
@@ -46,13 +55,13 @@
 
         <div class="form-group" *ngIf="DTO.transfers.length >= 1">
           <label for="theTime2">Transfer time 1</label>
-          <input #inputEl5 *ngIf="DTO.transfers?.length" type="datetime-local" class="form-control" name="departure" [(ngModel)]="DTO.transfers[0].theTime" />
+          <input *ngIf="DTO.transfers?.length" type="datetime-local" class="form-control" name="departure" (change)="deserializeTP1()" [(ngModel)]="DTO.transfers[0].theTime" />
         </div>
 
         <div class="form-group" *ngIf="DTO.transfers.length >= 2" >
           <label for="thePlace3">Transfer place 2</label>
           <label>
-            <select #inputEl6 *ngIf="DTO.transfers?.length" [(ngModel)]="DTO.transfers[1].thePlace" [ngModelOptions]="{standalone: true}" name="transfer" required>
+            <select *ngIf="DTO.transfers?.length" [(ngModel)]="DTO.transfers[1].thePlace" [ngModelOptions]="{standalone: true}" name="transfer" required>
               <option *ngFor="let transfer of destinations" [ngValue]="transfer" [value]="transfer" >{{transfer}}</option>
             </select>
           </label>
@@ -60,13 +69,13 @@
 
         <div class="form-group" *ngIf="DTO.transfers.length >= 2" >
           <label for="theTime3">Transfer time 2</label>
-          <input #inputEl7 *ngIf="DTO.transfers?.length" type="datetime-local" class="form-control" name="departure" [(ngModel)]="DTO.transfers[1].theTime" />
+          <input *ngIf="DTO.transfers?.length" type="datetime-local" class="form-control" name="departure" (change)="deserializeTP2()" [(ngModel)]="DTO.transfers[1].theTime" />
         </div>
 
         <div class="form-group">
           <label for="thePlace4">Arrival place</label>
           <label>
-            <select #inputEl8 [(ngModel)]="DTO.arrival.thePlace" [ngModelOptions]="{standalone: true}" name="arrival" required>
+            <select [(ngModel)]="DTO.arrival.thePlace" [ngModelOptions]="{standalone: true}" name="arrival" required>
               <option *ngFor="let arrival of destinations" [ngValue]="arrival" [value]="arrival" >{{arrival}}</option>
             </select>
           </label>
@@ -74,26 +83,25 @@
 
         <div class="form-group">
           <label for="theTime4">Arrival time</label>
-          <input #inputEl9 type="datetime-local" class="form-control" name="arrival" [(ngModel)]="DTO.arrival.theTime" required />
+          <input type="datetime-local" class="form-control" name="arrival" (change)="deserializeArrival()" [(ngModel)]="DTO.arrival.theTime" required />
         </div>
 
         <div class="form-group">
           <label for="distance">Distance</label>
-          <input #inputEl10 type="number" class="form-control" name="distance" [(ngModel)]="DTO.distance" required />
+          <input type="number" class="form-control" name="distance" [(ngModel)]="DTO.distance" required />
         </div>
 
         <div class="form-group">
           <label for="travelTime">Travel time</label>
-          <input #inputEl11 type="number" class="form-control" name="travelTime" [(ngModel)]="DTO.travelTime" required />
+          <input type="number" class="form-control" name="travelTime" [(ngModel)]="DTO.travelTime" required />
         </div>
 
         <div class="form-group">
-          <button class="signupbtn btn" >ADD</button>
+          <button class="signupbtn btn" >EDIT</button>
           <div *ngIf="f.submitted && failed" class="alert alert-warning">
             Failed!<br/>{{errorMessage}}
           </div>
-          <button class="cancelbtn btn" (click)="cancel()">UPDATE</button>
-          <button class="loginbtn btn" type="button" (click)="edit()">EDIT</button>
+          <button type="button" class="cancelbtn btn" (click)="cancel()">CANCEL</button>
         </div>
       </form>
     </div>

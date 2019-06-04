@@ -14,6 +14,7 @@ import {httpInterceptorProviders} from './modules/shared/auth-interceptor';
 import {MatDialogModule} from '@angular/material';
 import {DateTimeFormatPipe} from './modules/shared/date-time-format.pipe';
 import { FlightViewComponent } from './modules/shared/component/flight-view/flight-view.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FlightViewComponent } from './modules/shared/component/flight-view/flig
     AdministrationModule,
     ConsumptionModule,
     ModerationModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule],
   bootstrap: [AppComponent]
