@@ -126,6 +126,9 @@ public class TicketServiceImpl implements TicketService {
                     if (!ticketRepository.findAllByFlight_AirlineCompany(company.get()).contains(t.get())) {
                         throw new ObjectNotFoundException("Selected ticket(s) were not issued for your company.");
                     }
+                    if (t.get().getPassenger() != null) {
+                        throw new ObjectNotFoundException("Ticket already purchased!");
+                    }
                     t.get().setPrice(ticket.getPrice() * (100 - priceList.get().getDiscountPercentage()) / 100);
                     update(t.get());
                     disc.add(t.get());

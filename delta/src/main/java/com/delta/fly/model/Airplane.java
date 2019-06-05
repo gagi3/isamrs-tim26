@@ -27,7 +27,7 @@ public class Airplane implements Serializable {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airplane", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
     private List<Seat> seats = new ArrayList<>();
 
     @Column(name = "deleted", unique = false, nullable = false)

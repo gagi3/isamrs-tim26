@@ -13,6 +13,7 @@ import {EditPriceListComponent} from './modules/moderation/price-list/edit-price
 import {AddFlightComponent} from "./modules/moderation/flight/add-flight/add-flight.component";
 import {EditFlightComponent} from "./modules/moderation/flight/edit-flight/edit-flight.component";
 import {FlightViewComponent} from "./modules/shared/component/flight-view/flight-view.component";
+import {DiscountTicketsComponent} from "./modules/moderation/ticket/discount-tickets/discount-tickets.component";
 
 const routes: Routes = [
   // {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'flight/view',
     component: FlightViewComponent
+  },
+  {
+    path: 'ticket/discount',
+    component: DiscountTicketsComponent
   },
   {
     path: 'price-list/add',

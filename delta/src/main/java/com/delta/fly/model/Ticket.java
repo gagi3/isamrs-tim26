@@ -1,5 +1,6 @@
 package com.delta.fly.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Ticket implements Serializable {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "flight", referencedColumnName = "id")
+    @JsonIgnore
     private Flight flight;
 
     @OneToOne(targetEntity = Seat.class)

@@ -47,7 +47,7 @@ public class Flight implements Serializable {
     private Long travelTime;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
     @Column(name = "deleted", unique = false, nullable = false)

@@ -5,6 +5,6 @@ export class Airplane {
   id: BigInteger;
   airlineCompany: AirlineCompany;
   name: string;
-  seats: Seat[];
+  seats: Seat[] = [];
   deleted: boolean;
 }

@@ -3,8 +3,8 @@ import {Airplane} from './airplane';
 
 export class Seat {
   id: BigInteger;
-  row: BigInteger;
-  column: BigInteger;
+  row: number;
+  column: number;
   class: SeatClass;
   airplane: Airplane;
   deleted: boolean;
