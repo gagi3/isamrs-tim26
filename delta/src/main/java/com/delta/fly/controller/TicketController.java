@@ -1,5 +1,6 @@
 package com.delta.fly.controller;
 
+import com.delta.fly.dto.DiscountTicketsDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Flight;
@@ -63,6 +64,19 @@ public class TicketController {
         Boolean delete = ticketService.delete(id);
 
         return new ResponseEntity<>(delete, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
+    @RequestMapping(value = "/discount", method = RequestMethod.POST)
+    public ResponseEntity<List<Ticket>> discount(@RequestBody DiscountTicketsDTO tickets) throws ObjectNotFoundException {
+        List<Ticket> tix = ticketService.discount(tickets.getTickets());
+        return new ResponseEntity<>(tix, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get/discounted", method = RequestMethod.GET)
+    public ResponseEntity<List<Ticket>> getDiscounted() throws ObjectNotFoundException {
+        List<Ticket> tix = ticketService.getDiscounted();
+        return new ResponseEntity<>(tix, HttpStatus.OK);
     }
 
 }

@@ -37,6 +37,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public String getUsername() {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass() == String.class) {
+            return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }
         UserPrinciple user = (UserPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getUsername();
     }

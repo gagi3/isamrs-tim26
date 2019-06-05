@@ -3,16 +3,15 @@ package com.delta.fly.service.implementation;
 import com.delta.fly.enumeration.Class;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.Flight;
-import com.delta.fly.model.PriceList;
-import com.delta.fly.model.Seat;
-import com.delta.fly.model.Ticket;
+import com.delta.fly.model.*;
 import com.delta.fly.repository.PriceListRepository;
 import com.delta.fly.repository.TicketRepository;
+import com.delta.fly.service.abstraction.AirlineCompanyService;
 import com.delta.fly.service.abstraction.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +24,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private PriceListRepository priceListRepository;
+
+    @Autowired
+    private AirlineCompanyService airlineCompanyService;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     public List<Ticket> findAll() {
@@ -98,6 +103,65 @@ public class TicketServiceImpl implements TicketService {
             return ticket.getDeleted();
         } catch (ObjectNotFoundException ex) {
             throw new ObjectNotFoundException("Ticket with ID: " + id + " doesn't exist!");
+        }
+    }
+
+    @Override
+    public List<Ticket> discount(List<Ticket> tix) throws ObjectNotFoundException {
+        Optional<AirlineCompany> company;
+        Optional<PriceList> priceList;
+        try {
+            company = Optional.ofNullable(userDetailsService.getAdmin().getAirlineCompany());
+            if (!company.isPresent()) {
+                throw new ObjectNotFoundException("Admin doesn't moderate this company.");
+            }
+            priceList = Optional.ofNullable(priceListRepository.findPriceListByAirlineCompany(company.get()));
+            if (!priceList.isPresent()) {
+                throw new ObjectNotFoundException("Price List for this company doesn't exist.");
+            }
+            List<Ticket> disc = new ArrayList<>();
+            for (Ticket ticket : tix) {
+                Optional<Ticket> t = Optional.ofNullable(getOne(ticket.getId()));
+                if (t.isPresent()) {
+                    if (!ticketRepository.findAllByFlight_AirlineCompany(company.get()).contains(t.get())) {
+                        throw new ObjectNotFoundException("Selected ticket(s) were not issued for your company.");
+                    }
+                    t.get().setPrice(ticket.getPrice() * (100 - priceList.get().getDiscountPercentage()) / 100);
+                    update(t.get());
+                    disc.add(t.get());
+                }
+            }
+            if (company.get().getDiscountedTickets() != null) {
+                company.get().getDiscountedTickets().addAll(disc);
+            } else {
+                company.get().setDiscountedTickets(disc);
+            }
+            airlineCompanyService.update(company.get());
+            return company.get().getDiscountedTickets();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public List<Ticket> getDiscounted() throws ObjectNotFoundException {
+        if (userDetailsService.getUsername().equals("anonymousUser")) {
+            List<Ticket> discounted = new ArrayList<>();
+            for (AirlineCompany airlineCompany : airlineCompanyService.findAll()) {
+                discounted.addAll(airlineCompany.getDiscountedTickets());
+            }
+            return discounted;
+        }
+        Optional<AirlineCompany> company = Optional.ofNullable(userDetailsService.getAdmin().getAirlineCompany());
+        if (company.isPresent()) {
+            return company.get().getDiscountedTickets();
+        } else {
+            List<Ticket> discounted = new ArrayList<>();
+            for (AirlineCompany airlineCompany : airlineCompanyService.findAll()) {
+                discounted.addAll(airlineCompany.getDiscountedTickets());
+            }
+            return discounted;
         }
     }
 

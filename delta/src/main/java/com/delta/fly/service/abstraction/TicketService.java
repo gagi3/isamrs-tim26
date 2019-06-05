@@ -15,6 +15,10 @@ public interface TicketService {
     Ticket create(Flight flight, Seat seat) throws ObjectNotFoundException, InvalidInputException;
     Ticket update(Ticket ticket) throws ObjectNotFoundException;
     boolean delete (Long id) throws ObjectNotFoundException;
+
+    List<Ticket> discount(List<Ticket> tix) throws ObjectNotFoundException;
+
+    List<Ticket> getDiscounted() throws ObjectNotFoundException;
     //List<Ticket> filterSearch();
 
 }
