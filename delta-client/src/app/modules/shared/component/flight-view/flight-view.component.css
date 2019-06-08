@@ -200,7 +200,8 @@ button:hover {
 /* Float cancel and signup buttons and add an equal width */
 .cancelbtn, .signupbtn, .loginbtn {
   float: left;
-  width: 100px;
+  width: 80px;
+  height: 50px;
   transition-delay: 0.1s;
   transform: perspective(1px) translateZ(0);
   transition-duration: 0.3s;

@@ -34,6 +34,7 @@
             <td class="buttons" *ngIf="flight.deleted === false">
               <div class="buts">
                 <button *ngIf="admin !== undefined" class="loginbtn btn" (click)="edit(flight)">EDIT</button>
+                <button *ngIf="admin !== undefined" class="loginbtn btn" (click)="discount(flight)">DISCOUNT TICKETS</button>
                 <button *ngIf="admin !== undefined" class="cancelbtn btn" (click)="delete(flight)">DELETE</button>
                 <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="reserveTickets(flight)">RESERVE TICKETS</button>
               </div>

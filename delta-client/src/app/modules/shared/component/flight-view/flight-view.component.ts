@@ -9,6 +9,7 @@ import {EditFlightComponent} from '../../../moderation/flight/edit-flight/edit-f
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {PlaceAndTime} from '../../model/place-and-time';
+import {DiscountTicketsComponent} from "../../../moderation/ticket/discount-tickets/discount-tickets.component";
 
 @Component({
   selector: 'app-flight-view',
@@ -82,9 +83,12 @@ export class FlightViewComponent implements OnInit {
   setAdmin(admin: AirlineCompanyAdmin) {
     this.admin = admin;
     // this.flights = admin.airlineCompany.flights;
+    this.flights = [];
     for (let i = 0; i < admin.airlineCompany.flights.length; i++) {
       if (admin.airlineCompany.flights[i].deleted === false) {
-        this.flights.push(admin.airlineCompany.flights[i]);
+        if (!this.flights.includes(admin.airlineCompany.flights[i])) {
+          this.flights.push(admin.airlineCompany.flights[i]);
+        }
       }
     }
     console.log(this.flights);
@@ -160,6 +164,27 @@ export class FlightViewComponent implements OnInit {
           }
         }
       );
+    }
+  }
+  discount(flight: Flight) {
+    if (this.admin.airlineCompany !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = {
+        id: 1,
+        flight
+      };
+      const dialogRef = this.dialog.open(DiscountTicketsComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(
+        result => {
+          console.log('Dialog closed.');
+          console.log(result);
+          this.loadAll();
+        }
+      );
+    } else {
+      console.log('The flight does not belong to your company.');
     }
   }
   reserveTickets(flight: Flight) {

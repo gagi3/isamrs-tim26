@@ -129,9 +129,13 @@ public class TicketServiceImpl implements TicketService {
                     if (t.get().getPassenger() != null) {
                         throw new ObjectNotFoundException("Ticket already purchased!");
                     }
-                    t.get().setPrice(ticket.getPrice() * (100 - priceList.get().getDiscountPercentage()) / 100);
-                    update(t.get());
-                    disc.add(t.get());
+                    if (company.get().getDiscountedTickets().contains(t.get())) {
+                        throw new ObjectNotFoundException("Ticket already discounted!");
+                    } else {
+                        t.get().setPrice(ticket.getPrice() * (100 - priceList.get().getDiscountPercentage()) / 100);
+                        update(t.get());
+                        disc.add(t.get());
+                    }
                 }
             }
             if (company.get().getDiscountedTickets() != null) {

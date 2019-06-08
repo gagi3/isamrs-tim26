@@ -31,32 +31,26 @@ export class DiscountTicketsComponent implements OnInit {
               private service: TicketService, private flightService: FlightService, private tokenStorage: TokenStorageService,
               private adminService: ProfileService) { }
   cancel() {
-    this.router.navigateByUrl('');
+    this.dialogRef.close();
   }
   ngOnInit() {
-    // this.dialogRef.updateSize('40%', '80%');
+    this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
     this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
       data => {
         this.admin = data;
       }
     );
-    // this.flight = this.data;
-    this.flightService.getOne(11).subscribe(
-      data => {
-        this.flight = data;
-        this.getFlight(data);
-      }
-    );
-  }
-  getFlight(flight: Flight) {
-    this.flight = flight;
+    this.flight = this.data.flight;
+    console.log(this.data);
+    console.log(this.flight);
     this.reread();
+    this.refresh();
   }
   reread() {
     this.calcRows();
     this.mapTickets();
-    console.log(this.flight);
+    // console.log(this.flight);
   }
   onSubmit() {
     this.service.discount(this.dto).subscribe(
@@ -81,7 +75,9 @@ export class DiscountTicketsComponent implements OnInit {
       for (let j = 0; j < this.col; j++) {
         for (const ticket of this.flight.tickets) {
           if (ticket.seat.row === i + 1 && ticket.seat.column === j + 1) {
-            rowSeats.push(ticket);
+            if (ticket.deleted === false) {
+              rowSeats.push(ticket);
+            }
           }
         }
       }
@@ -103,6 +99,27 @@ export class DiscountTicketsComponent implements OnInit {
   }
 
   refresh() {
+    for (let i = 0; i < this.tix.length; i++) {
+      for (let j = 0; j < this.tix[i].length; j++) {
+        if (this.tix[i][j].seat.seatClass.toString() === 'ECONOMY') {
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.border = '3px solid #993399';
+        } else if (this.tix[i][j].seat.seatClass.toString() === 'BUSINESS') {
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.border = '3px solid #3385ff';
+        } else if (this.tix[i][j].seat.seatClass.toString() === 'FIRST') {
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.border = '3px solid #00ffa5';
+        } else {
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.border = '3px solid #f1f1f1';
+        }
+        if (!this.checkPass(this.tix[i][j])) {
+          console.log('undefined');
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
+        }
+        if (!this.checkDisc(this.tix[i][j])) {
+          console.log('exists');
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
+        }
+      }
+    }
     if (this.col === 6) {
       document.getElementsByClassName('seat').item(2).setAttribute('margin-right', '11.1%');
       document.getElementsByClassName('seat').item(2).setAttribute('margin-right', '11.1%');
@@ -121,9 +138,54 @@ export class DiscountTicketsComponent implements OnInit {
     }
   }
   seatAction(ticket: Ticket) {
+    console.log(this.dto.tickets);
     console.log(ticket);
-    document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = 'red';
-    this.dto.tickets.push(ticket);
+    console.log(this.admin.airlineCompany.discountedTickets);
+    // this.refresh();
+    console.log(this.checkPass(ticket));
+    if (!this.checkPass(ticket)) {
+      alert('Ticket already reserved!');
+    } else if (!this.checkDisc(ticket)) {
+      alert('Ticket already discounted!');
+    } else if (ticket.deleted) {
+      alert('Ticket deleted!');
+    } else if (!this.checkDTO(ticket)) {
+      document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = '#f1f1f1';
+      const index = this.dto.tickets.indexOf(ticket);
+      if (index !== -1) {
+        this.dto.tickets.splice(index, 1);
+      }
+    } else {
+      this.dto.tickets.push(ticket);
+      if (ticket.seat.seatClass.toString() === 'ECONOMY') {
+        document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = '#993399';
+      } else if (ticket.seat.seatClass.toString() === 'BUSINESS') {
+        document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = '#3385ff';
+      } else if (ticket.seat.seatClass.toString() === 'FIRST') {
+        document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = '#00ffa5';
+      } else {
+        document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = '#f1f1f1';
+      }
+    }
+  }
+  checkPass(ticket: Ticket): boolean {
+    return ticket.passenger === null;
+  }
+  checkDisc(ticket: Ticket): boolean {
+    for (const t of this.admin.airlineCompany.discountedTickets) {
+      if (t.id === ticket.id) {
+        return false;
+      }
+    }
+    return true;
+  }
+  checkDTO(ticket: Ticket): boolean {
+    for (const t of this.dto.tickets) {
+      if (t.id === ticket.id) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }
