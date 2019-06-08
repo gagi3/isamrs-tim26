@@ -19,6 +19,8 @@ public interface TicketService {
     List<Ticket> discount(List<Ticket> tix) throws ObjectNotFoundException;
 
     List<Ticket> getDiscounted() throws ObjectNotFoundException;
+
+    Ticket reserve(Ticket ticket, Boolean quick) throws ObjectNotFoundException;
     //List<Ticket> filterSearch();
 
 }

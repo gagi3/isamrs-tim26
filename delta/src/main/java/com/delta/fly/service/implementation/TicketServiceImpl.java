@@ -6,7 +6,9 @@ import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.*;
 import com.delta.fly.repository.PriceListRepository;
 import com.delta.fly.repository.TicketRepository;
+import com.delta.fly.security.TokenUtils;
 import com.delta.fly.service.abstraction.AirlineCompanyService;
+import com.delta.fly.service.abstraction.PassengerService;
 import com.delta.fly.service.abstraction.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private PassengerService passengerService;
+
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @Override
     public List<Ticket> findAll() {
@@ -184,4 +192,53 @@ public class TicketServiceImpl implements TicketService {
         }
         return price * flight.getDistance();
     }
+
+    @Override
+    public Ticket reserve(Ticket ticket, Boolean quick) throws ObjectNotFoundException {
+        Optional<Ticket> quickTicket = Optional.empty();
+        Optional<Passenger> passenger;
+        try {
+            if (quick) {
+                for (AirlineCompany company : airlineCompanyService.findAll()) {
+                    for (Ticket t : company.getDiscountedTickets()) {
+                        if (t.getId().equals(ticket.getId())) {
+                            quickTicket = Optional.of(ticketRepository.getOne(ticket.getId()));
+                        }
+                    }
+                }
+                if (!quickTicket.isPresent()) {
+                    throw new ObjectNotFoundException("Ticket not previously discounted!");
+                }
+            } else {
+                quickTicket = Optional.of(ticketRepository.getOne(ticket.getId()));
+            }
+            if (quickTicket.get().getPassenger() != null) {
+                throw new ObjectNotFoundException("Ticket already reserved.");
+            }
+            passenger = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!passenger.isPresent()) {
+                throw new ObjectNotFoundException("No passenger.");
+            }
+            Email email = new Email();
+            email.setMessage(emailService.reservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
+            email.setSubject("Ticket reservation");
+            email.setTo(passenger.get().getUsername());
+            emailService.send(email);
+            quickTicket.get().setPassenger(passenger.get());
+            if (passenger.get().getTickets() == null) {
+                Optional<Ticket> finalQuickTicket = quickTicket;
+                passenger.get().setTickets(new ArrayList<Ticket>() {{ add(finalQuickTicket.get()); }} );
+            } else {
+                passenger.get().getTickets().add(quickTicket.get());
+            }
+            quickTicket.get().getFlight().getAirlineCompany().getDiscountedTickets().remove(quickTicket.get());
+            airlineCompanyService.update(quickTicket.get().getFlight().getAirlineCompany());
+            passengerService.update(passenger.get());
+            return update(quickTicket.get());
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
 }
