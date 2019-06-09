@@ -17,7 +17,7 @@ import {TicketService} from '../../../moderation/ticket/ticket.service';
 })
 export class TicketsViewComponent implements OnInit {
   dto: DiscountTicketsDTO = new DiscountTicketsDTO();
-  discounted: Ticket[] = [];
+  discountedTickets: Ticket[] = [];
   username = '';
   passenger: Passenger = new Passenger();
   flight: Flight = new Flight();
@@ -26,6 +26,7 @@ export class TicketsViewComponent implements OnInit {
   errorMessage = '';
   row = 0;
   col = 0;
+  reserved = false;
   tix = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
@@ -44,18 +45,18 @@ export class TicketsViewComponent implements OnInit {
     );
     this.service.getDiscounted().subscribe(
       data => {
-        this.discounted = data;
+        this.discountedTickets = data;
       }
     );
     this.flight = this.data.flight;
-    console.log(this.data);
-    console.log(this.flight);
     this.reread();
     this.refresh();
   }
   reread() {
     this.calcRows();
     this.mapTickets();
+    console.log(this.tix);
+    // this.refresh();
     // console.log(this.flight);
   }
   onSubmit() {
@@ -64,6 +65,7 @@ export class TicketsViewComponent implements OnInit {
         alert('Ticket reservation was successful!');
         this.added = true;
         this.failed = false;
+        this.reserved = true;
         this.router.navigateByUrl('');
       }, error => {
         console.log(error);
@@ -75,6 +77,8 @@ export class TicketsViewComponent implements OnInit {
     );
   }
   mapTickets() {
+    console.log(this.flight.tickets);
+    console.log(this.flight.airplane.seats);
     const row = [];
     let rowSeats = [];
     for (let i = 0; i < this.row; i++) {
@@ -119,10 +123,12 @@ export class TicketsViewComponent implements OnInit {
         if (!this.checkPass(this.tix[i][j])) {
           console.log('undefined');
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.background = 'gray';
         }
         if (!this.checkDisc(this.tix[i][j])) {
           console.log('exists');
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
+          document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.background = 'gray';
         }
       }
     }
@@ -144,14 +150,10 @@ export class TicketsViewComponent implements OnInit {
     }
   }
   seatAction(ticket: Ticket) {
-    console.log(this.dto.tickets);
-    console.log(ticket);
-    // this.refresh();
-    console.log(this.checkPass(ticket));
     if (!this.checkPass(ticket)) {
       alert('Ticket already reserved!');
     } else if (!this.checkDisc(ticket)) {
-      alert('Ticket already discounted!');
+      alert('Ticket discounted!');
     } else if (ticket.deleted) {
       alert('Ticket deleted!');
     } else if (!this.checkDTO(ticket)) {
@@ -177,7 +179,7 @@ export class TicketsViewComponent implements OnInit {
     return ticket.passenger === null;
   }
   checkDisc(ticket: Ticket): boolean {
-    for (const t of this.discounted) {
+    for (const t of this.discountedTickets) {
       if (t.id === ticket.id) {
         return false;
       }

@@ -2,6 +2,12 @@
 
 <body>
 
+<div *ngIf = "reserved; else discountForm">
+  Reserved.
+</div>
+
+
+
 <ng-template #discountForm>
   <div class="container-all">
     <mat-dialog-actions>
@@ -10,7 +16,7 @@
 
           <div class="form-group">
             <div class="text-desc">
-              TICKETS
+              RESERVE TICKETS
             </div>
           </div>
 

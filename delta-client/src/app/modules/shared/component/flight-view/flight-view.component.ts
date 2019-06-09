@@ -10,6 +10,7 @@ import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {PlaceAndTime} from '../../model/place-and-time';
 import {DiscountTicketsComponent} from "../../../moderation/ticket/discount-tickets/discount-tickets.component";
+import {TicketsViewComponent} from "../../../consumption/reservation/tickets-view/tickets-view.component";
 
 @Component({
   selector: 'app-flight-view',
@@ -31,6 +32,7 @@ export class FlightViewComponent implements OnInit {
     this.loadAll();
   }
   loadAll() {
+    this.flights = [];
     this.whosInCharge();
     // if (this.admin !== undefined) {
     //   // this.flights = this.admin.airlineCompany.flights;
@@ -188,7 +190,25 @@ export class FlightViewComponent implements OnInit {
     }
   }
   reserveTickets(flight: Flight) {
-    // TODO: Implement passenger ticket reservation
+    if (this.passenger !== undefined) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = {
+        id: 1,
+        flight
+      };
+      const dialogRef = this.dialog.open(TicketsViewComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(
+        result => {
+          console.log('Dialog closed.');
+          console.log(result);
+          this.loadAll();
+        }
+      );
+    } else {
+      console.log('The flight does not belong to your company.');
+    }
   }
 
 }
