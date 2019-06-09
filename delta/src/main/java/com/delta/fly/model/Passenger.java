@@ -20,6 +20,9 @@ public class Passenger extends User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = CascadeType.ALL)
     private List<Passenger> friends = new ArrayList<>();
 
+    @Column(name = "passport", unique = true, nullable = false)
+    private String passport;
+
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
@@ -72,4 +75,11 @@ public class Passenger extends User implements Serializable {
         this.friends = friends;
     }
 
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
 }

@@ -80,6 +80,13 @@ public class TicketController {
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/reserve", method = RequestMethod.POST)
+    public ResponseEntity<Ticket> reserve(@RequestBody Ticket ticket) throws ObjectNotFoundException {
+        Ticket reserved = ticketService.reserve(ticket, false);
+        return new ResponseEntity<>(reserved, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/reserve/quick", method = RequestMethod.POST)
     public ResponseEntity<Ticket> quickReserve(@RequestBody Ticket ticket) throws ObjectNotFoundException {
         Ticket reserved = ticketService.reserve(ticket, true);

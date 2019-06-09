@@ -70,6 +70,7 @@ public class PassengerServiceImpl implements PassengerService {
                 passenger.get().setLastName(dto.getLastName());
                 passenger.get().setPhoneNumber(dto.getPhoneNumber());
                 passenger.get().setCity(dto.getCity());
+                passenger.get().setPassport(dto.getPassport());
                 passenger.get().setFriends(new ArrayList<>());
                 passenger.get().setTickets(new ArrayList<>());
                 Optional<Role> role = roleRepository.findByRoleName(RoleName.ROLE_PASSENGER);
@@ -110,6 +111,7 @@ public class PassengerServiceImpl implements PassengerService {
                 uPassenger.get().setLastName(passenger.getLastName());
                 uPassenger.get().setPassword(encoder.encode(passenger.getPassword()));
                 uPassenger.get().setPhoneNumber(passenger.getPhoneNumber());
+                uPassenger.get().setPassport(passenger.getPassport());
                 uPassenger.get().setTickets(passenger.getTickets());
                 uPassenger.get().setFriends(passenger.getFriends());
                 uPassenger.get().setRoles(passenger.getRoles());

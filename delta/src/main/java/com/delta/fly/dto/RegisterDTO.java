@@ -22,6 +22,9 @@ public class RegisterDTO {
     @NotBlank
     private String phoneNumber;
 
+    @NotBlank
+    private String passport;
+
     public String getUsername() {
         return username;
     }
@@ -68,5 +71,13 @@ public class RegisterDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
     }
 }
