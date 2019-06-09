@@ -168,13 +168,21 @@ public class TicketServiceImpl implements TicketService {
             }
             return discounted;
         }
-        Optional<AirlineCompany> company = Optional.ofNullable(userDetailsService.getAdmin().getAirlineCompany());
+        Optional<AirlineCompanyAdmin> admin = Optional.ofNullable(userDetailsService.getAdmin());
+        Optional<AirlineCompany> company = Optional.empty();
+        if (admin.isPresent()) {
+            company = Optional.ofNullable(admin.get().getAirlineCompany());
+        }
         if (company.isPresent()) {
             return company.get().getDiscountedTickets();
         } else {
             List<Ticket> discounted = new ArrayList<>();
             for (AirlineCompany airlineCompany : airlineCompanyService.findAll()) {
-                discounted.addAll(airlineCompany.getDiscountedTickets());
+                for (Ticket t : airlineCompany.getDiscountedTickets()) {
+                    if (!t.getDeleted() && t.getPassenger() == null) {
+                        discounted.add(t);
+                    }
+                }
             }
             return discounted;
         }

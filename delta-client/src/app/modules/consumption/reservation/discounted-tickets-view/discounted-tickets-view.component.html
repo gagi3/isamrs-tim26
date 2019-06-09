@@ -1,0 +1,46 @@
+<html>
+<body>
+
+<div class="container-all">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th *ngIf="passenger !== undefined" scope="col">Airplane</th>
+      <th scope="col">Departure place</th>
+      <th scope="col">Departure time</th>
+      <th scope="col">Arrival place</th>
+      <th scope="col">Arrival time</th>
+      <th scope="col">Transfer 1 place</th>
+      <th scope="col">Transfer 1 time</th>
+      <th scope="col">Transfer 2 place</th>
+      <th scope="col">Transfer 2 time</th>
+      <th scope="col">Distance</th>
+      <th *ngIf="passenger !== undefined" scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ticket of discountedTickets">
+      <ng-container *ngIf="ticket.deleted === false">
+        <td *ngIf="passenger !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.airplane.name}}</div></td>
+        <td *ngIf="ticket.deleted === false"><div class="table-cell">{{ticket.flight.departure.thePlace}}</div></td>
+        <td *ngIf="ticket.deleted === false"><div class="table-cell">{{ticket.flight.departure.theTime}}</div></td>
+        <td *ngIf="ticket.deleted === false"><div class="table-cell">{{ticket.flight.arrival.thePlace}}</div></td>
+        <td *ngIf="ticket.deleted === false"><div class="table-cell">{{ticket.flight.arrival.theTime}}</div></td>
+        <td *ngIf="ticket.flight.transfers[0] !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.transfers[0].thePlace}}</div></td>
+        <td *ngIf="ticket.flight.transfers[0] !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.transfers[0].theTime}}</div></td>
+        <td *ngIf="ticket.flight.transfers[1] !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.transfers[1].thePlace}}</div></td>
+        <td *ngIf="ticket.flight.transfers[1] !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.transfers[1].theTime}}</div></td>
+        <td *ngIf="ticket.deleted === false"><div class="table-cell">{{ticket.flight.distance}}</div></td>
+        <td class="buttons" *ngIf="ticket.deleted === false">
+          <div class="buts">
+            <button *ngIf="passenger !== undefined" class="loginbtn btn" (click)="quickReserve(ticket)">RESERVE</button>
+          </div>
+        </td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

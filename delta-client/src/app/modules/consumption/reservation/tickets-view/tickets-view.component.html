@@ -1,0 +1,55 @@
+<html>
+
+<body>
+
+<ng-template #discountForm>
+  <div class="container-all">
+    <mat-dialog-actions>
+      <div class="row col-sm-6" style="max-width:800px;">
+        <form class="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+          <div class="form-group">
+            <div class="text-desc">
+              TICKETS
+            </div>
+          </div>
+
+
+          <div class="plane">
+
+            <div class="exit exit--front fuselage">
+
+            </div>
+            <ol class="cabin fuselage">
+              <li *ngFor="let tickets of tix" class="row row--1">
+                <ol class="seats" type="A">
+                  <li *ngFor="let tic of tickets" class="seat" id="seat">
+                    <input  type="checkbox" [id]="tic" />
+                    <label (click)="seatAction(tic); refresh()" id="seat-label-{{tic.seat.row}}-{{tic.seat.column}}" class="seat-label" [for]="tic.seat">{{tic.seat.row + ":" + tic.seat.column}}</label>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+            <div class="exit exit--back fuselage">
+
+            </div>
+          </div>
+
+          <div class="bts2">
+            <div class="form-group">
+              <button type="submit" class="signinbtn btn">DISCOUNT</button>
+              <div *ngIf="f.submitted && failed" class="alert alert-warning">
+                Failed!<br/>{{errorMessage}}
+              </div>
+              <button class="cancelbtn btn" type="button" (click)="cancel()">CANCEL</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-dialog-actions>
+  </div>
+</ng-template>
+
+</body>
+
+</html>

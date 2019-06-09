@@ -10,10 +10,12 @@ import {AirlineCompanyRegistrationComponent} from './modules/administration/airl
 import {AddAirplaneComponent} from './modules/moderation/airplane/add-airplane/add-airplane.component';
 import {AddPriceListComponent} from './modules/moderation/price-list/add-price-list/add-price-list.component';
 import {EditPriceListComponent} from './modules/moderation/price-list/edit-price-list/edit-price-list.component';
-import {AddFlightComponent} from "./modules/moderation/flight/add-flight/add-flight.component";
-import {EditFlightComponent} from "./modules/moderation/flight/edit-flight/edit-flight.component";
-import {FlightViewComponent} from "./modules/shared/component/flight-view/flight-view.component";
-import {DiscountTicketsComponent} from "./modules/moderation/ticket/discount-tickets/discount-tickets.component";
+import {AddFlightComponent} from './modules/moderation/flight/add-flight/add-flight.component';
+import {EditFlightComponent} from './modules/moderation/flight/edit-flight/edit-flight.component';
+import {FlightViewComponent} from './modules/shared/component/flight-view/flight-view.component';
+import {DiscountTicketsComponent} from './modules/moderation/ticket/discount-tickets/discount-tickets.component';
+import {DiscountedTicketsViewComponent} from './modules/consumption/reservation/discounted-tickets-view/discounted-tickets-view.component';
+import {TicketsViewComponent} from './modules/consumption/reservation/tickets-view/tickets-view.component';
 
 const routes: Routes = [
   // {
@@ -39,6 +41,14 @@ const routes: Routes = [
   {
     path: 'ticket/discount',
     component: DiscountTicketsComponent
+  },
+  {
+    path: 'ticket/discounted',
+    component: DiscountedTicketsViewComponent
+  },
+  {
+    path: 'ticket/view',
+    component: TicketsViewComponent
   },
   {
     path: 'price-list/add',

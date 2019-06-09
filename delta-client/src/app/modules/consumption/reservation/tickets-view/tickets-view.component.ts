@@ -1,24 +1,25 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {DiscountTicketsDTO} from '../discount-tickets-dto';
-import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Flight} from '../../../shared/model/flight';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
-import {TicketService} from '../ticket.service';
-import {FlightService} from '../../flight/flight.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {Ticket} from '../../../shared/model/ticket';
+import {DiscountTicketsDTO} from '../../../moderation/ticket/discount-tickets-dto';
+import {FlightService} from '../../../moderation/flight/flight.service';
+import {Passenger} from '../../../account/profile/shared/model/passenger';
+import {TicketService} from '../../../moderation/ticket/ticket.service';
 
 @Component({
-  selector: 'app-discount-tickets',
-  templateUrl: './discount-tickets.component.html',
-  styleUrls: ['./discount-tickets.component.css']
+  selector: 'app-tickets-view',
+  templateUrl: './tickets-view.component.html',
+  styleUrls: ['./tickets-view.component.css']
 })
-export class DiscountTicketsComponent implements OnInit {
+export class TicketsViewComponent implements OnInit {
   dto: DiscountTicketsDTO = new DiscountTicketsDTO();
+  discounted: Ticket[] = [];
   username = '';
-  admin: AirlineCompanyAdmin = new AirlineCompanyAdmin();
+  passenger: Passenger = new Passenger();
   flight: Flight = new Flight();
   added = false;
   failed = false;
@@ -29,19 +30,26 @@ export class DiscountTicketsComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: TicketService, private flightService: FlightService, private tokenStorage: TokenStorageService,
-              private adminService: ProfileService) { }
+              private profileService: ProfileService) { }
   cancel() {
     this.dialogRef.close();
   }
   ngOnInit() {
     this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
-    this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
+    this.profileService.getPassengerByUsername(this.username).subscribe(
       data => {
-        this.admin = data;
+        this.passenger = data;
+      }
+    );
+    this.service.getDiscounted().subscribe(
+      data => {
+        this.discounted = data;
       }
     );
     this.flight = this.data.flight;
+    console.log(this.data);
+    console.log(this.flight);
     this.reread();
     this.refresh();
   }
@@ -51,9 +59,9 @@ export class DiscountTicketsComponent implements OnInit {
     // console.log(this.flight);
   }
   onSubmit() {
-    this.service.discount(this.dto).subscribe(
+    this.service.reserve(this.dto).subscribe(
       data => {
-        alert('Discounting tickets was successful!');
+        alert('Ticket reservation was successful!');
         this.added = true;
         this.failed = false;
         this.router.navigateByUrl('');
@@ -109,9 +117,11 @@ export class DiscountTicketsComponent implements OnInit {
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.border = '3px solid #f1f1f1';
         }
         if (!this.checkPass(this.tix[i][j])) {
+          console.log('undefined');
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
         }
         if (!this.checkDisc(this.tix[i][j])) {
+          console.log('exists');
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
         }
       }
@@ -134,7 +144,10 @@ export class DiscountTicketsComponent implements OnInit {
     }
   }
   seatAction(ticket: Ticket) {
+    console.log(this.dto.tickets);
+    console.log(ticket);
     // this.refresh();
+    console.log(this.checkPass(ticket));
     if (!this.checkPass(ticket)) {
       alert('Ticket already reserved!');
     } else if (!this.checkDisc(ticket)) {
@@ -164,7 +177,7 @@ export class DiscountTicketsComponent implements OnInit {
     return ticket.passenger === null;
   }
   checkDisc(ticket: Ticket): boolean {
-    for (const t of this.admin.airlineCompany.discountedTickets) {
+    for (const t of this.discounted) {
       if (t.id === ticket.id) {
         return false;
       }
