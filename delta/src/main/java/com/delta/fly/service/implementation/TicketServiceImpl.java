@@ -1,5 +1,6 @@
 package com.delta.fly.service.implementation;
 
+import com.delta.fly.dto.FriendReservationDTO;
 import com.delta.fly.enumeration.Class;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
@@ -70,6 +71,7 @@ public class TicketServiceImpl implements TicketService {
             ticket.get().setPrice(setPrice(priceList.get(), seat, flight));
             ticket.get().setFlight(flight);
             ticket.get().setDeleted(false);
+            ticket.get().setConfirmed(false);
 //            ticket.get().setPassenger(null);
             return ticketRepository.save(ticket.get());
         } catch (InvalidInputException ex) {
@@ -219,6 +221,11 @@ public class TicketServiceImpl implements TicketService {
                 }
             } else {
                 quickTicket = Optional.of(ticketRepository.getOne(ticket.getId()));
+                for (AirlineCompany company : airlineCompanyService.findAll()) {
+                    if (company.getDiscountedTickets().contains(quickTicket.get())) {
+                        throw new ObjectNotFoundException("Ticket is discounted, therefore unavailable for reservation.");
+                    }
+                }
             }
             if (quickTicket.get().getPassenger() != null) {
                 throw new ObjectNotFoundException("Ticket already reserved.");
@@ -227,6 +234,7 @@ public class TicketServiceImpl implements TicketService {
             if (!passenger.isPresent()) {
                 throw new ObjectNotFoundException("No passenger.");
             }
+            quickTicket.get().setConfirmed(true);
             Email email = new Email();
             email.setMessage(emailService.reservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
             email.setSubject("Ticket reservation");
@@ -243,6 +251,80 @@ public class TicketServiceImpl implements TicketService {
             airlineCompanyService.update(quickTicket.get().getFlight().getAirlineCompany());
             passengerService.update(passenger.get());
             return update(quickTicket.get());
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public Ticket friendReserve(FriendReservationDTO dto) throws ObjectNotFoundException {
+        Optional<Ticket> quickTicket;
+        Optional<Passenger> passenger;
+        Optional<Passenger> you;
+        try {
+            you = Optional.of(userDetailsService.getPassenger());
+            if (!you.isPresent()) {
+                throw new ObjectNotFoundException("Unauthorized.");
+            }
+            quickTicket = Optional.of(ticketRepository.getOne(dto.getTicket().getId()));
+            for (AirlineCompany company : airlineCompanyService.findAll()) {
+                if (company.getDiscountedTickets().contains(quickTicket.get())) {
+                    throw new ObjectNotFoundException("Ticket is discounted, therefore unavailable for reservation.");
+                }
+            }
+            if (quickTicket.get().getPassenger() != null) {
+                throw new ObjectNotFoundException("Ticket already reserved.");
+            }
+            passenger = Optional.ofNullable(passengerService.getOne(dto.getPassenger().getId()));
+            if (!passenger.isPresent()) {
+                throw new ObjectNotFoundException("No passenger.");
+            }
+            if (!you.get().getFriends().contains(passenger.get()) || !passenger.get().getFriends().contains(you.get())) {
+                throw new ObjectNotFoundException("You are not friends!");
+            }
+            Email email = new Email();
+            email.setMessage(emailService.reservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
+            email.setSubject("Confirm ticket reservation");
+            email.setTo(passenger.get().getUsername());
+            emailService.send(email);
+            quickTicket.get().setPassenger(passenger.get());
+            if (passenger.get().getTickets() == null) {
+                Optional<Ticket> finalQuickTicket = quickTicket;
+                passenger.get().setTickets(new ArrayList<Ticket>() {{ add(finalQuickTicket.get()); }} );
+            } else {
+                passenger.get().getTickets().add(quickTicket.get());
+            }
+            quickTicket.get().getFlight().getAirlineCompany().getDiscountedTickets().remove(quickTicket.get());
+            airlineCompanyService.update(quickTicket.get().getFlight().getAirlineCompany());
+            passengerService.update(passenger.get());
+            return update(quickTicket.get());
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public Boolean confirm(Long ticketID) throws ObjectNotFoundException {
+        Optional<Ticket> ticket;
+        Optional<Passenger> passenger;
+        try {
+            ticket = ticketRepository.findById(ticketID);
+            if (!ticket.isPresent()) {
+                throw new ObjectNotFoundException("Ticket not found!");
+            }
+            passenger = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!passenger.isPresent()) {
+                throw new ObjectNotFoundException("Passenger not found!");
+            }
+            if (!passenger.get().equals(ticket.get().getPassenger())) {
+                throw new ObjectNotFoundException("This is not your ticket.");
+            }
+            ticket.get().setConfirmed(true);
+            update(ticket.get());
+            return ticket.get().getConfirmed();
+
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);

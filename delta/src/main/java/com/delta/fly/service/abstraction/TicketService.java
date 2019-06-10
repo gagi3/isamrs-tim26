@@ -1,5 +1,6 @@
 package com.delta.fly.service.abstraction;
 
+import com.delta.fly.dto.FriendReservationDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Flight;
@@ -21,6 +22,10 @@ public interface TicketService {
     List<Ticket> getDiscounted() throws ObjectNotFoundException;
 
     Ticket reserve(Ticket ticket, Boolean quick) throws ObjectNotFoundException;
+
+    Ticket friendReserve(FriendReservationDTO dto) throws ObjectNotFoundException;
+
+    Boolean confirm(Long ticketID) throws ObjectNotFoundException;
     //List<Ticket> filterSearch();
 
 }

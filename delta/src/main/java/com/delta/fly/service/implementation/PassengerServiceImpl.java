@@ -63,7 +63,7 @@ public class PassengerServiceImpl implements PassengerService {
                 throw new InvalidInputException("Passenger with phone number: " + dto.getPhoneNumber() + " already exists!");
             }
             if (!passenger.isPresent()) {
-                passenger = Optional.ofNullable(new Passenger());
+                passenger = Optional.of(new Passenger());
                 passenger.get().setUsername(dto.getUsername());
                 passenger.get().setPassword(encoder.encode(dto.getPassword()));
                 passenger.get().setFirstName(dto.getFirstName());
@@ -89,10 +89,10 @@ public class PassengerServiceImpl implements PassengerService {
                 email.setSubject("Account activation");
                 email.setTo(passenger.get().getUsername());
                 emailService.send(email);
+                return passengerRepository.save(passenger.get());
             } else {
                 throw new InvalidInputException("Passenger with email: " + dto.getUsername() + " already exists!");
             }
-            return passengerRepository.save(passenger.get());
         } catch (InvalidInputException ex) {
             ex.printStackTrace();
             throw new InvalidInputException("Invalid input!", ex);
@@ -109,7 +109,7 @@ public class PassengerServiceImpl implements PassengerService {
                 uPassenger.get().setCity(passenger.getCity());
                 uPassenger.get().setFirstName(passenger.getFirstName());
                 uPassenger.get().setLastName(passenger.getLastName());
-                uPassenger.get().setPassword(encoder.encode(passenger.getPassword()));
+                uPassenger.get().setPassword(passenger.getPassword());
                 uPassenger.get().setPhoneNumber(passenger.getPhoneNumber());
                 uPassenger.get().setPassport(passenger.getPassport());
                 uPassenger.get().setTickets(passenger.getTickets());

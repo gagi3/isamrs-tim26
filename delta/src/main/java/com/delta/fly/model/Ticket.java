@@ -37,6 +37,9 @@ public class Ticket implements Serializable {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
+    @Column(name = "confirmed", unique = false, nullable = false)
+    private Boolean confirmed;
+
     public Ticket() {
     }
 
@@ -97,5 +100,13 @@ public class Ticket implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
     }
 }
