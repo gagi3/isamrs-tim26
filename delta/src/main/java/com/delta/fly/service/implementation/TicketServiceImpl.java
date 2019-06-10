@@ -170,23 +170,29 @@ public class TicketServiceImpl implements TicketService {
             }
             return discounted;
         }
-        Optional<AirlineCompanyAdmin> admin = Optional.ofNullable(userDetailsService.getAdmin());
-        Optional<AirlineCompany> company = Optional.empty();
-        if (admin.isPresent()) {
-            company = Optional.ofNullable(admin.get().getAirlineCompany());
-        }
-        if (company.isPresent()) {
-            return company.get().getDiscountedTickets();
-        } else {
-            List<Ticket> discounted = new ArrayList<>();
-            for (AirlineCompany airlineCompany : airlineCompanyService.findAll()) {
-                for (Ticket t : airlineCompany.getDiscountedTickets()) {
-                    if (!t.getDeleted() && t.getPassenger() == null) {
-                        discounted.add(t);
+        Optional<AirlineCompanyAdmin> admin = Optional.empty();
+        try {
+            admin = Optional.ofNullable(userDetailsService.getAdmin());
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+        } finally {
+            Optional<AirlineCompany> company = Optional.empty();
+            if (admin.isPresent()) {
+                company = Optional.ofNullable(admin.get().getAirlineCompany());
+            }
+            if (company.isPresent()) {
+                return company.get().getDiscountedTickets();
+            } else {
+                List<Ticket> discounted = new ArrayList<>();
+                for (AirlineCompany airlineCompany : airlineCompanyService.findAll()) {
+                    for (Ticket t : airlineCompany.getDiscountedTickets()) {
+                        if (!t.getDeleted() && t.getPassenger() == null) {
+                            discounted.add(t);
+                        }
                     }
                 }
+                return discounted;
             }
-            return discounted;
         }
     }
 
@@ -234,6 +240,13 @@ public class TicketServiceImpl implements TicketService {
             if (!passenger.isPresent()) {
                 throw new ObjectNotFoundException("No passenger.");
             }
+            for (Ticket t : quickTicket.get().getFlight().getTickets()) {
+                if (t.getPassenger() != null) {
+                    if (t.getPassenger().equals(passenger.get())) {
+                        throw new ObjectNotFoundException("You cannot reserve more than one ticket for a flight!");
+                    }
+                }
+            }
             quickTicket.get().setConfirmed(true);
             Email email = new Email();
             email.setMessage(emailService.reservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
@@ -263,7 +276,7 @@ public class TicketServiceImpl implements TicketService {
         Optional<Passenger> passenger;
         Optional<Passenger> you;
         try {
-            you = Optional.of(userDetailsService.getPassenger());
+            you = Optional.ofNullable(userDetailsService.getPassenger());
             if (!you.isPresent()) {
                 throw new ObjectNotFoundException("Unauthorized.");
             }
@@ -283,8 +296,13 @@ public class TicketServiceImpl implements TicketService {
             if (!you.get().getFriends().contains(passenger.get()) || !passenger.get().getFriends().contains(you.get())) {
                 throw new ObjectNotFoundException("You are not friends!");
             }
+            for (Ticket t : quickTicket.get().getFlight().getTickets()) {
+                if (t.getPassenger().equals(passenger.get())) {
+                    throw new ObjectNotFoundException("You cannot reserve more than one ticket for a flight!");
+                }
+            }
             Email email = new Email();
-            email.setMessage(emailService.reservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
+            email.setMessage(emailService.friendReservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
             email.setSubject("Confirm ticket reservation");
             email.setTo(passenger.get().getUsername());
             emailService.send(email);

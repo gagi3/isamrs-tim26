@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Flight} from '../../../shared/model/flight';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../../../shared/token-storage.service';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
@@ -9,6 +9,8 @@ import {DiscountTicketsDTO} from '../../../moderation/ticket/discount-tickets-dt
 import {FlightService} from '../../../moderation/flight/flight.service';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
+import {EditFlightComponent} from '../../../moderation/flight/edit-flight/edit-flight.component';
+import {TicketReservationComponent} from '../ticket-reservation/ticket-reservation.component';
 
 @Component({
   selector: 'app-tickets-view',
@@ -18,6 +20,7 @@ import {TicketService} from '../../../moderation/ticket/ticket.service';
 export class TicketsViewComponent implements OnInit {
   dto: DiscountTicketsDTO = new DiscountTicketsDTO();
   discountedTickets: Ticket[] = [];
+  selectedTicket: Ticket = new Ticket();
   username = '';
   passenger: Passenger = new Passenger();
   flight: Flight = new Flight();
@@ -31,7 +34,7 @@ export class TicketsViewComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: TicketService, private flightService: FlightService, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService) { }
+              private profileService: ProfileService, public dialog: MatDialog) { }
   cancel() {
     this.dialogRef.close();
   }
@@ -60,21 +63,8 @@ export class TicketsViewComponent implements OnInit {
     // console.log(this.flight);
   }
   onSubmit() {
-    this.service.reserve(this.dto).subscribe(
-      data => {
-        alert('Ticket reservation was successful!');
-        this.added = true;
-        this.failed = false;
-        this.reserved = true;
-        this.router.navigateByUrl('');
-      }, error => {
-        console.log(error);
-        this.errorMessage = error.errorMessage;
-        this.added = false;
-        this.failed = true;
-        alert(this.errorMessage);
-      }
-    );
+    alert('Reserved.');
+    this.router.navigateByUrl('');
   }
   mapTickets() {
     console.log(this.flight.tickets);
@@ -121,12 +111,10 @@ export class TicketsViewComponent implements OnInit {
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.border = '3px solid #f1f1f1';
         }
         if (!this.checkPass(this.tix[i][j])) {
-          console.log('undefined');
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.background = 'gray';
         }
         if (!this.checkDisc(this.tix[i][j])) {
-          console.log('exists');
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.pointerEvents = 'none';
           document.getElementById('seat-label-' + this.tix[i][j].seat.row + '-' + this.tix[i][j].seat.column).style.background = 'gray';
         }
@@ -164,6 +152,7 @@ export class TicketsViewComponent implements OnInit {
       }
     } else {
       this.dto.tickets.push(ticket);
+      this.selectedTicket = ticket;
       if (ticket.seat.seatClass.toString() === 'ECONOMY') {
         document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = '#993399';
       } else if (ticket.seat.seatClass.toString() === 'BUSINESS') {
@@ -173,6 +162,28 @@ export class TicketsViewComponent implements OnInit {
       } else {
         document.getElementById('seat-label-' + ticket.seat.row + '-' + ticket.seat.column).style.background = '#f1f1f1';
       }
+    }
+  }
+  reservation(ticket: Ticket) {
+    if (this.passenger.id !== undefined) {
+      const dialogConfig = new MatDialogConfig();
+      this.dialogRef.updateSize('100%', '100%');
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = {
+        id: 1,
+        ticket
+      };
+      const dialogRef = this.dialog.open(TicketReservationComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(
+        result => {
+          console.log('Dialog closed.');
+          console.log(result);
+          location.reload();
+        }
+      );
+    } else {
+      console.log('Passenger doesn\'t exist.');
     }
   }
   checkPass(ticket: Ticket): boolean {

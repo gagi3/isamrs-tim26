@@ -16,6 +16,7 @@ import {FlightViewComponent} from './modules/shared/component/flight-view/flight
 import {DiscountTicketsComponent} from './modules/moderation/ticket/discount-tickets/discount-tickets.component';
 import {DiscountedTicketsViewComponent} from './modules/consumption/reservation/discounted-tickets-view/discounted-tickets-view.component';
 import {TicketsViewComponent} from './modules/consumption/reservation/tickets-view/tickets-view.component';
+import {ConfirmationComponent} from "./modules/consumption/reservation/confirmation/confirmation.component";
 
 const routes: Routes = [
   // {
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: 'ticket/view',
     component: TicketsViewComponent
+  },
+  {
+    path: 'ticket/confirm/:ID',
+    component: ConfirmationComponent
   },
   {
     path: 'price-list/add',

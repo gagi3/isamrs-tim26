@@ -18,6 +18,8 @@ public interface PassengerService {
     Passenger update(Passenger passenger) throws ObjectNotFoundException;
     boolean delete(Long id) throws ObjectNotFoundException;
     boolean activate(String token) throws InvalidInputException, ObjectNotFoundException;
+
+    List<Passenger> getFriends() throws ObjectNotFoundException;
     //List<Passenger> filterSearch();
     
 }

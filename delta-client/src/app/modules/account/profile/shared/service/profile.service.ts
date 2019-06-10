@@ -31,6 +31,11 @@ export class ProfileService {
     const url = this.passengerURL + '/get/';
     return this.http.get<Passenger>(url + username, {headers: this.headers});
   }
+  public getFriends(): Observable<Passenger[]> {
+    httpOptions.headers.set('AuthToken', this.token);
+    const url = this.passengerURL + '/friends';
+    return this.http.get<Passenger[]>(url, httpOptions);
+  }
   public updateAirlineCompanyAdmin(admin: AirlineCompanyAdmin) {
     httpOptions.headers.set('AuthToken', this.token);
     const url = this.airlineCompanyAdminURL + '/update';

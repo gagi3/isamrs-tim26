@@ -49,6 +49,24 @@ public class EmailServiceImpl {
                 + "Delta";
     }
 
+    public String friendReservationTemplate(String name, Ticket ticket) {
+        return "Dear " + name + ",\n\n"
+                + "Your Delta friend reserved a ticket on our website.\n\n"
+                + "Details of your reservation are given below.\n\n"
+                + "Airline company: " + ticket.getFlight().getAirlineCompany().getName() + "\n"
+                + "Airplane: " + ticket.getFlight().getAirplane().getName() + "\n"
+                + "Seat: row: " + ticket.getSeat().getRow() + ", column: " + ticket.getSeat().getColumn() + ", class: " + ticket.getSeat().getSeatClass().toString() + "\n"
+                + "Departure: " + ticket.getFlight().getDeparture().getThePlace() + ", " + ticket.getFlight().getDeparture().getTheTime().toString() + "\n"
+                + "Arrival: " + ticket.getFlight().getArrival().getThePlace() + ", " + ticket.getFlight().getArrival().getTheTime().toString() + "\n"
+                + "Distance: " + ticket.getFlight().getDistance() + "\n"
+                + transfers(ticket) + "\n"
+                + "Price: " + ticket.getPrice() + "\n"
+                + "If you want to confirm your reservation, click on the link below.\n\n"
+                + "http://localhost:4200/ticket/confirm/" + ticket.getId() + "\n\n"
+                + "Sincerely yours,\n\n"
+                + "Delta";
+    }
+
     private String transfers(Ticket ticket) {
         if (ticket.getFlight().getTransfers().size() == 2) {
             return "Transfer point 1: " + ticket.getFlight().getTransfers().get(0).getThePlace() + ", " + ticket.getFlight().getTransfers().get(0).getTheTime().toString() + "\n"

@@ -1,0 +1,22 @@
+<div *ngIf="confirmed; else validateForm">
+  Validation successful!
+</div>
+
+<ng-template #validateForm>
+  <div class="container-all">
+    <div class="row col-sm-6" style="max-width:350px;">
+      <div class="form-group">
+        <div class="text-desc">Thank you for confirming your reservation.</div>
+      </div>
+      <div class="form-group">
+        <div class="text-desc">The reservation process is now complete. Enjoy your flight.</div>
+      </div>
+      <div class="form-group">
+        <div class="text-desc">Click the button below to continue browsing.</div>
+      </div>
+      <div class="form-group">
+        <button class="validatebtn btn" (click)="reroute()">MAIN PAGE</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

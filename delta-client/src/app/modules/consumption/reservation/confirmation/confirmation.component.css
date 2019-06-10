@@ -1,0 +1,163 @@
+body {
+  font-family: Helvetica, Roboto, monospace;
+  opacity: 0.7;
+  background: inherit;
+  overflow: hidden;
+}
+* {box-sizing: border-box}
+html {
+  background: inherit;
+  overflow: hidden;
+}
+
+.container-all:before {
+  content: '';
+  top: -25px;
+  left: -25px;
+  right: -25px;
+  bottom: -25px;
+  background: inherit;
+  position: absolute;
+  height: 1%;
+  width: 25%;
+  border-radius: 15px;
+  margin: 0 auto 0 auto;
+  margin-top: 23%;
+  margin-bottom: 25%;
+  z-index: -1;
+  padding-top: 10%;
+  box-shadow: inset 0 0 3000px rgba(255, 255, 255, .3);
+  filter: url('#blur');
+  filter: blur(0.1px);
+}
+
+.container-all {
+  overflow: hidden;
+  background: inherit;
+  height: 20%;
+  width: 40%;
+  padding-top: 23%;
+  margin: 0 auto 0 auto;
+}
+
+.row {
+  background: inherit;
+  width: 90%;
+  margin: 0 auto 0 auto;
+  color: #fff;
+}
+
+form {
+  border-color: whitesmoke;
+  border-radius: 5px;
+  background: inherit;
+}
+
+.text-desc {
+  font-family: "Helvetica Neue LT Pro - Ultra Light", Roboto, monospace;
+  font-size: 16px;
+  margin: 0 auto 0 auto;
+  width: 100%;
+  background: inherit;
+}
+
+.form-group {
+  border-width: 2px;
+  border-color: whitesmoke;
+  border-radius: 5px;
+  background: inherit;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  font-family: "Helvetica Neue LT Pro - Light", Arial, sans-serif;
+  font-size: 110%;
+  background: inherit;
+  color: white;
+  border-radius: 25px;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  box-shadow: black;
+}
+
+button:hover {
+  color: white;
+  left: 0;
+}
+
+
+
+.validatebtn {
+  padding: 14px 20px;
+  background-image: linear-gradient(to bottom right, #3385ff, #00ffa5);
+}
+
+.validatebtn:hover {
+  background-image: linear-gradient(to bottom right, #00ffa5, #3385ff);
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.validatebtn {
+  float: left;
+  width: 100%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .validatebtn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .container-all:before {
+    width: 400px;
+    height: 125px;
+  }
+}
+
+/*@media screen and (max-width: 1000px) {*/
+/*  .container-all:before {*/
+/*    width: 400px;*/
+/*    height: 250px;*/
+/*  }*/
+/*}*/
+
+@media screen and (max-width: 1500px) {
+  .container-all {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .container-all {
+    width: 100%;
+    height: 100%;
+  }
+}

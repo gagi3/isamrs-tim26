@@ -31,7 +31,7 @@
                 <ol class="seats" type="A">
                   <li *ngFor="let tic of tickets" class="seat" id="seat">
                     <input  type="checkbox" [id]="tic" />
-                    <label (click)="seatAction(tic); refresh()" id="seat-label-{{tic.seat.row}}-{{tic.seat.column}}" class="seat-label" [for]="tic.seat">{{tic.seat.row + ":" + tic.seat.column}}</label>
+                    <label (click)="seatAction(tic); refresh(); reservation(tic)" id="seat-label-{{tic.seat.row}}-{{tic.seat.column}}" class="seat-label" [for]="tic.seat">{{tic.seat.row + ":" + tic.seat.column}}</label>
                   </li>
                 </ol>
               </li>

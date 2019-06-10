@@ -104,7 +104,7 @@ public class TicketController {
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/confirm/{ID}", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> quickReserve(@PathVariable Long ID) throws ObjectNotFoundException {
+    public ResponseEntity<Boolean> confirm(@PathVariable Long ID) throws ObjectNotFoundException {
         Boolean confirmed = ticketService.confirm(ID);
         return new ResponseEntity<>(confirmed, HttpStatus.OK);
     }

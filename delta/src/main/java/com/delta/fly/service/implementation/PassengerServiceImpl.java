@@ -38,6 +38,9 @@ public class PassengerServiceImpl implements PassengerService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     @Override
     public List<Passenger> findAll() {
         return passengerRepository.findAllByDeletedIsFalse();
@@ -158,6 +161,24 @@ public class PassengerServiceImpl implements PassengerService {
         }
         update(passenger.get());
         return passenger.get().getActivated();
+    }
+
+    @Override
+    public List<Passenger> getFriends() throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!you.isPresent()) {
+                throw new ObjectNotFoundException("Passenger not found!");
+            }
+            if (you.get().getFriends() == null || you.get().getFriends().size() == 0) {
+                throw new ObjectNotFoundException("You have no friends!");
+            }
+            return you.get().getFriends();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
     }
     
 }
