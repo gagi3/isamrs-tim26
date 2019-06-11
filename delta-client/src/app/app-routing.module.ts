@@ -16,7 +16,9 @@ import {FlightViewComponent} from './modules/shared/component/flight-view/flight
 import {DiscountTicketsComponent} from './modules/moderation/ticket/discount-tickets/discount-tickets.component';
 import {DiscountedTicketsViewComponent} from './modules/consumption/reservation/discounted-tickets-view/discounted-tickets-view.component';
 import {TicketsViewComponent} from './modules/consumption/reservation/tickets-view/tickets-view.component';
-import {ConfirmationComponent} from "./modules/consumption/reservation/confirmation/confirmation.component";
+import {ConfirmationComponent} from './modules/consumption/reservation/confirmation/confirmation.component';
+import {BusinessReportSelectComponent} from './modules/moderation/reservation/business-report-select/business-report-select.component';
+import {BusinessReportViewComponent} from './modules/moderation/reservation/business-report-view/business-report-view.component';
 
 const routes: Routes = [
   // {
@@ -54,6 +56,14 @@ const routes: Routes = [
   {
     path: 'ticket/confirm/:ID',
     component: ConfirmationComponent
+  },
+  {
+    path: 'report/select',
+    component: BusinessReportSelectComponent
+  },
+  {
+    path: 'report/view',
+    component: BusinessReportViewComponent
   },
   {
     path: 'price-list/add',

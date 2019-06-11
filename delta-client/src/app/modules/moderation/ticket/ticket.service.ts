@@ -7,7 +7,7 @@ import {Ticket} from '../../shared/model/ticket';
 import {Flight} from '../../shared/model/flight';
 import {Seat} from '../../shared/model/seat';
 import {DiscountTicketsDTO} from './discount-tickets-dto';
-import {FriendReservationDTO} from "../../consumption/reservation/friend-reservation-dto";
+import {FriendReservationDTO} from '../../consumption/reservation/friend-reservation-dto';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})

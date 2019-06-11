@@ -128,4 +128,19 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return reservations;
     }
+
+    @Override
+    public Flight getFlight(Long ID) throws ObjectNotFoundException {
+        Optional<Reservation> reservation;
+        try {
+            reservation = Optional.ofNullable(getOne(ID));
+            if (!reservation.isPresent()) {
+                throw new ObjectNotFoundException("Reservation doesn't exist!");
+            }
+            return reservation.get().getTicket().getFlight();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
 }

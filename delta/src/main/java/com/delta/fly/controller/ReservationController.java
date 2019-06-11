@@ -3,10 +3,7 @@ package com.delta.fly.controller;
 import com.delta.fly.dto.BusinessReportDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.Passenger;
-import com.delta.fly.model.Reservation;
-import com.delta.fly.model.Seat;
-import com.delta.fly.model.Ticket;
+import com.delta.fly.model.*;
 import com.delta.fly.service.abstraction.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,7 +65,7 @@ public class ReservationController {
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
-    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> businessReport(@RequestBody BusinessReportDTO dto) throws ObjectNotFoundException {
 
         List<Reservation> reservations = reservationService.businessReport(dto);
@@ -81,6 +78,13 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> regenerate() throws InvalidInputException {
         List<Reservation> reservations = reservationService.regenerate();
         return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
+    @RequestMapping(value = "/get/flight/{ID}", method = RequestMethod.GET)
+    public ResponseEntity<Flight> getFlight(@PathVariable Long ID) throws ObjectNotFoundException {
+        Flight flight = reservationService.getFlight(ID);
+        return new ResponseEntity<>(flight, HttpStatus.OK);
     }
     
 }

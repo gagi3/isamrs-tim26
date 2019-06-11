@@ -15,12 +15,14 @@ import {MatDialogModule} from '@angular/material';
 import {DateTimeFormatPipe} from './modules/shared/date-time-format.pipe';
 import { FlightViewComponent } from './modules/shared/component/flight-view/flight-view.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TicketViewComponent } from './modules/shared/component/ticket-view/ticket-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DateTimeFormatPipe,
-    FlightViewComponent
+    FlightViewComponent,
+    TicketViewComponent
   ],
   imports: [
     BrowserModule,

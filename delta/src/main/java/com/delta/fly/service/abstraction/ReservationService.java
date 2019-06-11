@@ -3,6 +3,7 @@ package com.delta.fly.service.abstraction;
 import com.delta.fly.dto.BusinessReportDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
+import com.delta.fly.model.Flight;
 import com.delta.fly.model.Passenger;
 import com.delta.fly.model.Reservation;
 import com.delta.fly.model.Ticket;
@@ -19,4 +20,6 @@ public interface ReservationService {
     List<Reservation> businessReport(BusinessReportDTO dto) throws ObjectNotFoundException;
 
     List<Reservation> regenerate() throws InvalidInputException;
+
+    Flight getFlight(Long ID) throws ObjectNotFoundException;
 }

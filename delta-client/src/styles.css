@@ -29,7 +29,7 @@ mat-dialog-container:before {
   width: auto;
   border-radius: 15px;
   margin: 0 auto 0 auto;
-  margin-top: 7%;
+  margin-top: 4%;
   z-index: -1;
   padding-top: 10%;
   box-shadow: inset 0 0 3000px rgba(255, 255, 255, .3);
