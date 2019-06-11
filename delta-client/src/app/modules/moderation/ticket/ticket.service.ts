@@ -55,13 +55,13 @@ export class TicketService {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.get<Ticket[]>(this.URL + '/get/discounted', httpOptions);
   }
-  quickReserve(dto: Ticket): Observable<Ticket> {
+  quickReserve(dto: Ticket, luggage: number): Observable<Ticket> {
     httpOptions.headers.set('AuthToken', this.token);
-    return this.http.post<Ticket>(this.URL + '/reserve/quick', dto, httpOptions);
+    return this.http.post<Ticket>(this.URL + '/reserve/quick', {dto, luggage}, httpOptions);
   }
-  reserve(ticket: Ticket): Observable<Ticket> {
+  reserve(ticket: Ticket, luggage: number): Observable<Ticket> {
     httpOptions.headers.set('AuthToken', this.token);
-    return this.http.post<Ticket>(this.URL + '/reserve', ticket, httpOptions);
+    return this.http.post<Ticket>(this.URL + '/reserve', {ticket, luggage}, httpOptions);
   }
   friendReserve(DTO: FriendReservationDTO): Observable<Ticket> {
     httpOptions.headers.set('AuthToken', this.token);
@@ -71,4 +71,5 @@ export class TicketService {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.post<boolean>(this.URL + '/confirm/' + ID, null, httpOptions);
   }
+  
 }

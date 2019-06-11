@@ -21,9 +21,9 @@ public interface TicketService {
 
     List<Ticket> getDiscounted() throws ObjectNotFoundException;
 
-    Ticket reserve(Ticket ticket, Boolean quick) throws ObjectNotFoundException;
+    Ticket reserve(Ticket ticket, Boolean quick, Integer luggage) throws ObjectNotFoundException;
 
-    Ticket friendReserve(FriendReservationDTO dto) throws ObjectNotFoundException;
+    Ticket friendReserve(FriendReservationDTO dto, Integer luggage) throws ObjectNotFoundException;
 
     Boolean confirm(Long ticketID) throws ObjectNotFoundException;
     //List<Ticket> filterSearch();

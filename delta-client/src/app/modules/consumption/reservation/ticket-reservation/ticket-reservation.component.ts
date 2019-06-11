@@ -19,6 +19,7 @@ export class TicketReservationComponent implements OnInit {
   friend: false;
   friends: Passenger[] = [];
   f: Passenger = new Passenger();
+  luggage = 0;
   selectedFriend: Passenger = new Passenger();
   username = '';
   passenger: Passenger = new Passenger();
@@ -63,8 +64,12 @@ export class TicketReservationComponent implements OnInit {
     console.log(this.friends);
     console.log(this.selectedFriend);
     console.log(this.DTO);
-    if (this.friend !== true) {
-      this.service.reserve(this.ticket).subscribe(
+    if (this.friend === true) {
+      this.DTO.ticket = this.ticket;
+      this.DTO.passenger = this.selectedFriend;
+      this.DTO.luggage = this.luggage;
+      console.log(this.DTO);
+      this.service.friendReserve(this.DTO).subscribe(
         data => {
           alert('Reservation successful.');
           this.reserved = true;
@@ -75,10 +80,7 @@ export class TicketReservationComponent implements OnInit {
         }
       );
     } else {
-      this.DTO.ticket = this.ticket;
-      this.DTO.passenger = this.selectedFriend;
-      console.log(this.DTO);
-      this.service.friendReserve(this.DTO).subscribe(
+      this.service.reserve(this.ticket, this.luggage).subscribe(
         data => {
           alert('Reservation successful.');
           this.reserved = true;

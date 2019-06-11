@@ -210,9 +210,10 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket reserve(Ticket ticket, Boolean quick) throws ObjectNotFoundException {
+    public Ticket reserve(Ticket ticket, Boolean quick, Integer luggage) throws ObjectNotFoundException {
         Optional<Ticket> quickTicket = Optional.empty();
         Optional<Passenger> passenger;
+        Optional<PriceList> priceList;
         try {
             if (quick) {
                 for (AirlineCompany company : airlineCompanyService.findAll()) {
@@ -247,6 +248,11 @@ public class TicketServiceImpl implements TicketService {
                     }
                 }
             }
+            priceList = priceListRepository.findByAirlineCompany(quickTicket.get().getFlight().getAirlineCompany());
+            if (!priceList.isPresent()) {
+                throw new ObjectNotFoundException("Price List doesn't exist for this company.");
+            }
+            quickTicket.get().setPrice(quickTicket.get().getPrice() + (luggage * priceList.get().getPriceByLuggageItem()));
             quickTicket.get().setConfirmed(true);
             Email email = new Email();
             email.setMessage(emailService.reservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
@@ -271,10 +277,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket friendReserve(FriendReservationDTO dto) throws ObjectNotFoundException {
+    public Ticket friendReserve(FriendReservationDTO dto, Integer luggage) throws ObjectNotFoundException {
         Optional<Ticket> quickTicket;
         Optional<Passenger> passenger;
         Optional<Passenger> you;
+        Optional<PriceList> priceList;
         try {
             you = Optional.ofNullable(userDetailsService.getPassenger());
             if (!you.isPresent()) {
@@ -301,6 +308,11 @@ public class TicketServiceImpl implements TicketService {
                     throw new ObjectNotFoundException("You cannot reserve more than one ticket for a flight!");
                 }
             }
+            priceList = priceListRepository.findByAirlineCompany(quickTicket.get().getFlight().getAirlineCompany());
+            if (!priceList.isPresent()) {
+                throw new ObjectNotFoundException("Price List doesn't exist for this company.");
+            }
+            quickTicket.get().setPrice(quickTicket.get().getPrice() + (luggage * priceList.get().getPriceByLuggageItem()));
             Email email = new Email();
             email.setMessage(emailService.friendReservationTemplate(passenger.get().getFirstName(), quickTicket.get()));
             email.setSubject("Confirm ticket reservation");

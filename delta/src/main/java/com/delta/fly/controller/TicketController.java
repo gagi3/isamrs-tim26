@@ -2,6 +2,7 @@ package com.delta.fly.controller;
 
 import com.delta.fly.dto.DiscountTicketsDTO;
 import com.delta.fly.dto.FriendReservationDTO;
+import com.delta.fly.dto.ReservationDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Flight;
@@ -83,22 +84,22 @@ public class TicketController {
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/reserve", method = RequestMethod.POST)
-    public ResponseEntity<Ticket> reserve(@RequestBody Ticket ticket) throws ObjectNotFoundException {
-        Ticket reserved = ticketService.reserve(ticket, false);
+    public ResponseEntity<Ticket> reserve(@RequestBody ReservationDTO DTO) throws ObjectNotFoundException {
+        Ticket reserved = ticketService.reserve(DTO.getTicket(), false, DTO.getLuggage());
         return new ResponseEntity<>(reserved, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/reserve/friend", method = RequestMethod.POST)
     public ResponseEntity<Ticket> friendReserve(@RequestBody FriendReservationDTO DTO) throws ObjectNotFoundException {
-        Ticket reserved = ticketService.friendReserve(DTO);
+        Ticket reserved = ticketService.friendReserve(DTO, DTO.getLuggage());
         return new ResponseEntity<>(reserved, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/reserve/quick", method = RequestMethod.POST)
-    public ResponseEntity<Ticket> quickReserve(@RequestBody Ticket ticket) throws ObjectNotFoundException {
-        Ticket reserved = ticketService.reserve(ticket, true);
+    public ResponseEntity<Ticket> quickReserve(@RequestBody ReservationDTO DTO) throws ObjectNotFoundException {
+        Ticket reserved = ticketService.reserve(DTO.getTicket(), false, DTO.getLuggage());
         return new ResponseEntity<>(reserved, HttpStatus.OK);
     }
 

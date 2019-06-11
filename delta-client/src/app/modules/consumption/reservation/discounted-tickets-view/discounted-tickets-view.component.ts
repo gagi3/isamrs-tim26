@@ -77,7 +77,7 @@ export class DiscountedTicketsViewComponent implements OnInit {
     if (this.passenger === undefined) {
       alert('Not logged in!');
     } else {
-      this.service.quickReserve(ticket).subscribe(
+      this.service.quickReserve(ticket, 0).subscribe(
         data => {
           if (data.passenger.id === this.passenger.id) {
             alert('Reservation successful!');
