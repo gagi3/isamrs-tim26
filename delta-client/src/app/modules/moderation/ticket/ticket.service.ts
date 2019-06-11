@@ -71,5 +71,5 @@ export class TicketService {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.post<boolean>(this.URL + '/confirm/' + ID, null, httpOptions);
   }
-  
+
 }

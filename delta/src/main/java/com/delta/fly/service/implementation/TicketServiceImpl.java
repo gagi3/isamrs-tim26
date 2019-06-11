@@ -10,6 +10,7 @@ import com.delta.fly.repository.TicketRepository;
 import com.delta.fly.security.TokenUtils;
 import com.delta.fly.service.abstraction.AirlineCompanyService;
 import com.delta.fly.service.abstraction.PassengerService;
+import com.delta.fly.service.abstraction.ReservationService;
 import com.delta.fly.service.abstraction.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private EmailServiceImpl emailService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Override
     public List<Ticket> findAll() {
@@ -267,10 +271,13 @@ public class TicketServiceImpl implements TicketService {
                 passenger.get().getTickets().add(quickTicket.get());
             }
             quickTicket.get().getFlight().getAirlineCompany().getDiscountedTickets().remove(quickTicket.get());
+            if (quickTicket.get().getConfirmed()) {
+                reservationService.create(quickTicket.get(), passenger.get());
+            }
             airlineCompanyService.update(quickTicket.get().getFlight().getAirlineCompany());
             passengerService.update(passenger.get());
             return update(quickTicket.get());
-        } catch (ObjectNotFoundException ex) {
+        } catch (ObjectNotFoundException | InvalidInputException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);
         }
@@ -326,10 +333,13 @@ public class TicketServiceImpl implements TicketService {
                 passenger.get().getTickets().add(quickTicket.get());
             }
             quickTicket.get().getFlight().getAirlineCompany().getDiscountedTickets().remove(quickTicket.get());
+            if (quickTicket.get().getConfirmed()) {
+                reservationService.create(quickTicket.get(), passenger.get());
+            }
             airlineCompanyService.update(quickTicket.get().getFlight().getAirlineCompany());
             passengerService.update(passenger.get());
             return update(quickTicket.get());
-        } catch (ObjectNotFoundException ex) {
+        } catch (ObjectNotFoundException | InvalidInputException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);
         }
@@ -353,9 +363,12 @@ public class TicketServiceImpl implements TicketService {
             }
             ticket.get().setConfirmed(true);
             update(ticket.get());
+            if (ticket.get().getConfirmed()) {
+                reservationService.create(ticket.get(), passenger.get());
+            }
             return ticket.get().getConfirmed();
 
-        } catch (ObjectNotFoundException ex) {
+        } catch (ObjectNotFoundException | InvalidInputException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);
         }
