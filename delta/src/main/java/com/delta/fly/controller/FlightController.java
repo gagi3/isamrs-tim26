@@ -1,6 +1,7 @@
 package com.delta.fly.controller;
 
 import com.delta.fly.dto.FlightDTO;
+import com.delta.fly.dto.FlightSearchFilterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Flight;
@@ -63,6 +64,12 @@ public class FlightController {
         Boolean delete = flightService.delete(id);
 
         return new ResponseEntity<>(delete, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public ResponseEntity<List<Flight>> delete(@RequestBody FlightSearchFilterDTO dto) {
+        List<Flight> filter = flightService.filterSearch(dto);
+        return new ResponseEntity<>(filter, HttpStatus.OK);
     }
 
 }

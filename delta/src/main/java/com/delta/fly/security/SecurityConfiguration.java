@@ -94,7 +94,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/api/user/signup/passenger",
                             "/api/user/validate/*",
                             "/api/flight",
-                            "/api/ticket/get/discounted"
+                            "/api/ticket/get/discounted",
+                            "/api/flight/search"
                     ).permitAll()
                     .anyRequest().authenticated()
                 .and().headers().cacheControl().disable()

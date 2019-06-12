@@ -1,6 +1,7 @@
 package com.delta.fly.service.implementation;
 
 import com.delta.fly.dto.FlightDTO;
+import com.delta.fly.dto.FlightSearchFilterDTO;
 import com.delta.fly.dto.PlaceAndTimeDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
@@ -182,14 +183,6 @@ public class FlightServiceImpl implements FlightService {
         if (departure.getTheTime().after(arrival.getTheTime())) {
             throw new InvalidInputException("Departure date can't be after arrival date.");
         }
-//        for (Flight flight: company.getFlights()) {
-//            if (flight.getAirplane().equals(airplane)) {
-//                if (flight.getDeparture().getTheTime().before(departure.getTheTime()) ||
-//                    flight.getArrival().getTheTime().after(departure.getTheTime())) {
-//
-//                }
-//            }
-//        }
         if (transfers.size() > 0) {
             for (PlaceAndTime pat : transfers) {
                 if (!company.getDestinations().contains(pat.getThePlace())) {
@@ -203,6 +196,110 @@ public class FlightServiceImpl implements FlightService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<Flight> filterSearch(FlightSearchFilterDTO dto) {
+        // Filter chain.
+        List<Flight> allFlights = findAll();
+        List<Flight> companyFilter = new ArrayList<>();
+        List<Flight> depPlaceFilter = new ArrayList<>();
+        List<Flight> depTimeFilter = new ArrayList<>();
+        List<Flight> arrPlaceFilter = new ArrayList<>();
+        List<Flight> arrTimeFilter = new ArrayList<>();
+        List<Flight> distanceFilter = new ArrayList<>();
+        List<Flight> priceFromFilter = new ArrayList<>();
+        List<Flight> priceToFilter = new ArrayList<>();
+        // Search by company name.
+        if (dto.getCompanyName() != null) {
+            for (Flight f : allFlights) {
+                if (f.getAirlineCompany().getName().contains(dto.getCompanyName())) {
+                    companyFilter.add(f);
+                }
+            }
+        } else {
+            companyFilter = allFlights;
+        }
+        // Search by departure place.
+        if (dto.getDeparturePlace() != null) {
+            for (Flight f : companyFilter) {
+                if (f.getDeparture().getThePlace().contains(dto.getDeparturePlace())) {
+                    depPlaceFilter.add(f);
+                }
+            }
+        } else {
+            depPlaceFilter = companyFilter;
+        }
+        // Search by departure time.
+        if (dto.getDepartureTime() != null) {
+            for (Flight f : depPlaceFilter) {
+                if (f.getDeparture().getTheTime().equals(dto.getDepartureTime())) {
+                    depTimeFilter.add(f);
+                }
+            }
+        } else {
+            depTimeFilter = depPlaceFilter;
+        }
+        // Search by arrival place.
+        if (dto.getArrivalPlace() != null) {
+            for (Flight f : depTimeFilter) {
+                if (f.getArrival().getThePlace().contains(dto.getArrivalPlace())) {
+                    arrPlaceFilter.add(f);
+                }
+            }
+        } else {
+            arrPlaceFilter = depTimeFilter;
+        }
+        // Search by arrival time.
+        if (dto.getArrivalTime() != null) {
+            for (Flight f : arrPlaceFilter) {
+                if (f.getArrival().getTheTime().equals(dto.getArrivalTime())) {
+                    arrTimeFilter.add(f);
+                }
+            }
+        } else {
+            arrTimeFilter = arrPlaceFilter;
+        }
+        // Search by distance.
+        if (dto.getDistance() != null) {
+            for (Flight f : arrTimeFilter) {
+                if (f.getDistance().equals(dto.getDistance())) {
+                    distanceFilter.add(f);
+                }
+            }
+        } else {
+            distanceFilter = arrTimeFilter;
+        }
+        // Search by ticket price - lower.
+        if (dto.getPriceFrom() != null) {
+            for (Flight f : distanceFilter) {
+                for (Ticket t : f.getTickets()) {
+                    if (t.getPrice() > dto.getPriceFrom()) {
+                        if (!priceFromFilter.contains(f)) {
+                            priceFromFilter.add(f);
+                        }
+                    }
+                }
+            }
+        } else {
+            priceFromFilter = distanceFilter;
+        }
+        // Search by ticket price - upper.
+        if (dto.getPriceFrom() != null) {
+            for (Flight f : priceFromFilter) {
+                for (Ticket t : f.getTickets()) {
+                    if (t.getPrice() < dto.getPriceTo()) {
+                        if (!priceToFilter.contains(f)) {
+                            priceToFilter.add(f);
+                        }
+                    }
+                }
+            }
+        } else {
+            priceToFilter = priceFromFilter;
+        }
+
+        return priceToFilter;
     }
 
 }

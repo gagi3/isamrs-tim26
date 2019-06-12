@@ -1,6 +1,7 @@
 package com.delta.fly.service.abstraction;
 
 import com.delta.fly.dto.FlightDTO;
+import com.delta.fly.dto.FlightSearchFilterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Flight;
@@ -14,6 +15,8 @@ public interface FlightService {
     Flight create(FlightDTO dto) throws ObjectNotFoundException, InvalidInputException;
     Flight update(Flight flight) throws ObjectNotFoundException, InvalidInputException;
     boolean delete (Long id) throws ObjectNotFoundException;
+
+    List<Flight> filterSearch(FlightSearchFilterDTO dto);
     //List<Flight> filterSearch();
     
 }
