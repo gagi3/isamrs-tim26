@@ -5,6 +5,7 @@ import {TokenStorageService} from '../../shared/token-storage.service';
 import {Observable} from 'rxjs';
 import {Flight} from '../../shared/model/flight';
 import {FlightDTO} from './flight-dto';
+import {FlightSearchDTO} from "../../shared/flight-search-dto";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})
@@ -46,5 +47,9 @@ export class FlightService {
   delete(ID: BigInteger): Observable<boolean> {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.delete<boolean>(this.URL + '/delete/' + ID, httpOptions);
+  }
+  filterSearch(dto: FlightSearchDTO): Observable<Flight[]> {
+    httpOptions.headers.set('AuthToken', this.token);
+    return this.http.post<Flight[]>(this.URL + '/search', dto, httpOptions);
   }
 }
