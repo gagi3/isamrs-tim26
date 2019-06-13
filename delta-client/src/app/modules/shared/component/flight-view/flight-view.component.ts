@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Flight} from '../../model/flight';
 import {FlightService} from '../../../moderation/flight/flight.service';
 import {Router} from '@angular/router';
@@ -24,6 +24,7 @@ export class FlightViewComponent implements OnInit {
   read = false;
   errorMessage = '';
   username = '';
+  @Input() flightSearch: any;
 
   constructor(private service: FlightService, private router: Router, private tokenStorage: TokenStorageService,
               private profileService: ProfileService, public dialog: MatDialog) { }
@@ -146,6 +147,7 @@ export class FlightViewComponent implements OnInit {
           console.log('Dialog closed.');
           console.log(result);
           this.loadAll();
+          this.flightSearch.reset();
         }
       );
     } else {
@@ -159,6 +161,7 @@ export class FlightViewComponent implements OnInit {
           if (data === true) {
             alert('Flight was deleted.');
             this.loadAll();
+            this.flightSearch.reset();
             // location.reload();
             this.router.navigateByUrl('flight/view');
           } else {
@@ -183,6 +186,7 @@ export class FlightViewComponent implements OnInit {
           console.log('Dialog closed.');
           console.log(result);
           this.loadAll();
+          this.flightSearch.reset();
         }
       );
     } else {
@@ -204,11 +208,15 @@ export class FlightViewComponent implements OnInit {
           console.log('Dialog closed.');
           console.log(result);
           this.loadAll();
+          this.flightSearch.reset();
         }
       );
     } else {
       console.log('The flight does not belong to your company.');
     }
+  }
+  loadSearchFilter(filtered: Flight[]) {
+    this.flights = filtered;
   }
 
 }
