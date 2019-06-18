@@ -399,6 +399,7 @@ public class TicketServiceImpl implements TicketService {
                 throw new ObjectNotFoundException("Invalid data.");
             }
             reservation.get().setPassenger(null);
+            reservation.get().setTicket(null);
             reservation.get().setDeleted(true);
             theTicket.get().setConfirmed(false);
             theTicket.get().setPassenger(null);

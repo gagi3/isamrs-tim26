@@ -5,6 +5,7 @@ import {AirlineCompanyAdmin} from '../model/airline-company-admin';
 import {SystemAdmin} from '../model/system-admin';
 import {Observable} from 'rxjs';
 import {TokenStorageService} from '../../../../shared/token-storage.service';
+import {Ticket} from "../../../../shared/model/ticket";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json', AuthToken: '' })
@@ -60,5 +61,10 @@ export class ProfileService {
     httpOptions.headers.set('AuthToken', this.token);
     const url = this.systemAdminURL + '/get/';
     return this.http.get<SystemAdmin>(url + username, httpOptions);
+  }
+  public getTickets(): Observable<Ticket[]> {
+    httpOptions.headers.set('AuthToken', this.token);
+    const url = this.passengerURL + '/tickets';
+    return this.http.get<Ticket[]>(url, httpOptions);
   }
 }

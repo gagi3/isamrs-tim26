@@ -71,5 +71,9 @@ export class TicketService {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.post<boolean>(this.URL + '/confirm/' + ID, null, httpOptions);
   }
+  cancel(ticket: Ticket): Observable<boolean> {
+    httpOptions.headers.set('AuthToken', this.token);
+    return this.http.post<boolean>(this.URL + '/cancel', ticket, httpOptions);
+  }
 
 }

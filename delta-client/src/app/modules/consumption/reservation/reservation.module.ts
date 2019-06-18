@@ -10,9 +10,10 @@ import { DiscountedTicketsViewComponent } from './discounted-tickets-view/discou
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TicketReservationComponent } from './ticket-reservation/ticket-reservation.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ViewTicketsComponent } from './view-tickets/view-tickets.component';
 
 @NgModule({
-  declarations: [TicketsViewComponent, DiscountedTicketsViewComponent, TicketReservationComponent, ConfirmationComponent],
+  declarations: [TicketsViewComponent, DiscountedTicketsViewComponent, TicketReservationComponent, ConfirmationComponent, ViewTicketsComponent],
   imports: [
     CommonModule,
     MatDialogModule,

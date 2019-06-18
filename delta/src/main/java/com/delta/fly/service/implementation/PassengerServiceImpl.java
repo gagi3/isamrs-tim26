@@ -4,10 +4,7 @@ import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.enumeration.RoleName;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.Email;
-import com.delta.fly.model.Passenger;
-import com.delta.fly.model.Role;
-import com.delta.fly.model.UserPrinciple;
+import com.delta.fly.model.*;
 import com.delta.fly.repository.PassengerRepository;
 import com.delta.fly.repository.RoleRepository;
 import com.delta.fly.security.TokenUtils;
@@ -175,6 +172,26 @@ public class PassengerServiceImpl implements PassengerService {
                 throw new ObjectNotFoundException("You have no friends!");
             }
             return you.get().getFriends();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+
+
+    @Override
+    public List<Ticket> getTickets() throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!you.isPresent()) {
+                throw new ObjectNotFoundException("Passenger not found!");
+            }
+            if (you.get().getTickets() == null || you.get().getTickets().size() == 0) {
+                throw new ObjectNotFoundException("You have no tickets!");
+            }
+            return you.get().getTickets();
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);

@@ -19,6 +19,7 @@ import {TicketsViewComponent} from './modules/consumption/reservation/tickets-vi
 import {ConfirmationComponent} from './modules/consumption/reservation/confirmation/confirmation.component';
 import {BusinessReportSelectComponent} from './modules/moderation/reservation/business-report-select/business-report-select.component';
 import {BusinessReportViewComponent} from './modules/moderation/reservation/business-report-view/business-report-view.component';
+import {ViewTicketsComponent} from './modules/consumption/reservation/view-tickets/view-tickets.component';
 
 const routes: Routes = [
   // {
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path: 'ticket/view',
     component: TicketsViewComponent
+  },
+  {
+    path: 'tickets',
+    component: ViewTicketsComponent
   },
   {
     path: 'ticket/confirm/:ID',

@@ -4,6 +4,7 @@ import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Passenger;
+import com.delta.fly.model.Ticket;
 import com.delta.fly.service.abstraction.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,6 +84,13 @@ public class PassengerController {
     public ResponseEntity<List<Passenger>> getFriends() throws ObjectNotFoundException {
         List<Passenger> friends = passengerService.getFriends();
         return new ResponseEntity<>(friends, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/tickets", method = RequestMethod.GET)
+    public ResponseEntity<List<Ticket>> getTickets() throws ObjectNotFoundException {
+        List<Ticket> tickets = passengerService.getTickets();
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
 
 }
