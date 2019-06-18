@@ -17,7 +17,8 @@ public class Passenger extends User implements Serializable {
     @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Passenger> friends = new ArrayList<>();
 
     @Column(name = "passport", unique = true, nullable = false)

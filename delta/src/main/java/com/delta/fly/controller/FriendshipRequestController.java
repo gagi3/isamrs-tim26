@@ -1,9 +1,11 @@
 package com.delta.fly.controller;
 
+import com.delta.fly.dto.FriendshipDTO;
 import com.delta.fly.dto.FriendshipRequestDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.FriendshipRequest;
+import com.delta.fly.model.Passenger;
 import com.delta.fly.service.abstraction.FriendshipRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,5 +67,61 @@ public class FriendshipRequestController {
 
         return new ResponseEntity<>(delete, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/accept", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> accept(@RequestBody FriendshipRequest friendshipRequest) throws ObjectNotFoundException {
+
+        Boolean accepted = friendshipRequestService.accept(friendshipRequest);
+
+        return new ResponseEntity<>(accepted, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/get/sent", method = RequestMethod.GET)
+    public ResponseEntity<List<FriendshipRequest>> getSent() throws ObjectNotFoundException {
+
+        List<FriendshipRequest> friendshipRequests = friendshipRequestService.getSent();
+
+        return new ResponseEntity<>(friendshipRequests, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/get/received", method = RequestMethod.GET)
+    public ResponseEntity<List<FriendshipRequest>> getReceived() throws ObjectNotFoundException {
+
+        List<FriendshipRequest> friendshipRequests = friendshipRequestService.getReceived();
+
+        return new ResponseEntity<>(friendshipRequests, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/get/exact", method = RequestMethod.POST)
+    public ResponseEntity<FriendshipRequest> getExact(@RequestBody FriendshipDTO dto) throws ObjectNotFoundException {
+
+        FriendshipRequest request = friendshipRequestService.getExact(dto.getFrom(), dto.getTo());
+
+        return new ResponseEntity<>(request, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/reject", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> reject(@RequestBody FriendshipDTO dto) throws ObjectNotFoundException {
+
+        Boolean rejected = friendshipRequestService.reject(dto.getFrom(), dto.getTo());
+
+        return new ResponseEntity<>(rejected, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> removeFriend(@RequestBody Passenger remove) throws ObjectNotFoundException {
+
+        Boolean removed = friendshipRequestService.removeFriend(remove);
+
+        return new ResponseEntity<>(removed, HttpStatus.OK);
+    }
+
+
 
 }
