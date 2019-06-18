@@ -374,4 +374,45 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
+    @Override
+    public Boolean cancel(Ticket ticket) throws ObjectNotFoundException {
+        Optional<Ticket> theTicket;
+        Optional<Passenger> passenger;
+        Optional<Reservation> reservation;
+        try {
+            theTicket = Optional.ofNullable(getOne(ticket.getId()));
+            if (!theTicket.isPresent()) {
+                throw new ObjectNotFoundException("Ticket not found!");
+            }
+            passenger = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!passenger.isPresent()) {
+                throw new ObjectNotFoundException("Passenger not found!");
+            }
+            if (!passenger.get().equals(theTicket.get().getPassenger())) {
+                throw new ObjectNotFoundException("This is not your ticket.");
+            }
+            reservation = Optional.ofNullable(reservationService.getByTicket(theTicket.get()));
+            if (!reservation.isPresent()) {
+                throw new ObjectNotFoundException("Reservation not found!");
+            }
+            if (!reservation.get().getTicket().equals(theTicket.get()) || !reservation.get().getPassenger().equals(passenger.get())) {
+                throw new ObjectNotFoundException("Invalid data.");
+            }
+            reservation.get().setPassenger(null);
+            reservation.get().setDeleted(true);
+            theTicket.get().setConfirmed(false);
+            theTicket.get().setPassenger(null);
+            update(theTicket.get());
+            reservationService.update(reservation.get());
+            if (theTicket.get().getConfirmed()) {
+                reservationService.create(theTicket.get(), passenger.get());
+            }
+            return theTicket.get().getConfirmed();
+
+        } catch (ObjectNotFoundException | InvalidInputException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
 }

@@ -143,4 +143,9 @@ public class ReservationServiceImpl implements ReservationService {
             throw new ObjectNotFoundException(ex);
         }
     }
+
+    @Override
+    public Reservation getByTicket(Ticket ticket) throws ObjectNotFoundException {
+        return reservationRepository.findByTicket(ticket).orElseThrow(() -> new ObjectNotFoundException("Reservation doesn't exist."));
+    }
 }

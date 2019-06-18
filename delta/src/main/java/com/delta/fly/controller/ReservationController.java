@@ -86,5 +86,12 @@ public class ReservationController {
         Flight flight = reservationService.getFlight(ID);
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
+    @RequestMapping(value = "/get/ticket", method = RequestMethod.POST)
+    public ResponseEntity<Reservation> getByTicket(@RequestBody Ticket ticket) throws ObjectNotFoundException {
+        Reservation reservation = reservationService.getByTicket(ticket);
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
+    }
     
 }

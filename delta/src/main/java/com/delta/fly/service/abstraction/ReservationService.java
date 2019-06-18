@@ -22,4 +22,6 @@ public interface ReservationService {
     List<Reservation> regenerate() throws InvalidInputException;
 
     Flight getFlight(Long ID) throws ObjectNotFoundException;
+
+    Reservation getByTicket(Ticket ticket) throws ObjectNotFoundException;
 }
