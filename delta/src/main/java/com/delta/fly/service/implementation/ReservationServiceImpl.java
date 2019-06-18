@@ -96,7 +96,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> businessReport(BusinessReportDTO dto) throws ObjectNotFoundException {
-        Optional<AirlineCompany> company = Optional.empty();
+        Optional<AirlineCompany> company;
         Optional<AirlineCompanyAdmin> admin;
         try {
             admin = Optional.ofNullable(userDetailsService.getAdmin());
@@ -104,14 +104,25 @@ public class ReservationServiceImpl implements ReservationService {
                 throw new ObjectNotFoundException("Admin doesn't exist.");
             }
             company = Optional.ofNullable(admin.get().getAirlineCompany());
+            List<Reservation> reservations;
+            reservations = reservationRepository.findAllByReservationDateAfterAndReservationDateBeforeAndTicketFlightAirlineCompany(
+                    dto.getAfter(),
+                    dto.getBefore(),
+                    company.get()
+            );
+            if (reservations == null || reservations.isEmpty()) {
+                throw new ObjectNotFoundException("No reservations for the selected interval and company");
+            }
+            for (Reservation r : reservations) {
+                if (r.getTicket().getFlight().getArrival().getTheTime().after(new Date())) {
+                    reservations.remove(r);
+                }
+            }
+            return reservations;
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
         }
-        return reservationRepository.findAllByReservationDateAfterAndReservationDateBeforeAndTicketFlightAirlineCompany(
-                dto.getAfter(),
-                dto.getBefore(),
-                company.get()
-        );
     }
 
     @Override
