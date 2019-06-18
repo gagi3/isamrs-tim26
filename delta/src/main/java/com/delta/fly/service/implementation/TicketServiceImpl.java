@@ -407,7 +407,7 @@ public class TicketServiceImpl implements TicketService {
             if (theTicket.get().getConfirmed()) {
                 reservationService.create(theTicket.get(), passenger.get());
             }
-            return theTicket.get().getConfirmed();
+            return reservation.get().getDeleted();
 
         } catch (ObjectNotFoundException | InvalidInputException ex) {
             ex.printStackTrace();

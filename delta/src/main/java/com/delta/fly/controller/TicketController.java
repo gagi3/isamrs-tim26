@@ -110,4 +110,11 @@ public class TicketController {
         return new ResponseEntity<>(confirmed, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> confirm(@RequestBody Ticket ticket) throws ObjectNotFoundException {
+        Boolean cancelled = ticketService.cancel(ticket);
+        return new ResponseEntity<>(cancelled, HttpStatus.OK);
+    }
+
 }
