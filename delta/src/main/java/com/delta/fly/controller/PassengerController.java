@@ -87,6 +87,13 @@ public class PassengerController {
     }
 
     @PreAuthorize("hasRole('ROLE_PASSENGER')")
+    @RequestMapping(value = "/non-friends", method = RequestMethod.GET)
+    public ResponseEntity<List<Passenger>> getNonFriends() throws ObjectNotFoundException {
+        List<Passenger> nonFriends = passengerService.getNonFriends();
+        return new ResponseEntity<>(nonFriends, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PASSENGER')")
     @RequestMapping(value = "/tickets", method = RequestMethod.GET)
     public ResponseEntity<List<Ticket>> getTickets() throws ObjectNotFoundException {
         List<Ticket> tickets = passengerService.getTickets();

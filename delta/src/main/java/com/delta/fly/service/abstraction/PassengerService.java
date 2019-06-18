@@ -22,6 +22,8 @@ public interface PassengerService {
 
     List<Passenger> getFriends() throws ObjectNotFoundException;
 
+    List<Passenger> getNonFriends() throws ObjectNotFoundException;
+
     List<Ticket> getTickets() throws ObjectNotFoundException;
     //List<Passenger> filterSearch();
     

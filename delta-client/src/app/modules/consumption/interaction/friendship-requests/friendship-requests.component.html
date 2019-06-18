@@ -1,0 +1,85 @@
+<html>
+<body>
+
+<div class="form-group">
+  <div class="container-outer">
+    <div class="container-inner">
+      <input type="radio" class="hidden" id="input1" name="inputs" value="SENT" [(ngModel)]="show">
+      <label class="entry" for="input1" value="SENT"><div class="circle"></div><div class="entry-label">SENT</div></label>
+      <input type="radio" class="hidden" id="input2" name="inputs" value="RECEIVED" [(ngModel)]="show">
+      <label class="entry" for="input2" value="RECEIVED"><div class="circle"></div><div class="entry-label">RECEIVED</div></label>
+      <div class="highlight"></div>
+      <div class="overlay"></div>
+    </div>
+  </div>
+</div>
+
+<svg width="0" height="0" viewBox="0 0 40 90">
+  <defs>
+    <mask id="holes">
+      <rect x="0" y="0" width="100" height="90" fill="white" />
+      <circle r="12" cx="20" cy="20" fill="black"/>
+      <circle r="12" cx="20" cy="70" fill="black"/>
+    </mask>
+  </defs>
+</svg>
+
+<div class="container-all" *ngIf="show === 'SENT'">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th *ngIf="passenger !== undefined" scope="col">Username</th>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Phone number</th>
+      <th scope="col">City</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let request of sent">
+      <ng-container *ngIf="passenger.deleted === false">
+        <td *ngIf="passenger !== undefined && passenger.deleted === false"><div class="table-cell">{{request.sentTo.username}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{request.sentTo.firstName}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{request.sentTo.lastName}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{request.sentTo.phoneNumber}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{request.sentTo.city}}</div></td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container-all" *ngIf="show === 'RECEIVED'">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th *ngIf="passenger !== undefined" scope="col">Username</th>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Phone number</th>
+      <th scope="col">City</th>
+      <th *ngIf="passenger !== undefined" scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let request of received">
+      <ng-container *ngIf="request.deleted === false">
+        <td *ngIf="request.sentFrom !== undefined && passenger.deleted === false"><div class="table-cell">{{request.sentFrom.username}}</div></td>
+        <td *ngIf="request.deleted === false"><div class="table-cell">{{request.sentFrom.firstName}}</div></td>
+        <td *ngIf="request.deleted === false"><div class="table-cell">{{request.sentFrom.lastName}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{request.sentFrom.phoneNumber}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{request.sentFrom.city}}</div></td>
+        <td class="buttons" *ngIf="passenger.deleted === false">
+          <div class="buts">
+            <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="accept(request)">ACCEPT</button>
+            <button *ngIf="passenger !== undefined" class="cancelbtn btn" (click)="reject(request.sentFrom)">REJECT</button>
+          </div>
+        </td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

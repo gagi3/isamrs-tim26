@@ -178,7 +178,26 @@ public class PassengerServiceImpl implements PassengerService {
         }
     }
 
-
+    @Override
+    public List<Passenger> getNonFriends() throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!you.isPresent()) {
+                throw new ObjectNotFoundException("Passenger not found!");
+            }
+            List<Passenger> nonFriends = new ArrayList<>();
+            for (Passenger p : findAll()) {
+                if (!you.get().getFriends().contains(p) && !p.equals(you.get())) {
+                    nonFriends.add(p);
+                }
+            }
+            return nonFriends;
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
 
     @Override
     public List<Ticket> getTickets() throws ObjectNotFoundException {

@@ -1,0 +1,453 @@
+body {
+  font-family: "Helvetica Neue LT Pro - Ultra Light", Arial, sans-serif;
+  background: inherit;
+  color: white;
+}
+* {box-sizing: border-box}
+html {
+  overflow: auto;
+  background: inherit;
+  /*filter: blur(95px);*/
+}
+.table-cell {
+  height: 64px;
+  max-height: 64px;
+  overflow: hidden;
+}
+table, .table-hover {
+  width: 100%;
+  display: table;
+  float: left;
+}
+table, .container-all:before {
+  height: 100%;
+}
+td {
+  display: table-cell;
+  text-align: center;
+  height: 64px;
+  vertical-align: middle;
+}
+.buttons{
+  display: inline-block;
+  vertical-align: middle;
+}
+tr {
+  display: table-row;
+  max-height: 64px;
+  height: 64px;
+  text-align: center;
+}
+
+thead, tbody {
+  width: 100%;
+  /*height: 100%;*/
+}
+
+.container-all:before ~table {
+  /*height: 100%;*/
+  float: left;
+}
+
+.container-all:before, .mat-dialog-container {
+  float: left;
+  content: '';
+  overflow:auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  position: absolute;
+  /*height: auto;*/
+  width: 100%;
+  border-radius: 15px;
+  margin: 0 auto 0 auto;
+  margin-top: 4%;
+  z-index: -1;
+  padding-top: 10%;
+  box-shadow: inset 0 0 3000px rgba(255, 255, 255, .3);
+  filter: url('#blur');
+  filter: blur(0.1px);
+}
+
+.container-all, .mat-dialog-container {
+  overflow: auto;
+  background: inherit;
+  height: 1080px;
+  width: 100%;
+  padding-top: 4%;
+  margin: 0 auto 0 auto;
+}
+
+.row {
+  background: inherit;
+  width: 100%;
+  margin: 0 auto 0 auto;
+  color: #fff;
+}
+
+#form {
+  overflow: scroll;
+  border-color: whitesmoke;
+  border-radius: 5px;
+  background: inherit;
+  width: 100%;
+}
+
+.text-desc {
+  font-family: "Helvetica Neue LT Pro - Light", Roboto, monospace;
+  font-size: 40px;
+  margin: 0 auto 0 auto;
+  width: 65%;
+  background: inherit;
+}
+
+.form-group {
+  border-width: 2px;
+  border-color: whitesmoke;
+  border-radius: 5px;
+  background: inherit;
+  width: 100%;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=email], input[type = number], input [type=datetime-local],
+input[type=checkbox], select, option {
+  width: 100%;
+  border-radius: 25px;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ccc;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  font-family: "Helvetica Neue LT Pro - Light", Arial, sans-serif;
+  font-size: 100%;
+  background: inherit;
+  color: white;
+  border-radius: 25px;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+button:hover {
+  color: white;
+  left: 0;
+  transform: perspective(1px) translateZ(0);
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-image: linear-gradient(to bottom right, #993399, #3385ff);
+  border-width: 2px;
+  border-color: #993399;
+  left: -100%;
+}
+
+.loginbtn:hover {
+  color:white;
+  transform: perspective(1px) translateZ(0);
+  transition-duration: 0.3s;
+  transition-property: transform;
+  background-image: linear-gradient(to bottom right, #383838, #282828);
+}
+
+.loginbtn {
+  color: black;
+  padding: 14px 20px;
+  background-image: linear-gradient(to bottom right, #ffffff, #ffffff, #ffffff, #ffffff);
+  left: -100%;
+}
+
+.signupbtn {
+  padding: 14px 20px;
+  background-image: linear-gradient(to bottom right, #3385ff, #00ffa5);
+}
+
+.signupbtn:hover {
+  transition-delay: 0.1s;
+  transform: perspective(1px) translateZ(0);
+  transition-duration: 0.3s;
+  transition-property: transform;
+  background-image: linear-gradient(to bottom right, #00ffa5, #3385ff);
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn, .loginbtn {
+  float: left;
+  width: 125px;
+  height: 50px;
+  transition-delay: 0.1s;
+  transform: perspective(1px) translateZ(0);
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+
+.cancelbtn:hover{
+  float: left;
+  transform: perspective(1px) translateZ(0);
+  transition-duration: 0.3s;
+  transition-property: transform;
+  background-image: linear-gradient(to bottom right, #3385ff, #993399);
+}
+
+/* Add padding to container elements */
+.container {
+  overflow: auto;
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn, .loginbtn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .container-all:before {
+    width: 100%;
+    height: inherit;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .container-all {
+    width: 100%;
+    height: inherit;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .container-all {
+    width: 100%;
+    height: inherit;
+  }
+  .container-all:before {
+    width: 100%;
+    height: inherit;
+  }
+}
+
+
+.label:before {
+  content: "";
+  position: absolute;
+  width: 75%;
+  height: 75%;
+  top: 1px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  border-radius: 3px;
+}
+.label:hover {
+  cursor: pointer;
+  box-shadow: 0 0 0px 2px #5C6AFF;
+}
+
+
+@-webkit-keyframes rubberBand {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    -webkit-transform: scale3d(.95, 1.05, 1);
+    transform: scale3d(.95, 1.05, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1.05, .95, 1);
+    transform: scale3d(1.05, .95, 1);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes rubberBand {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    -webkit-transform: scale3d(.95, 1.05, 1);
+    transform: scale3d(.95, 1.05, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1.05, .95, 1);
+    transform: scale3d(1.05, .95, 1);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.rubberBand {
+  -webkit-animation-name: rubberBand;
+  animation-name: rubberBand;
+}
+
+.container-outer {
+  background: white;
+  border-radius: 25px;
+  box-shadow: 2px 6px 20px 2px rgba(10,10,120,0.15);
+}
+
+.container-inner {
+  position: relative;
+  margin: 20px 20px;
+  overflow: hidden;
+  width: 80%;
+}
+
+.hidden {
+  display: none;
+}
+.entry {
+  height: 33.3%;
+  position: absolute;
+  width: 100%;
+  padding-right: 60px;
+}
+
+.entry:nth-child(2) {
+  left: 8px;
+  top: 8px;
+}
+.entry:nth-child(4) {
+  left: 8px;
+  top: 58px;
+}
+.entry:nth-child(6) {
+  left: 8px;
+  top: 108px;
+}
+.circle {
+  color: #545556;
+  border: 2px solid #545556;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 20px;
+  position: absolute;
+  transition: border-color 300ms;
+  width: 20px;
+}
+.entry-label {
+  color: #545556;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: -3px;
+  padding-left: 100px;
+  user-select: none;
+  -moz-user-select: none;
+  width: 100%;
+}
+
+.overlay {
+  background: #fff;
+  mask: url(#holes);
+  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAACMCAYAAAAOc+uVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAItSURBVHic7ZnNjhJBFIVPA0txr0Iyw+tIdOXWaDRufZWZeYbZuMKOUV9Gg+HHGN/BHBcNcSBT1KVOEVycb0mq635UVd9U5zQkif+Y3rkFclhQxYIqFlQZiM8vALQAPgP4AWC1+X0E4ALAFMBzAOPiCixjRfIdyX5g/h7JFyTnJYVKBGckHxQsxJBke2rBK5LF55bdal6fSnCmyO1JhlcyKrhkwbYekBySXNcUfF1L7o7k20jhhsxetxYAJk3T/Kks2EfXmkaHxkXO1MfacgCwmbPNjYsIftV1knzJDYgIfqsgkuJ7bkBE8FcFkRTr3IBzXxay9SOCjyuIFM8dEZxUECmeOyL4tIJIimluQKRRLwFcnqBRDwDMUaFRjwG8quC0zxtk5ACEL6wrksNaZiQfkvwZKRxtM08AfGDgBh2Q6wG4BfAo+sAxXB/xp+6VI3lzTMGSK3/Lgu1mt62fji1W+tH0m+R7dm9iZNVeMnjm9om0mUOs8O+zc47dz84Juh76DJG3NYEqeHLOfVnIYkEVC6pYUMWCKhZUsaCKBVUsqGJBFQuqWFDFgipO3OnEfRcn7qWCTtxTOHFP4cS9Ek7cVZy4qzhxL4ZO3AXoxF2QoxP3DifuW5y4q1hQxYIqFlSxoIoFVSyoYkEVC6pYUMWCKhZUsaCKE3c6cd/FiXupoBP3FE7cUzhxr4QTdxUn7ipO3IuhE3cBOnEX5OjEvcOJ+xYn7ioWVLGgigVV/gKEL4RSyM8Z8wAAAABJRU5ErkJggg==);
+  height: 140px;
+  pointer-events: none;
+  transition: background 300ms;
+  width: 40px;
+}
+.highlight {
+  background: #545556;
+  border-radius: 50%;
+  height: 12px;
+  left: 12.4px;
+  pointer-events: none;
+  position: absolute;
+  top: 15.2px;
+  transition: transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  transform: translateY(-50px);
+  width: 12px;
+}
+.hidden:nth-child(1):checked ~ .highlight {
+  transform: translateY(0);
+  background: rgb(51, 133, 255);
+}
+.hidden:nth-child(3):checked ~ .highlight {
+  transform: translateY(50px);
+  background: rgb(153, 51, 153);
+}
+.hidden:nth-child(1):checked + .entry .circle {
+  border-color: rgb(51, 133, 255);
+}
+.hidden:nth-child(3):checked + .entry .circle {
+  border-color: rgb(153, 51, 153);
+}
+.check:checked ~ .containerOuter .overlay {
+  background: #ecf0f4;
+}

@@ -4,8 +4,8 @@ import com.delta.fly.model.Passenger;
 
 public class FriendshipDTO {
 
-    Passenger from;
-    Passenger to;
+    private Passenger from;
+    private Passenger to;
 
     public Passenger getFrom() {
         return from;

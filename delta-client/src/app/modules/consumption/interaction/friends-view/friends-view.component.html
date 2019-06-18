@@ -1,0 +1,36 @@
+<html>
+<body>
+
+<div class="container-all">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th *ngIf="passenger !== undefined" scope="col">Username</th>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Phone number</th>
+      <th scope="col">City</th>
+      <th *ngIf="passenger !== undefined" scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let passenger of friends">
+      <ng-container *ngIf="passenger.deleted === false">
+        <td *ngIf="passenger !== undefined && passenger.deleted === false"><div class="table-cell">{{passenger.username}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{passenger.firstName}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{passenger.lastName}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{passenger.phoneNumber}}</div></td>
+        <td *ngIf="passenger.deleted === false"><div class="table-cell">{{passenger.city}}</div></td>
+        <td class="buttons" *ngIf="passenger.deleted === false">
+          <div class="buts">
+            <button *ngIf="passenger !== undefined" class="cancelbtn btn" (click)="remove(passenger)">REMOVE</button>
+          </div>
+        </td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
