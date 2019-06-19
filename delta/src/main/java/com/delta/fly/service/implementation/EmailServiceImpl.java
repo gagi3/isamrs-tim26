@@ -44,7 +44,7 @@ public class EmailServiceImpl {
                 + transfers(ticket) + "\n"
                 + "Price: " + ticket.getPrice() + "\n"
                 + "If you want to see your reservations, click on the link below.\n\n"
-                + "http://localhost:4200/user-ticket-view\n\n"
+                + "http://localhost:4200/tickets\n\n"
                 + "Sincerely yours,\n\n"
                 + "Delta";
     }
