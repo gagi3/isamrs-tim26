@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FlightDTO} from '../flight-dto';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Router} from '@angular/router';
@@ -8,6 +8,7 @@ import {Airplane} from '../../../shared/model/airplane';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {DateTimeFormatPipe} from '../../../shared/date-time-format.pipe';
 import {PlaceAndTimeDTO} from '../place-and-time-dto';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-add-flight',
@@ -26,6 +27,8 @@ export class AddFlightComponent implements OnInit {
   added = false;
   failed = false;
   errorMessage = '';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'add-flight';
 
   constructor(private router: Router, private service: FlightService, private tokenStorage: TokenStorageService,
               private adminService: ProfileService, private datePipe: DateTimeFormatPipe) { }
@@ -41,6 +44,7 @@ export class AddFlightComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
     this.DTO.transfers = [];
     this.DTO.generateTickets = false;
     this.username = this.tokenStorage.getUsername();
@@ -112,6 +116,15 @@ export class AddFlightComponent implements OnInit {
       }
     }
     return false;
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

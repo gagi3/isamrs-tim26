@@ -11,6 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TicketReservationComponent } from './ticket-reservation/ticket-reservation.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { ViewTicketsComponent } from './view-tickets/view-tickets.component';
+import {HeaderModule} from "../../shared/modules/header/header.module";
 
 @NgModule({
   declarations: [TicketsViewComponent, DiscountedTicketsViewComponent, TicketReservationComponent, ConfirmationComponent, ViewTicketsComponent],
@@ -20,7 +21,8 @@ import { ViewTicketsComponent } from './view-tickets/view-tickets.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HeaderModule
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule, DateTimeFormatPipe],
   exports: [TicketReservationComponent],

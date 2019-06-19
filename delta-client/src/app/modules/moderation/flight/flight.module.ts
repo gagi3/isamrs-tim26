@@ -7,6 +7,8 @@ import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule, MatSelectModule} from '@angular/material';
 import {DateTimeFormatPipe} from '../../shared/date-time-format.pipe';
 import { EditFlightComponent } from './edit-flight/edit-flight.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HeaderModule} from "../../shared/modules/header/header.module";
 
 @NgModule({
   declarations: [AddFlightComponent, EditFlightComponent],
@@ -14,7 +16,12 @@ import { EditFlightComponent } from './edit-flight/edit-flight.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    HeaderModule
+  ],
+  exports: [
+    EditFlightComponent,
+    AddFlightComponent
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule, DateTimeFormatPipe]
 })

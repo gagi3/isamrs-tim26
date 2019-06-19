@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {PriceListService} from '../price-list.service';
 import {PriceListDTO} from '../price-list-dto';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-add-price-list',
@@ -13,6 +14,8 @@ export class AddPriceListComponent implements OnInit {
   failed = false;
   success = false;
   errorMessage = '';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'add-price-list';
 
   constructor(private router: Router, private priceListService: PriceListService) { }
 
@@ -20,6 +23,7 @@ export class AddPriceListComponent implements OnInit {
     this.router.navigateByUrl('');
   }
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
   }
   onSubmit() {
     this.priceListService.create(this.DTO).subscribe(
@@ -35,6 +39,15 @@ export class AddPriceListComponent implements OnInit {
         this.failed = true;
       }
     );
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

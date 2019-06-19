@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AirplaneDTO} from '../airplane-dto';
 import {Router} from '@angular/router';
 import {AirplaneService} from '../airplane.service';
 import {SeatDTO} from '../seat-dto';
 import {SeatClass} from '../../../shared/enumeration/seat-class.enum';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 
 @Component({
@@ -23,14 +24,15 @@ export class AddAirplaneComponent implements OnInit {
   row = [];
   seatClass: SeatClass;
   errorMessage = '';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'add-airplane';
 
   constructor(private router: Router, private service: AirplaneService) { }
 
   cancel() {
     this.router.navigateByUrl('');
   }
-  ngOnInit() {
-  }
+  ngOnInit() { this.header.airlineCompanyAdminView(); }
   create() {
     const row = [];
     let rowSeats = [];
@@ -98,5 +100,13 @@ export class AddAirplaneComponent implements OnInit {
       document.getElementById('seat-label-' + seat.rowNo + '-' + seat.colNo).style.border = '3px solid #f1f1f1';
     }
   }
-
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
+  }
 }

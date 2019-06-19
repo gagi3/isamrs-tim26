@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {DiscountTicketsDTO} from '../discount-tickets-dto';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Flight} from '../../../shared/model/flight';
@@ -9,6 +9,7 @@ import {FlightService} from '../../flight/flight.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {Ticket} from '../../../shared/model/ticket';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-discount-tickets',
@@ -26,6 +27,8 @@ export class DiscountTicketsComponent implements OnInit {
   row = 0;
   col = 0;
   tix = [];
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'discount-tickets';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: TicketService, private flightService: FlightService, private tokenStorage: TokenStorageService,
@@ -34,6 +37,7 @@ export class DiscountTicketsComponent implements OnInit {
     this.dialogRef.close();
   }
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
     this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
@@ -178,6 +182,15 @@ export class DiscountTicketsComponent implements OnInit {
       }
     }
     return true;
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

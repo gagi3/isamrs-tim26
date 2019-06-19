@@ -1,3 +1,5 @@
+<app-header #header (featureSelected)= "onNavigate($event)"></app-header>
+
 <html>
 
 <body>
@@ -82,7 +84,7 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="signinbtn btn">ADD</button>
+          <button type="submit" class="signinbtn btn">GET</button>
           <button class="cancelbtn btn" type="button" (click)="cancel()">CANCEL</button>
         </div>
 

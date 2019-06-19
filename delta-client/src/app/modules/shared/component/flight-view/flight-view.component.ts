@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Flight} from '../../model/flight';
 import {FlightService} from '../../../moderation/flight/flight.service';
 import {Router} from '@angular/router';
@@ -11,6 +11,7 @@ import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {PlaceAndTime} from '../../model/place-and-time';
 import {DiscountTicketsComponent} from "../../../moderation/ticket/discount-tickets/discount-tickets.component";
 import {TicketsViewComponent} from "../../../consumption/reservation/tickets-view/tickets-view.component";
+import {HeaderComponent} from "../../modules/header/header/header.component";
 
 @Component({
   selector: 'app-flight-view',
@@ -25,6 +26,8 @@ export class FlightViewComponent implements OnInit {
   errorMessage = '';
   username = '';
   @Input() flightSearch: any;
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'flights';
 
   constructor(private service: FlightService, private router: Router, private tokenStorage: TokenStorageService,
               private profileService: ProfileService, public dialog: MatDialog) { }
@@ -58,6 +61,7 @@ export class FlightViewComponent implements OnInit {
         data => {
           this.admin = data;
           this.setAdmin(data);
+          this.header.airlineCompanyAdminView();
         }
       );
     } else if (this.tokenStorage.getAuthorities().includes('ROLE_PASSENGER')) {
@@ -66,6 +70,7 @@ export class FlightViewComponent implements OnInit {
         data => {
           this.passenger = data;
           this.setPassenger(data);
+          this.header.passengerView();
         }
       );
     } else {
@@ -85,6 +90,7 @@ export class FlightViewComponent implements OnInit {
   }
   setAdmin(admin: AirlineCompanyAdmin) {
     this.admin = admin;
+    this.header.airlineCompanyAdminView();
     // this.flights = admin.airlineCompany.flights;
     this.flights = [];
     for (let i = 0; i < admin.airlineCompany.flights.length; i++) {
@@ -100,6 +106,7 @@ export class FlightViewComponent implements OnInit {
   }
   setPassenger(passenger: Passenger) {
     this.passenger = passenger;
+    this.header.passengerView();
     this.service.get().subscribe(
       data => {
         for (let i = 0; i < data.length; i++) {
@@ -217,6 +224,15 @@ export class FlightViewComponent implements OnInit {
   }
   loadSearchFilter(filtered: Flight[]) {
     this.flights = filtered;
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

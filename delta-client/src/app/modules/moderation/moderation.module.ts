@@ -5,6 +5,7 @@ import {PriceListModule} from './price-list/price-list.module';
 import {FlightModule} from './flight/flight.module';
 import {TicketModule} from './ticket/ticket.module';
 import {ReservationModule} from './reservation/reservation.module';
+import {HeaderModule} from '../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [],
@@ -14,7 +15,8 @@ import {ReservationModule} from './reservation/reservation.module';
     PriceListModule,
     FlightModule,
     TicketModule,
-    ReservationModule
+    ReservationModule,
+    HeaderModule
   ]
 })
 export class ModerationModule { }

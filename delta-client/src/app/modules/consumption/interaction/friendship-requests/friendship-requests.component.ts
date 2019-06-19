@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../../../shared/token-storage.service';
@@ -7,6 +7,7 @@ import {ProfileService} from '../../../account/profile/shared/service/profile.se
 import {MatDialog} from '@angular/material';
 import {FriendshipRequest} from '../../../shared/model/friendship-request';
 import {FriendshipDTO} from '../friendship-dto';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-friendship-requests',
@@ -19,6 +20,8 @@ export class FriendshipRequestsComponent implements OnInit {
   username = '';
   passenger: Passenger;
   show = '';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'friendship-requests';
   constructor(private router: Router, private tokenStorage: TokenStorageService, private friendshipService: FriendshipRequestService,
               private profileService: ProfileService, public dialog: MatDialog) { }
 
@@ -27,6 +30,7 @@ export class FriendshipRequestsComponent implements OnInit {
     this.profileService.getPassengerByUsername(this.username).subscribe(
       data => {
         this.passenger = data;
+        this.header.passengerView();
       }
     );
     this.friendshipService.getSent().subscribe(
@@ -75,6 +79,15 @@ export class FriendshipRequestsComponent implements OnInit {
           }
         }
       );
+    }
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
     }
   }
 

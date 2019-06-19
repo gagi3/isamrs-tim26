@@ -20,9 +20,9 @@ import {ConfirmationComponent} from './modules/consumption/reservation/confirmat
 import {BusinessReportSelectComponent} from './modules/moderation/reservation/business-report-select/business-report-select.component';
 import {BusinessReportViewComponent} from './modules/moderation/reservation/business-report-view/business-report-view.component';
 import {ViewTicketsComponent} from './modules/consumption/reservation/view-tickets/view-tickets.component';
-import {FriendsViewComponent} from "./modules/consumption/interaction/friends-view/friends-view.component";
-import {FindFriendsComponent} from "./modules/consumption/interaction/find-friends/find-friends.component";
-import {FriendshipRequestsComponent} from "./modules/consumption/interaction/friendship-requests/friendship-requests.component";
+import {FriendsViewComponent} from './modules/consumption/interaction/friends-view/friends-view.component';
+import {FindFriendsComponent} from './modules/consumption/interaction/find-friends/find-friends.component';
+import {FriendshipRequestsComponent} from './modules/consumption/interaction/friendship-requests/friendship-requests.component';
 
 const routes: Routes = [
   // {

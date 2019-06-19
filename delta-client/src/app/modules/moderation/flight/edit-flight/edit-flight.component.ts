@@ -9,6 +9,7 @@ import {DateTimeFormatPipe} from '../../../shared/date-time-format.pipe';
 import {Flight} from '../../../shared/model/flight';
 import {PlaceAndTime} from '../../../shared/model/place-and-time';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-edit-flight',
@@ -28,6 +29,8 @@ export class EditFlightComponent implements OnInit {
   failed = false;
   errorMessage = '';
   show = 'flight';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'edit-flight';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: FlightService, private tokenStorage: TokenStorageService,
@@ -45,6 +48,7 @@ export class EditFlightComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
     this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
@@ -131,5 +135,14 @@ export class EditFlightComponent implements OnInit {
       }
     }
     return false;
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../../../shared/token-storage.service';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
@@ -9,6 +9,7 @@ import {ReservationService} from '../reservation.service';
 import {Reservation} from '../../../shared/model/reservation';
 import {BusinessReportViewComponent} from '../business-report-view/business-report-view.component';
 import {DateTimeFormatPipe} from "../../../shared/date-time-format.pipe";
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-business-report-select',
@@ -24,12 +25,15 @@ export class BusinessReportSelectComponent implements OnInit {
   errorMessage = '';
   username = '';
   reservations: Reservation[] = [];
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'business-report-select';
 
   constructor(private router: Router, private tokenStorage: TokenStorageService,
               private profileService: ProfileService, public dialog: MatDialog,
               private service: ReservationService, private datePipe: DateTimeFormatPipe) { }
 
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
     this.dto.before = new Date();
     this.dto.after = new Date();
     this.username = this.tokenStorage.getUsername();
@@ -140,6 +144,15 @@ export class BusinessReportSelectComponent implements OnInit {
         }
       }
     );
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

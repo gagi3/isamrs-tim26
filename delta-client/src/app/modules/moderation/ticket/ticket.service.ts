@@ -8,6 +8,7 @@ import {Flight} from '../../shared/model/flight';
 import {Seat} from '../../shared/model/seat';
 import {DiscountTicketsDTO} from './discount-tickets-dto';
 import {FriendReservationDTO} from '../../consumption/reservation/friend-reservation-dto';
+import {ReservationDTO} from "../../consumption/reservation/reservation-dto";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})
@@ -55,9 +56,9 @@ export class TicketService {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.get<Ticket[]>(this.URL + '/get/discounted', httpOptions);
   }
-  quickReserve(dto: Ticket, luggage: number): Observable<Ticket> {
+  quickReserve(dto: ReservationDTO): Observable<Ticket> {
     httpOptions.headers.set('AuthToken', this.token);
-    return this.http.post<Ticket>(this.URL + '/reserve/quick', {dto, luggage}, httpOptions);
+    return this.http.post<Ticket>(this.URL + '/reserve/quick', dto, httpOptions);
   }
   reserve(ticket: Ticket, luggage: number): Observable<Ticket> {
     httpOptions.headers.set('AuthToken', this.token);

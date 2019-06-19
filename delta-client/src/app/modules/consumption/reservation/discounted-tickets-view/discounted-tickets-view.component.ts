@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
 import {FlightService} from '../../../moderation/flight/flight.service';
 import {Router} from '@angular/router';
@@ -9,6 +9,8 @@ import {Ticket} from '../../../shared/model/ticket';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {PlaceAndTime} from '../../../shared/model/place-and-time';
 import {Flight} from '../../../shared/model/flight';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {ReservationDTO} from "../reservation-dto";
 
 @Component({
   selector: 'app-discounted-tickets-view',
@@ -20,6 +22,8 @@ export class DiscountedTicketsViewComponent implements OnInit {
   flights: Flight[] = [];
   username = '';
   passenger: Passenger;
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'discounted-tickets-view';
 
   constructor(private service: TicketService, private router: Router, private tokenStorage: TokenStorageService,
               private profileService: ProfileService, public dialog: MatDialog, private flightService: FlightService) { }
@@ -29,6 +33,7 @@ export class DiscountedTicketsViewComponent implements OnInit {
     this.profileService.getPassengerByUsername(this.username).subscribe(
       data => {
         this.passenger = data;
+        this.header.passengerView();
       }
     );
     this.service.getDiscounted().subscribe(
@@ -74,10 +79,14 @@ export class DiscountedTicketsViewComponent implements OnInit {
     }
   }
   quickReserve(ticket: Ticket) {
+    const dto = new ReservationDTO();
+    dto.ticket = ticket;
+    dto.luggage = 0;
+    console.log(ticket);
     if (this.passenger === undefined) {
       alert('Not logged in!');
     } else {
-      this.service.quickReserve(ticket, 0).subscribe(
+      this.service.quickReserve(dto).subscribe(
         data => {
           if (data.passenger.id === this.passenger.id) {
             alert('Reservation successful!');
@@ -90,5 +99,13 @@ export class DiscountedTicketsViewComponent implements OnInit {
       );
     }
   }
-
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
+  }
 }

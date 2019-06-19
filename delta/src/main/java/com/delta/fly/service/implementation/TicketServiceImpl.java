@@ -231,7 +231,7 @@ public class TicketServiceImpl implements TicketService {
                     throw new ObjectNotFoundException("Ticket not previously discounted!");
                 }
             } else {
-                quickTicket = Optional.of(ticketRepository.getOne(ticket.getId()));
+                quickTicket = Optional.of(getOne(ticket.getId()));
                 for (AirlineCompany company : airlineCompanyService.findAll()) {
                     if (company.getDiscountedTickets().contains(quickTicket.get())) {
                         throw new ObjectNotFoundException("Ticket is discounted, therefore unavailable for reservation.");

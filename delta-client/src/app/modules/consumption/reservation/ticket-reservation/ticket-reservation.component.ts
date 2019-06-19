@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
 import {Ticket} from '../../../shared/model/ticket';
@@ -7,6 +7,7 @@ import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-ticket-reservation',
@@ -24,6 +25,8 @@ export class TicketReservationComponent implements OnInit {
   username = '';
   passenger: Passenger = new Passenger();
   reserved = false;
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'ticket-reservation';
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
@@ -38,6 +41,7 @@ export class TicketReservationComponent implements OnInit {
     this.profileService.getPassengerByUsername(this.username).subscribe(
       data => {
         this.passenger = data;
+        this.header.passengerView();
       }
     );
     this.profileService.getFriends().subscribe(
@@ -64,7 +68,7 @@ export class TicketReservationComponent implements OnInit {
     console.log(this.friends);
     console.log(this.selectedFriend);
     console.log(this.DTO);
-    if (this.friend === true) {
+    if (this.friend) {
       this.DTO.ticket = this.ticket;
       this.DTO.passenger = this.selectedFriend;
       this.DTO.luggage = this.luggage;
@@ -90,6 +94,15 @@ export class TicketReservationComponent implements OnInit {
           this.dialogRef.close();
         }
       );
+    }
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
     }
   }
 }

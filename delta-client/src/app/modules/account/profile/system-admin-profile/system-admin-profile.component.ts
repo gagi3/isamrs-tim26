@@ -2,6 +2,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {SystemAdmin} from '../shared/model/system-admin';
 import {ProfileService} from '../shared/service/profile.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-system-admin-profile',
@@ -19,8 +21,10 @@ export class SystemAdminProfileComponent implements OnInit {
   systemAdminFound = false;
   passwordRepeat: string;
   show = 'profile';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'profile-view';
 
-  constructor(private service: ProfileService, private tokenStorage: TokenStorageService) { }
+  constructor(private service: ProfileService, private tokenStorage: TokenStorageService, private router: Router) { }
 
   ngOnInit() {
     this.look();
@@ -37,6 +41,7 @@ export class SystemAdminProfileComponent implements OnInit {
       data => {
         this.systemAdmin = data;
         this.systemAdmin.id = data.id;
+        this.header.systemAdminView();
         if (typeof this.systemAdmin !== 'undefined') {
           this.systemAdminFound = true;
         }
@@ -70,6 +75,15 @@ export class SystemAdminProfileComponent implements OnInit {
       );
     } else {
       alert('Passwords do not match!');
+    }
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
     }
   }
 }

@@ -17,6 +17,7 @@ import { FlightViewComponent } from './modules/shared/component/flight-view/flig
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TicketViewComponent } from './modules/shared/component/ticket-view/ticket-view.component';
 import { FlightSearchComponent } from './modules/shared/component/flight-search/flight-search.component';
+import {HeaderModule} from "./modules/shared/modules/header/header.module";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FlightSearchComponent } from './modules/shared/component/flight-search/
     ConsumptionModule,
     ModerationModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HeaderModule
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule],
   bootstrap: [AppComponent]

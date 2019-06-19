@@ -7,6 +7,7 @@ import {RoleGuardService} from '../../shared/role-guard.service';
 import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {DateTimeFormatPipe} from '../../shared/date-time-format.pipe';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HeaderModule} from "../../shared/modules/header/header.module";
 
 @NgModule({
   declarations: [DiscountTicketsComponent],
@@ -16,7 +17,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HeaderModule
+  ],
+  exports: [
+    DiscountTicketsComponent
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule, DateTimeFormatPipe]
 })

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../../../shared/token-storage.service';
@@ -6,6 +6,7 @@ import {ProfileService} from '../../../account/profile/shared/service/profile.se
 import {ReservationService} from '../reservation.service';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Reservation} from '../../../shared/model/reservation';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-business-report-view',
@@ -17,6 +18,8 @@ export class BusinessReportViewComponent implements OnInit {
   username = '';
   admin: AirlineCompanyAdmin = new AirlineCompanyAdmin();
   profit = 0;
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'business-report-view';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: ReservationService, private tokenStorage: TokenStorageService,
@@ -26,6 +29,7 @@ export class BusinessReportViewComponent implements OnInit {
     this.dialogRef.close();
   }
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('100%', '100%');
     this.username = this.tokenStorage.getUsername();
     this.profileService.getAirlineCompanyAdminByUsername(this.username).subscribe(
@@ -52,6 +56,15 @@ export class BusinessReportViewComponent implements OnInit {
   calcProfit() {
     for (const reservation of this.data.data) {
       this.profit += reservation.ticket.price;
+    }
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
     }
   }
 

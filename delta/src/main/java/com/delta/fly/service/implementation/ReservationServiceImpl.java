@@ -10,10 +10,7 @@ import com.delta.fly.service.abstraction.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -112,11 +109,8 @@ public class ReservationServiceImpl implements ReservationService {
             );
             if (reservations == null || reservations.isEmpty()) {
                 throw new ObjectNotFoundException("No reservations for the selected interval and company");
-            }
-            for (Reservation r : reservations) {
-                if (r.getTicket().getFlight().getArrival().getTheTime().after(new Date())) {
-                    reservations.remove(r);
-                }
+            } else {
+                reservations.removeIf(r -> r.getTicket().getFlight().getArrival().getTheTime().after(new Date()));
             }
             return reservations;
         } catch (ObjectNotFoundException ex) {

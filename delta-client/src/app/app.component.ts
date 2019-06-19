@@ -16,10 +16,10 @@ export class AppComponent {
       this.roles = this.tokenStorage.getAuthorities();
       this.roles.every( role => {
         if (role === 'ROLE_SYSTEMADMIN') {
-          this.authority = 'system admin';
+          this.authority = 'system-admin';
           return false;
         } else if (role === 'ROLE_AIRLINECOMPANYADMIN') {
-          this.authority = 'airline company admin';
+          this.authority = 'airline-company-admin';
           return false;
         } else {
           this.authority = 'passenger';

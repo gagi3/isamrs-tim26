@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Ticket} from "../../../shared/model/ticket";
 import {Flight} from "../../../shared/model/flight";
 import {Passenger} from "../../../account/profile/shared/model/passenger";
@@ -10,6 +10,7 @@ import {MatDialog} from "@angular/material";
 import {FlightService} from "../../../moderation/flight/flight.service";
 import {PlaceAndTime} from "../../../shared/model/place-and-time";
 import {FriendshipRequestService} from "../../../account/profile/shared/service/friendship-request.service";
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-friends-view',
@@ -20,6 +21,8 @@ export class FriendsViewComponent implements OnInit {
   friends: Passenger[] = [];
   username = '';
   passenger: Passenger;
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'friends-view';
 
   constructor(private router: Router, private tokenStorage: TokenStorageService, private friendshipService: FriendshipRequestService,
               private profileService: ProfileService, public dialog: MatDialog) { }
@@ -29,6 +32,7 @@ export class FriendsViewComponent implements OnInit {
     this.profileService.getPassengerByUsername(this.username).subscribe(
       data => {
         this.passenger = data;
+        this.header.passengerView();
       }
     );
     this.profileService.getFriends().subscribe(
@@ -52,6 +56,15 @@ export class FriendsViewComponent implements OnInit {
           }
         }
       );
+    }
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
     }
   }
 

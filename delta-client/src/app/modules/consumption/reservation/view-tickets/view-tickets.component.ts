@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Ticket} from '../../../shared/model/ticket';
 import {Flight} from '../../../shared/model/flight';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
@@ -9,6 +9,7 @@ import {ProfileService} from '../../../account/profile/shared/service/profile.se
 import {MatDialog} from '@angular/material';
 import {FlightService} from '../../../moderation/flight/flight.service';
 import {PlaceAndTime} from '../../../shared/model/place-and-time';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-view-tickets',
@@ -20,6 +21,8 @@ export class ViewTicketsComponent implements OnInit {
   flights: Flight[] = [];
   username = '';
   passenger: Passenger;
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'tickets-view';
 
   constructor(private service: TicketService, private router: Router, private tokenStorage: TokenStorageService,
               private profileService: ProfileService, public dialog: MatDialog, private flightService: FlightService) { }
@@ -29,6 +32,7 @@ export class ViewTicketsComponent implements OnInit {
     this.profileService.getPassengerByUsername(this.username).subscribe(
       data => {
         this.passenger = data;
+        this.header.passengerView();
       }
     );
     this.profileService.getTickets().subscribe(
@@ -87,6 +91,15 @@ export class ViewTicketsComponent implements OnInit {
           }
         }
       );
+    }
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
     }
   }
 

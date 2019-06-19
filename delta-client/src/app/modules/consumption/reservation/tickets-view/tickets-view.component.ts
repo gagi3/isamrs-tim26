@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Flight} from '../../../shared/model/flight';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
@@ -11,6 +11,7 @@ import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
 import {EditFlightComponent} from '../../../moderation/flight/edit-flight/edit-flight.component';
 import {TicketReservationComponent} from '../ticket-reservation/ticket-reservation.component';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-tickets-view',
@@ -31,6 +32,8 @@ export class TicketsViewComponent implements OnInit {
   col = 0;
   reserved = false;
   tix = [];
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'tickets-view';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: TicketService, private flightService: FlightService, private tokenStorage: TokenStorageService,
@@ -44,6 +47,7 @@ export class TicketsViewComponent implements OnInit {
     this.profileService.getPassengerByUsername(this.username).subscribe(
       data => {
         this.passenger = data;
+        this.header.passengerView();
       }
     );
     this.service.getDiscounted().subscribe(
@@ -204,6 +208,15 @@ export class TicketsViewComponent implements OnInit {
       }
     }
     return true;
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

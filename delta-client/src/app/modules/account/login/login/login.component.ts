@@ -38,13 +38,16 @@ export class LoginComponent implements OnInit {
         this.roles = this.tokenStorage.getAuthorities();
         this.roles.every( role => {
           if (role === 'ROLE_AIRLINECOMPANYADMIN') {
-            this.router.navigateByUrl('administration');
+            this.router.navigateByUrl('profile/airline-company-admin');
             return true;
           } else if (role === 'ROLE_PASSENGER') {
-            this.router.navigateByUrl('consumption');
+            this.router.navigateByUrl('tickets');
+            return true;
+          } else if (role === 'ROLE_SYSTEMADMIN') {
+            this.router.navigateByUrl('airline-company/add');
             return true;
           } else {
-            this.router.navigateByUrl('moderation');
+            this.router.navigateByUrl('flight/view');
             return true;
           }
         });
@@ -64,7 +67,7 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('');
   }
   register() {
-    this.router.navigateByUrl('/signup/passenger');
+    this.router.navigateByUrl('signup/passenger');
   }
 
 }

@@ -11,6 +11,9 @@ html {
   width: 100%;
 }
 
+.container-all:before {
+  margin-top: 75px !important;
+}
 
 mat-dialog-container {
   background: inherit !important;

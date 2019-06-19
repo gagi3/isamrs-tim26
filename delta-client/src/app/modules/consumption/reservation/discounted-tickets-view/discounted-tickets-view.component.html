@@ -1,3 +1,5 @@
+<app-header #header (featureSelected)= "onNavigate($event)"></app-header>
+
 <html>
 <body>
 
@@ -14,7 +16,7 @@
       <th scope="col">Transfer 1 time</th>
       <th scope="col">Transfer 2 place</th>
       <th scope="col">Transfer 2 time</th>
-      <th scope="col">Distance</th>
+      <th scope="col">Price</th>
       <th *ngIf="passenger !== undefined" scope="col">Actions</th>
     </tr>
     </thead>
@@ -30,7 +32,7 @@
         <td *ngIf="ticket.flight.transfers[0] !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.transfers[0].theTime}}</div></td>
         <td *ngIf="ticket.flight.transfers[1] !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.transfers[1].thePlace}}</div></td>
         <td *ngIf="ticket.flight.transfers[1] !== undefined && ticket.deleted === false"><div class="table-cell">{{ticket.flight.transfers[1].theTime}}</div></td>
-        <td *ngIf="ticket.deleted === false"><div class="table-cell">{{ticket.flight.distance}}</div></td>
+        <td *ngIf="ticket.deleted === false"><div class="table-cell">{{ticket.price}}</div></td>
         <td class="buttons" *ngIf="ticket.deleted === false">
           <div class="buts">
             <button *ngIf="passenger !== undefined" class="loginbtn btn" (click)="quickReserve(ticket)">RESERVE</button>

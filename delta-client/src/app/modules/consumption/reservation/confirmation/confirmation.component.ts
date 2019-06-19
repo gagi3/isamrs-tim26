@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
+import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
 @Component({
   selector: 'app-confirmation',
@@ -12,6 +13,8 @@ export class ConfirmationComponent implements OnInit {
   location: string;
   ID: any;
   confirmed = false;
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'ticket-confirmation';
 
   constructor(private router: Router, private service: TicketService) { }
   validate() {
@@ -31,7 +34,17 @@ export class ConfirmationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.header.passengerView();
     this.validate();
+  }
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

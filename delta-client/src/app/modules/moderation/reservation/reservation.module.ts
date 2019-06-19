@@ -4,13 +4,19 @@ import { BusinessReportViewComponent } from './business-report-view/business-rep
 import { BusinessReportSelectComponent } from './business-report-select/business-report-select.component';
 import {MatDialogModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HeaderModule} from "../../shared/modules/header/header.module";
 
 @NgModule({
   declarations: [BusinessReportViewComponent, BusinessReportSelectComponent],
+  exports: [
+    BusinessReportSelectComponent
+  ],
   imports: [
     CommonModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    HeaderModule
   ]
 })
 export class ReservationModule { }

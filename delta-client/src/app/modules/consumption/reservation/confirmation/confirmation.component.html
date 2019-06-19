@@ -1,3 +1,5 @@
+<app-header #header (featureSelected)= "onNavigate($event)"></app-header>
+
 <div *ngIf="confirmed; else validateForm">
   Validation successful!
 </div>

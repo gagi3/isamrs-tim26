@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../../token-storage.service';
@@ -7,6 +7,7 @@ import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {Ticket} from '../../model/ticket';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
+import {HeaderComponent} from "../../modules/header/header/header.component";
 
 @Component({
   selector: 'app-ticket-view',
@@ -20,6 +21,8 @@ export class TicketViewComponent implements OnInit {
   read = false;
   errorMessage = '';
   username = '';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'edit-flight';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private ticketService: TicketService, private tokenStorage: TokenStorageService,
@@ -33,6 +36,7 @@ export class TicketViewComponent implements OnInit {
       this.profileService.getAirlineCompanyAdminByUsername(this.username).subscribe(
         data => {
           this.admin = data;
+          this.header.airlineCompanyAdminView();
         }
       );
     } else if (this.tokenStorage.getAuthorities().includes('ROLE_PASSENGER')) {
@@ -40,6 +44,7 @@ export class TicketViewComponent implements OnInit {
       this.profileService.getPassengerByUsername(this.username).subscribe(
         data => {
           this.passenger = data;
+          this.header.passengerView();
           if (this.ticket.passenger.username !== this.passenger.username) {
             alert('This is not your ticket!');
             this.dialogRef.close();
