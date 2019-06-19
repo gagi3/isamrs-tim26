@@ -5,7 +5,7 @@ export class Seat {
   id: BigInteger;
   row: number;
   column: number;
-  class: SeatClass;
+  seatClass: SeatClass;
   airplane: Airplane;
   deleted: boolean;
 }

@@ -16,13 +16,17 @@ export class RegisterComponent implements OnInit {
   failed = false;
   errorMessage = '';
 
-  constructor(private router: Router, private registerService: RegisterService) { }
+  constructor(private router: Router, private registerService: RegisterService) {
+  }
+
   cancel() {
     this.router.navigateByUrl('');
   }
+
   login() {
     this.router.navigateByUrl('/signin');
   }
+
   onSubmit() {
     this.type = this.router.url.substr(8);
     this.registerService.register(this.registerDTO, this.type).subscribe(

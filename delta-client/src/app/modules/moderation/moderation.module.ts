@@ -19,4 +19,5 @@ import {HeaderModule} from '../shared/modules/header/header.module';
     HeaderModule
   ]
 })
-export class ModerationModule { }
+export class ModerationModule {
+}

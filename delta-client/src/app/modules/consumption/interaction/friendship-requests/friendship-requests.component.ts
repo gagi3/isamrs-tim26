@@ -22,8 +22,10 @@ export class FriendshipRequestsComponent implements OnInit {
   show = '';
   @ViewChild('header') header: HeaderComponent;
   showView = 'friendship-requests';
+
   constructor(private router: Router, private tokenStorage: TokenStorageService, private friendshipService: FriendshipRequestService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.username = this.tokenStorage.getUsername();
@@ -44,6 +46,7 @@ export class FriendshipRequestsComponent implements OnInit {
       }
     );
   }
+
   reject(passenger: Passenger) {
     const dto = new FriendshipDTO();
     if (this.passenger === undefined) {
@@ -64,6 +67,7 @@ export class FriendshipRequestsComponent implements OnInit {
       );
     }
   }
+
   accept(req: FriendshipRequest) {
     if (this.passenger === undefined) {
       alert('Not logged in!');
@@ -81,6 +85,7 @@ export class FriendshipRequestsComponent implements OnInit {
       );
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

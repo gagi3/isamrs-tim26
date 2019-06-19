@@ -7,6 +7,7 @@ export class FlightSearchDTO {
   distance: number;
   priceFrom: number;
   priceTo: number;
+
   constructor(companyName: string, departurePlace: string, departureTime: Date, arrivalPlace: string,
               arrivalTime: Date, distance: number, priceFrom: number, priceTo: number) {
     this.companyName = companyName;

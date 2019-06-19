@@ -13,4 +13,5 @@ import {RouterModule} from '@angular/router';
     RouterModule
   ],
 })
-export class RegisterModule { }
+export class RegisterModule {
+}

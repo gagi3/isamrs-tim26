@@ -26,7 +26,8 @@ export class TicketViewComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private ticketService: TicketService, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.ticket = this.data;
@@ -55,6 +56,7 @@ export class TicketViewComponent implements OnInit {
       alert('You are not signed in. You can only browse flights.');
     }
   }
+
   cancel() {
     this.dialogRef.close();
   }

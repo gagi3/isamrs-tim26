@@ -16,7 +16,9 @@ export class ConfirmationComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'ticket-confirmation';
 
-  constructor(private router: Router, private service: TicketService) { }
+  constructor(private router: Router, private service: TicketService) {
+  }
+
   validate() {
     this.location = this.router.url;
     this.ID = this.location.substr(16);
@@ -29,6 +31,7 @@ export class ConfirmationComponent implements OnInit {
       }
     );
   }
+
   reroute() {
     this.router.navigateByUrl('/');
   }
@@ -37,6 +40,7 @@ export class ConfirmationComponent implements OnInit {
     this.header.passengerView();
     this.validate();
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

@@ -25,11 +25,13 @@ export class EditPriceListComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'edit-price-list';
 
-  constructor(private router: Router, private priceListService: PriceListService) { }
+  constructor(private router: Router, private priceListService: PriceListService) {
+  }
 
   setPriceList(data: PriceList) {
     this.priceList = data;
   }
+
   getPriceList() {
     this.priceListService.getThis().subscribe(
       data => {
@@ -41,10 +43,12 @@ export class EditPriceListComponent implements OnInit {
       }
     );
   }
+
   ngOnInit() {
     this.header.airlineCompanyAdminView();
     this.getPriceList();
   }
+
   onSubmit() {
     this.priceListService.update(this.priceList).subscribe(
       data => {
@@ -60,6 +64,7 @@ export class EditPriceListComponent implements OnInit {
       }
     );
   }
+
   edit() {
     this.show = 'change';
     this.inputEl1.nativeElement.disabled = false;
@@ -69,6 +74,7 @@ export class EditPriceListComponent implements OnInit {
     this.inputEl5.nativeElement.disabled = false;
     this.inputEl6.nativeElement.disabled = false;
   }
+
   cancel() {
     this.show = 'priceList';
     this.inputEl1.nativeElement.disabled = true;
@@ -78,6 +84,7 @@ export class EditPriceListComponent implements OnInit {
     this.inputEl5.nativeElement.disabled = true;
     this.inputEl6.nativeElement.disabled = true;
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

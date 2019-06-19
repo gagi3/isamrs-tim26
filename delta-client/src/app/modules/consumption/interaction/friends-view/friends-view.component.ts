@@ -1,14 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Ticket} from "../../../shared/model/ticket";
-import {Flight} from "../../../shared/model/flight";
 import {Passenger} from "../../../account/profile/shared/model/passenger";
-import {TicketService} from "../../../moderation/ticket/ticket.service";
 import {Router} from "@angular/router";
 import {TokenStorageService} from "../../../shared/token-storage.service";
 import {ProfileService} from "../../../account/profile/shared/service/profile.service";
 import {MatDialog} from "@angular/material";
-import {FlightService} from "../../../moderation/flight/flight.service";
-import {PlaceAndTime} from "../../../shared/model/place-and-time";
 import {FriendshipRequestService} from "../../../account/profile/shared/service/friendship-request.service";
 import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
@@ -25,7 +20,8 @@ export class FriendsViewComponent implements OnInit {
   showView = 'friends-view';
 
   constructor(private router: Router, private tokenStorage: TokenStorageService, private friendshipService: FriendshipRequestService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.username = this.tokenStorage.getUsername();
@@ -41,6 +37,7 @@ export class FriendsViewComponent implements OnInit {
       }
     );
   }
+
   remove(passenger: Passenger) {
     if (this.passenger === undefined) {
       alert('Not logged in!');
@@ -58,6 +55,7 @@ export class FriendsViewComponent implements OnInit {
       );
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

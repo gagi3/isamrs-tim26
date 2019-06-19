@@ -10,8 +10,11 @@ import java.util.Optional;
 public interface PriceListRepository extends JpaRepository<PriceList, Long> {
 
     List<PriceList> findAllByDeletedIsFalse();
+
     Optional<PriceList> findByAirlineCompany(AirlineCompany company);
+
     Optional<PriceList> findByAirlineCompanyId(Long id);
+
     PriceList findPriceListByAirlineCompany(AirlineCompany company);
 
 }

@@ -13,7 +13,9 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     List<Reservation> findAllByReservationDateAfterAndReservationDateBeforeAndTicketFlightAirlineCompany(Date after, Date before, AirlineCompany company);
+
     Reservation findByPassengerAndTicket(Passenger passenger, Ticket ticket);
+
     Optional<Reservation> findByTicket(Ticket ticket);
 
 }

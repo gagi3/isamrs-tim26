@@ -25,7 +25,8 @@ export class ViewTicketsComponent implements OnInit {
   showView = 'tickets-view';
 
   constructor(private service: TicketService, private router: Router, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog, private flightService: FlightService) { }
+              private profileService: ProfileService, public dialog: MatDialog, private flightService: FlightService) {
+  }
 
   ngOnInit() {
     this.username = this.tokenStorage.getUsername();
@@ -46,14 +47,17 @@ export class ViewTicketsComponent implements OnInit {
       }
     );
   }
+
   setFlights(flights: Flight[]) {
     this.flights = flights;
     this.mapTF();
     this.setEmpty();
   }
+
   setData(tickets: Ticket[]) {
     this.tickets = tickets;
   }
+
   mapTF() {
     for (const flight of this.flights) {
       for (const t of flight.tickets) {
@@ -66,6 +70,7 @@ export class ViewTicketsComponent implements OnInit {
     }
     this.setEmpty();
   }
+
   setEmpty() {
     for (const ticket of this.tickets) {
       if (ticket.flight.transfers[0] === undefined) {
@@ -76,6 +81,7 @@ export class ViewTicketsComponent implements OnInit {
       }
     }
   }
+
   cancel(ticket: Ticket) {
     if (this.passenger === undefined) {
       alert('Not logged in!');
@@ -93,6 +99,7 @@ export class ViewTicketsComponent implements OnInit {
       );
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

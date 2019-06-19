@@ -24,17 +24,20 @@ export class AirlineCompanyAdminProfileComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'profile-view';
 
-  constructor(private service: ProfileService, private tokenStorage: TokenStorageService, private router: Router) { }
+  constructor(private service: ProfileService, private tokenStorage: TokenStorageService, private router: Router) {
+  }
 
   ngOnInit() {
     this.look();
   }
+
   look() {
     this.findAirlineCompanyAdmin();
     if (this.airlineCompanyAdminFound === false) {
       alert('Nobody found with this username. You cheat!');
     }
   }
+
   findAirlineCompanyAdmin() {
     const username = this.tokenStorage.getUsername();
     this.service.getAirlineCompanyAdminByUsername(username).subscribe(
@@ -48,6 +51,7 @@ export class AirlineCompanyAdminProfileComponent implements OnInit {
       }
     );
   }
+
   clickChange() {
     this.show = 'change';
     this.inputEl1.nativeElement.disabled = false;
@@ -56,6 +60,7 @@ export class AirlineCompanyAdminProfileComponent implements OnInit {
     this.inputEl4.nativeElement.disabled = false;
     this.inputEl5.nativeElement.disabled = false;
   }
+
   clickCancel() {
     this.show = 'profile';
     this.inputEl1.nativeElement.disabled = true;
@@ -64,6 +69,7 @@ export class AirlineCompanyAdminProfileComponent implements OnInit {
     this.inputEl4.nativeElement.disabled = true;
     this.inputEl5.nativeElement.disabled = true;
   }
+
   clickSave() {
     if (this.airlineCompanyAdmin.password === this.passwordRepeat) {
       this.service.updateAirlineCompanyAdmin(this.airlineCompanyAdmin).subscribe(
@@ -77,6 +83,7 @@ export class AirlineCompanyAdminProfileComponent implements OnInit {
       alert('Passwords do not match!');
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

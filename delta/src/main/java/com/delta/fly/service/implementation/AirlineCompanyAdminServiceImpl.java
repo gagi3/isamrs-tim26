@@ -63,7 +63,9 @@ public class AirlineCompanyAdminServiceImpl implements AirlineCompanyAdminServic
                 admin.get().setCity(dto.getCity());
                 Optional<Role> role = roleRepository.findByRoleName(RoleName.ROLE_AIRLINECOMPANYADMIN);
                 if (role.isPresent()) {
-                    admin.get().setRoles(new ArrayList<Role>() {{ add(role.get()); }});
+                    admin.get().setRoles(new ArrayList<Role>() {{
+                        add(role.get());
+                    }});
                 } else {
                     admin.get().setRoles(new ArrayList<Role>() {{
                         add(new Role(RoleName.ROLE_AIRLINECOMPANYADMIN));

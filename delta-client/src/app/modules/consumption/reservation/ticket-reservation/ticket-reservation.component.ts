@@ -31,10 +31,13 @@ export class TicketReservationComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: TicketService, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
+
   cancel() {
     this.dialogRef.close();
   }
+
   ngOnInit() {
     this.dialogRef.updateSize('150%', '150%');
     this.username = this.tokenStorage.getUsername();
@@ -53,6 +56,7 @@ export class TicketReservationComponent implements OnInit {
     this.ticket = this.data.ticket;
     // this.getFriends();
   }
+
   getFriends() {
     this.profileService.getFriends().subscribe(
       data => {
@@ -61,6 +65,7 @@ export class TicketReservationComponent implements OnInit {
       }
     );
   }
+
   onSubmit() {
     console.log(this.friend);
     console.log(this.ticket);
@@ -96,6 +101,7 @@ export class TicketReservationComponent implements OnInit {
       );
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

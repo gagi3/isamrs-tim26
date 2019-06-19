@@ -17,14 +17,17 @@ export class AirlineCompanyRegistrationComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'add-company';
 
-  constructor(private router: Router, private registerService: AirlineCompanyRegistrationService) { }
+  constructor(private router: Router, private registerService: AirlineCompanyRegistrationService) {
+  }
 
   ngOnInit() {
     this.header.systemAdminView();
   }
+
   cancel() {
     this.router.navigateByUrl('');
   }
+
   onSubmit() {
     this.registerService.register(this.registrationDTO).subscribe(
       data => {
@@ -41,6 +44,7 @@ export class AirlineCompanyRegistrationComponent implements OnInit {
       }
     );
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

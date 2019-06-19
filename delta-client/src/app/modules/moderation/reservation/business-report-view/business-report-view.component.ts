@@ -23,11 +23,13 @@ export class BusinessReportViewComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: ReservationService, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
 
   cancel() {
     this.dialogRef.close();
   }
+
   ngOnInit() {
     this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('100%', '100%');
@@ -40,10 +42,12 @@ export class BusinessReportViewComponent implements OnInit {
     this.read();
     this.reservations = this.data.data;
   }
+
   read() {
     this.mapFlights();
     this.calcProfit();
   }
+
   mapFlights() {
     for (const r of this.data.data) {
       this.service.getFlight(r.id).subscribe(
@@ -53,11 +57,13 @@ export class BusinessReportViewComponent implements OnInit {
       );
     }
   }
+
   calcProfit() {
     for (const reservation of this.data.data) {
       this.profit += reservation.ticket.price;
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

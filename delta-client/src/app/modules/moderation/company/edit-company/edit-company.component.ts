@@ -10,11 +10,13 @@ export class EditCompanyComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'edit-company';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.header.airlineCompanyAdminView();
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

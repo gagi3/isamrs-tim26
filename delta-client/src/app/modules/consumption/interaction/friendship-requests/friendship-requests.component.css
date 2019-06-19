@@ -3,35 +3,45 @@ body {
   background: inherit;
   color: white;
 }
-* {box-sizing: border-box}
+
+* {
+  box-sizing: border-box
+}
+
 html {
   overflow: auto;
   background: inherit;
   /*filter: blur(95px);*/
 }
+
 .table-cell {
   height: 64px;
   max-height: 64px;
   overflow: hidden;
 }
+
 table, .table-hover {
   width: 100%;
   display: table;
   float: left;
 }
+
 table, .container-all:before {
   height: 100%;
 }
+
 td {
   display: table-cell;
   text-align: center;
   height: 64px;
   vertical-align: middle;
 }
-.buttons{
+
+.buttons {
   display: inline-block;
   vertical-align: middle;
 }
+
 tr {
   display: table-row;
   max-height: 64px;
@@ -44,7 +54,7 @@ thead, tbody {
   /*height: 100%;*/
 }
 
-.container-all:before ~table {
+.container-all:before ~ table {
   /*height: 100%;*/
   float: left;
 }
@@ -52,7 +62,7 @@ thead, tbody {
 .container-all:before, .mat-dialog-container {
   float: left;
   content: '';
-  overflow:auto;
+  overflow: auto;
   top: 0;
   left: 0;
   right: 0;
@@ -170,7 +180,7 @@ button:hover {
 }
 
 .loginbtn:hover {
-  color:white;
+  color: white;
   transform: perspective(1px) translateZ(0);
   transition-duration: 0.3s;
   transition-property: transform;
@@ -208,7 +218,7 @@ button:hover {
   transition-property: transform;
 }
 
-.cancelbtn:hover{
+.cancelbtn:hover {
   float: left;
   transform: perspective(1px) translateZ(0);
   transition-duration: 0.3s;
@@ -255,6 +265,7 @@ button:hover {
     width: 100%;
     height: inherit;
   }
+
   .container-all:before {
     width: 100%;
     height: inherit;
@@ -272,6 +283,7 @@ button:hover {
   transform: translate(-50%, 0%);
   border-radius: 3px;
 }
+
 .label:hover {
   cursor: pointer;
   box-shadow: 0 0 0px 2px #5C6AFF;
@@ -360,7 +372,7 @@ button:hover {
 .container-outer {
   background: white;
   border-radius: 25px;
-  box-shadow: 2px 6px 20px 2px rgba(10,10,120,0.15);
+  box-shadow: 2px 6px 20px 2px rgba(10, 10, 120, 0.15);
 }
 
 .container-inner {
@@ -373,6 +385,7 @@ button:hover {
 .hidden {
   display: none;
 }
+
 .entry {
   height: 33.3%;
   position: absolute;
@@ -384,14 +397,17 @@ button:hover {
   left: 8px;
   top: 8px;
 }
+
 .entry:nth-child(4) {
   left: 8px;
   top: 58px;
 }
+
 .entry:nth-child(6) {
   left: 8px;
   top: 108px;
 }
+
 .circle {
   color: #545556;
   border: 2px solid #545556;
@@ -402,6 +418,7 @@ button:hover {
   transition: border-color 300ms;
   width: 20px;
 }
+
 .entry-label {
   color: #545556;
   font-size: 20px;
@@ -422,6 +439,7 @@ button:hover {
   transition: background 300ms;
   width: 40px;
 }
+
 .highlight {
   background: #545556;
   border-radius: 50%;
@@ -434,20 +452,25 @@ button:hover {
   transform: translateY(-50px);
   width: 12px;
 }
+
 .hidden:nth-child(1):checked ~ .highlight {
   transform: translateY(0);
   background: rgb(51, 133, 255);
 }
+
 .hidden:nth-child(3):checked ~ .highlight {
   transform: translateY(50px);
   background: rgb(153, 51, 153);
 }
+
 .hidden:nth-child(1):checked + .entry .circle {
   border-color: rgb(51, 133, 255);
 }
+
 .hidden:nth-child(3):checked + .entry .circle {
   border-color: rgb(153, 51, 153);
 }
+
 .check:checked ~ .containerOuter .overlay {
   background: #ecf0f4;
 }

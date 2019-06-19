@@ -21,7 +21,8 @@ export class FindFriendsComponent implements OnInit {
   showView = 'find-friends';
 
   constructor(private router: Router, private tokenStorage: TokenStorageService, private friendshipService: FriendshipRequestService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.username = this.tokenStorage.getUsername();
@@ -37,6 +38,7 @@ export class FindFriendsComponent implements OnInit {
       }
     );
   }
+
   add(passenger: Passenger) {
     const dto = new FriendshipRequestDTO();
     if (this.passenger === undefined) {
@@ -59,6 +61,7 @@ export class FindFriendsComponent implements OnInit {
       );
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

@@ -32,10 +32,13 @@ export class DiscountTicketsComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: TicketService, private flightService: FlightService, private tokenStorage: TokenStorageService,
-              private adminService: ProfileService) { }
+              private adminService: ProfileService) {
+  }
+
   cancel() {
     this.dialogRef.close();
   }
+
   ngOnInit() {
     this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('40%', '80%');
@@ -49,11 +52,13 @@ export class DiscountTicketsComponent implements OnInit {
     this.reread();
     this.refresh();
   }
+
   reread() {
     this.calcRows();
     this.mapTickets();
     // console.log(this.flight);
   }
+
   onSubmit() {
     this.service.discount(this.dto).subscribe(
       data => {
@@ -70,6 +75,7 @@ export class DiscountTicketsComponent implements OnInit {
       }
     );
   }
+
   mapTickets() {
     const row = [];
     let rowSeats = [];
@@ -137,6 +143,7 @@ export class DiscountTicketsComponent implements OnInit {
       document.getElementsByClassName('seat').item(0).setAttribute('margin-right', '44.28571428571429%');
     }
   }
+
   seatAction(ticket: Ticket) {
     // this.refresh();
     if (!this.checkPass(ticket)) {
@@ -164,9 +171,11 @@ export class DiscountTicketsComponent implements OnInit {
       }
     }
   }
+
   checkPass(ticket: Ticket): boolean {
     return ticket.passenger === null;
   }
+
   checkDisc(ticket: Ticket): boolean {
     for (const t of this.admin.airlineCompany.discountedTickets) {
       if (t.id === ticket.id) {
@@ -175,6 +184,7 @@ export class DiscountTicketsComponent implements OnInit {
     }
     return true;
   }
+
   checkDTO(ticket: Ticket): boolean {
     for (const t of this.dto.tickets) {
       if (t.id === ticket.id) {
@@ -183,6 +193,7 @@ export class DiscountTicketsComponent implements OnInit {
     }
     return true;
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

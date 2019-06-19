@@ -30,7 +30,8 @@ export class BusinessReportSelectComponent implements OnInit {
 
   constructor(private router: Router, private tokenStorage: TokenStorageService,
               private profileService: ProfileService, public dialog: MatDialog,
-              private service: ReservationService, private datePipe: DateTimeFormatPipe) { }
+              private service: ReservationService, private datePipe: DateTimeFormatPipe) {
+  }
 
   ngOnInit() {
     this.header.airlineCompanyAdminView();
@@ -43,9 +44,11 @@ export class BusinessReportSelectComponent implements OnInit {
       }
     );
   }
+
   cancel() {
     this.router.navigateByUrl('');
   }
+
   onSubmit() {
     this.dto.after = new Date(this.dto.after);
     this.dto.before = new Date(this.dto.before);
@@ -145,6 +148,7 @@ export class BusinessReportSelectComponent implements OnInit {
       }
     );
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

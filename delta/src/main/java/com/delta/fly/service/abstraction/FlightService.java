@@ -11,12 +11,16 @@ import java.util.List;
 public interface FlightService {
 
     List<Flight> findAll();
+
     Flight getOne(Long id) throws ObjectNotFoundException;
+
     Flight create(FlightDTO dto) throws ObjectNotFoundException, InvalidInputException;
+
     Flight update(Flight flight) throws ObjectNotFoundException, InvalidInputException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
 
     List<Flight> filterSearch(FlightSearchFilterDTO dto);
     //List<Flight> filterSearch();
-    
+
 }

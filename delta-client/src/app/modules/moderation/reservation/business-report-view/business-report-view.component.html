@@ -1,4 +1,3 @@
-
 <html>
 <body>
 
@@ -28,14 +27,30 @@
     <tbody>
     <tr *ngFor="let reservation of reservations">
       <ng-container *ngIf="reservation.deleted === false">
-        <td *ngIf="admin !== undefined && reservation.deleted === false && reservation.ticket.flight !== undefined"><div class="table-cell">{{reservation.ticket.flight.airplane.name}}</div></td>
-        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined"><div class="table-cell">{{reservation.ticket.flight.departure.thePlace}}</div></td>
-        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined"><div class="table-cell">{{reservation.ticket.flight.departure.theTime}}</div></td>
-        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined"><div class="table-cell">{{reservation.ticket.flight.arrival.thePlace}}</div></td>
-        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined"><div class="table-cell">{{reservation.ticket.flight.arrival.theTime}}</div></td>
-        <td *ngIf="reservation.deleted === false"><div class="table-cell">{{reservation.ticket.passenger.username}}</div></td>
-        <td *ngIf="reservation.deleted === false"><div class="table-cell">{{reservation.reservationDate}}</div></td>
-        <td *ngIf="reservation.deleted === false"><div class="table-cell">{{reservation.ticket.price}}</div></td>
+        <td *ngIf="admin !== undefined && reservation.deleted === false && reservation.ticket.flight !== undefined">
+          <div class="table-cell">{{reservation.ticket.flight.airplane.name}}</div>
+        </td>
+        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined">
+          <div class="table-cell">{{reservation.ticket.flight.departure.thePlace}}</div>
+        </td>
+        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined">
+          <div class="table-cell">{{reservation.ticket.flight.departure.theTime}}</div>
+        </td>
+        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined">
+          <div class="table-cell">{{reservation.ticket.flight.arrival.thePlace}}</div>
+        </td>
+        <td *ngIf="reservation.deleted === false && reservation.ticket.flight !== undefined">
+          <div class="table-cell">{{reservation.ticket.flight.arrival.theTime}}</div>
+        </td>
+        <td *ngIf="reservation.deleted === false">
+          <div class="table-cell">{{reservation.ticket.passenger.username}}</div>
+        </td>
+        <td *ngIf="reservation.deleted === false">
+          <div class="table-cell">{{reservation.reservationDate}}</div>
+        </td>
+        <td *ngIf="reservation.deleted === false">
+          <div class="table-cell">{{reservation.ticket.price}}</div>
+        </td>
         <td class="buttons" *ngIf="reservation.deleted === false">
           <div class="buts">
             <button *ngIf="admin !== undefined" class="loginbtn btn" (click)="cancel()">VIEW</button>

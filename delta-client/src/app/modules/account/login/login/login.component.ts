@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any, private dialogRef: MatDialogRef<any>,
               private loginService: LoginService, private tokenStorage: TokenStorageService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
       this.roles = this.tokenStorage.getAuthorities();
     }
   }
+
   onSubmit() {
     this.loginService.attemptAuth(this.loginDTO).subscribe(
       data => {
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.isLoggedIn = true;
         this.failed = false;
         this.roles = this.tokenStorage.getAuthorities();
-        this.roles.every( role => {
+        this.roles.every(role => {
           if (role === 'ROLE_AIRLINECOMPANYADMIN') {
             this.router.navigateByUrl('profile/airline-company-admin');
             return true;
@@ -63,9 +65,11 @@ export class LoginComponent implements OnInit {
   reload() {
     window.location.reload();
   }
+
   cancel() {
     this.router.navigateByUrl('');
   }
+
   register() {
     this.router.navigateByUrl('signup/passenger');
   }

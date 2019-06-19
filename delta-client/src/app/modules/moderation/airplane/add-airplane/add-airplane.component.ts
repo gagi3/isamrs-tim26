@@ -27,12 +27,17 @@ export class AddAirplaneComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'add-airplane';
 
-  constructor(private router: Router, private service: AirplaneService) { }
+  constructor(private router: Router, private service: AirplaneService) {
+  }
 
   cancel() {
     this.router.navigateByUrl('');
   }
-  ngOnInit() { this.header.airlineCompanyAdminView(); }
+
+  ngOnInit() {
+    this.header.airlineCompanyAdminView();
+  }
+
   create() {
     const row = [];
     let rowSeats = [];
@@ -52,6 +57,7 @@ export class AddAirplaneComponent implements OnInit {
       this.row = row;
     }
   }
+
   onSubmit() {
     this.service.add(this.dto).subscribe(
       data => {
@@ -68,6 +74,7 @@ export class AddAirplaneComponent implements OnInit {
       }
     );
   }
+
   refresh() {
     if (this.cols === 6) {
       document.getElementsByClassName('seat').item(2).setAttribute('margin-right', '11.1%');
@@ -86,6 +93,7 @@ export class AddAirplaneComponent implements OnInit {
       document.getElementsByClassName('seat').item(0).setAttribute('margin-right', '44.28571428571429%');
     }
   }
+
   seatAction(seat, seatClass) {
     if (seatClass.toString() === 'ECONOMY') {
       seat.seatClass = SeatClass.ECONOMY;
@@ -100,6 +108,7 @@ export class AddAirplaneComponent implements OnInit {
       document.getElementById('seat-label-' + seat.rowNo + '-' + seat.colNo).style.border = '3px solid #f1f1f1';
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

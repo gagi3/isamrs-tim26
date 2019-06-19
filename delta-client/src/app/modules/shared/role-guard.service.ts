@@ -11,7 +11,9 @@ const AUTHORITIES_KEY = 'AuthAuthorities';
 })
 export class RoleGuardService implements CanActivate {
 
-  constructor(public auth: LoginService, public router: Router, private tokenStorage: TokenStorageService) { }
+  constructor(public auth: LoginService, public router: Router, private tokenStorage: TokenStorageService) {
+  }
+
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data.expectedRole;
     const token = this.tokenStorage.getToken();

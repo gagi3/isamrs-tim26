@@ -1,71 +1,94 @@
-<app-header #header (featureSelected)= "onNavigate($event)"></app-header>
+<app-header #header (featureSelected)="onNavigate($event)"></app-header>
 
 <html>
 <body>
-  <div class="container-all">
-    <div class="search-container">
-      <button *ngIf="passenger !== undefined" class="loginbtn btn" (click)="reset()">RESET</button>
-      <label>
-        <select [(ngModel)]="dep" *ngIf="passenger !== undefined" name="dep" (change)="changeDep();" required>
-          <option *ngFor="let dep of destinations" [value]="dep" (click)="filterDeparture(dep);" >{{dep}}</option>
-        </select>
-      </label>
-      <label>
-        <select [(ngModel)]="arr" *ngIf="passenger !== undefined" name="arr" (change)="changeArr();" required>
-          <option *ngFor="let arr of destinations" [value]="arr" (click)="filterArrival(arr);" >{{arr}}</option>
-        </select>
-      </label>
-      <input type="datetime-local" class="form-control" name="arrDate" [(ngModel)]="depDate" required />
-      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changeDepDate();">APPLY</button>
-      <input type="datetime-local" class="form-control" name="arrDate" [(ngModel)]="arrDate" required />
-      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changeArrTime();">APPLY</button>
-      <input type="number" class="form-control" name="arrDate" [(ngModel)]="priceFrom" required />
-      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changePriceFrom();">APPLY</button>
-      <input type="number" class="form-control" name="arrDate" [(ngModel)]="priceTo" required />
-      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changePriceTo();">APPLY</button>
-    </div>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th *ngIf="admin !== undefined" scope="col">Airplane</th>
-          <th scope="col">Departure place</th>
-          <th scope="col">Departure time</th>
-          <th scope="col">Arrival place</th>
-          <th scope="col">Arrival time</th>
-          <th scope="col">Transfer 1 place</th>
-          <th scope="col">Transfer 1 time</th>
-          <th scope="col">Transfer 2 place</th>
-          <th scope="col">Transfer 2 time</th>
-          <th scope="col">Distance</th>
-          <th *ngIf="admin !== undefined || passenger !== undefined" scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let flight of flights">
-          <ng-container *ngIf="flight.deleted === false">
-            <td *ngIf="admin !== undefined && flight.deleted === false"><div class="table-cell">{{flight.airplane.name}}</div></td>
-            <td *ngIf="flight.deleted === false"><div class="table-cell">{{flight.departure.thePlace}}</div></td>
-            <td *ngIf="flight.deleted === false"><div class="table-cell">{{flight.departure.theTime}}</div></td>
-            <td *ngIf="flight.deleted === false"><div class="table-cell">{{flight.arrival.thePlace}}</div></td>
-            <td *ngIf="flight.deleted === false"><div class="table-cell">{{flight.arrival.theTime}}</div></td>
-            <td *ngIf="flight.transfers[0] !== undefined && flight.deleted === false"><div class="table-cell">{{flight.transfers[0].thePlace}}</div></td>
-            <td *ngIf="flight.transfers[0] !== undefined && flight.deleted === false"><div class="table-cell">{{flight.transfers[0].theTime}}</div></td>
-            <td *ngIf="flight.transfers[1] !== undefined && flight.deleted === false"><div class="table-cell">{{flight.transfers[1].thePlace}}</div></td>
-            <td *ngIf="flight.transfers[1] !== undefined && flight.deleted === false"><div class="table-cell">{{flight.transfers[1].theTime}}</div></td>
-            <td *ngIf="flight.deleted === false"><div class="table-cell">{{flight.distance}}</div></td>
-            <td class="buttons" *ngIf="flight.deleted === false">
-              <div class="buts">
-                <button *ngIf="admin !== undefined" class="loginbtn btn" (click)="edit(flight)">EDIT</button>
-                <button *ngIf="admin !== undefined" class="loginbtn btn" (click)="discount(flight)">DISCOUNT TICKETS</button>
-                <button *ngIf="admin !== undefined" class="cancelbtn btn" (click)="delete(flight)">DELETE</button>
-                <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="reserveTickets(flight)">RESERVE TICKETS</button>
-              </div>
-            </td>
-          </ng-container>
-        </tr>
-      </tbody>
-    </table>
+<div class="container-all">
+  <div class="search-container">
+    <button *ngIf="passenger !== undefined" class="loginbtn btn" (click)="reset()">RESET</button>
+    <label>
+      <select [(ngModel)]="dep" *ngIf="passenger !== undefined" name="dep" (change)="changeDep();" required>
+        <option *ngFor="let dep of destinations" [value]="dep" (click)="filterDeparture(dep);">{{dep}}</option>
+      </select>
+    </label>
+    <label>
+      <select [(ngModel)]="arr" *ngIf="passenger !== undefined" name="arr" (change)="changeArr();" required>
+        <option *ngFor="let arr of destinations" [value]="arr" (click)="filterArrival(arr);">{{arr}}</option>
+      </select>
+    </label>
+    <input type="datetime-local" class="form-control" name="arrDate" [(ngModel)]="depDate" required/>
+    <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changeDepDate();">APPLY</button>
+    <input type="datetime-local" class="form-control" name="arrDate" [(ngModel)]="arrDate" required/>
+    <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changeArrTime();">APPLY</button>
+    <input type="number" class="form-control" name="arrDate" [(ngModel)]="priceFrom" required/>
+    <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changePriceFrom();">APPLY</button>
+    <input type="number" class="form-control" name="arrDate" [(ngModel)]="priceTo" required/>
+    <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changePriceTo();">APPLY</button>
   </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th *ngIf="admin !== undefined" scope="col">Airplane</th>
+      <th scope="col">Departure place</th>
+      <th scope="col">Departure time</th>
+      <th scope="col">Arrival place</th>
+      <th scope="col">Arrival time</th>
+      <th scope="col">Transfer 1 place</th>
+      <th scope="col">Transfer 1 time</th>
+      <th scope="col">Transfer 2 place</th>
+      <th scope="col">Transfer 2 time</th>
+      <th scope="col">Distance</th>
+      <th *ngIf="admin !== undefined || passenger !== undefined" scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let flight of flights">
+      <ng-container *ngIf="flight.deleted === false">
+        <td *ngIf="admin !== undefined && flight.deleted === false">
+          <div class="table-cell">{{flight.airplane.name}}</div>
+        </td>
+        <td *ngIf="flight.deleted === false">
+          <div class="table-cell">{{flight.departure.thePlace}}</div>
+        </td>
+        <td *ngIf="flight.deleted === false">
+          <div class="table-cell">{{flight.departure.theTime}}</div>
+        </td>
+        <td *ngIf="flight.deleted === false">
+          <div class="table-cell">{{flight.arrival.thePlace}}</div>
+        </td>
+        <td *ngIf="flight.deleted === false">
+          <div class="table-cell">{{flight.arrival.theTime}}</div>
+        </td>
+        <td *ngIf="flight.transfers[0] !== undefined && flight.deleted === false">
+          <div class="table-cell">{{flight.transfers[0].thePlace}}</div>
+        </td>
+        <td *ngIf="flight.transfers[0] !== undefined && flight.deleted === false">
+          <div class="table-cell">{{flight.transfers[0].theTime}}</div>
+        </td>
+        <td *ngIf="flight.transfers[1] !== undefined && flight.deleted === false">
+          <div class="table-cell">{{flight.transfers[1].thePlace}}</div>
+        </td>
+        <td *ngIf="flight.transfers[1] !== undefined && flight.deleted === false">
+          <div class="table-cell">{{flight.transfers[1].theTime}}</div>
+        </td>
+        <td *ngIf="flight.deleted === false">
+          <div class="table-cell">{{flight.distance}}</div>
+        </td>
+        <td class="buttons" *ngIf="flight.deleted === false">
+          <div class="buts">
+            <button *ngIf="admin !== undefined" class="loginbtn btn" (click)="edit(flight)">EDIT</button>
+            <button *ngIf="admin !== undefined" class="loginbtn btn" (click)="discount(flight)">DISCOUNT TICKETS
+            </button>
+            <button *ngIf="admin !== undefined" class="cancelbtn btn" (click)="delete(flight)">DELETE</button>
+            <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="reserveTickets(flight)">RESERVE
+              TICKETS
+            </button>
+          </div>
+        </td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>

@@ -6,7 +6,6 @@ import com.delta.fly.dto.ReservationDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Flight;
-import com.delta.fly.model.Passenger;
 import com.delta.fly.model.Seat;
 import com.delta.fly.model.Ticket;
 import com.delta.fly.service.abstraction.TicketService;
@@ -116,7 +115,6 @@ public class TicketController {
         Boolean cancelled = ticketService.cancel(ticket);
         return new ResponseEntity<>(cancelled, HttpStatus.OK);
     }
-
 
 
 }

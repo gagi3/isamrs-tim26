@@ -1,12 +1,10 @@
-
 <html>
 
 <body>
 
-<div *ngIf = "added; else discountForm">
- Discounted.
+<div *ngIf="added; else discountForm">
+  Discounted.
 </div>
-
 
 
 <ng-template #discountForm>
@@ -31,8 +29,9 @@
               <li *ngFor="let tickets of tix" class="row row--1">
                 <ol class="seats" type="A">
                   <li *ngFor="let tic of tickets" class="seat" id="seat">
-                    <input  type="checkbox" [id]="tic" />
-                    <label (click)="seatAction(tic); refresh()" id="seat-label-{{tic.seat.row}}-{{tic.seat.column}}" class="seat-label" [for]="tic.seat">{{tic.seat.row + ":" + tic.seat.column}}</label>
+                    <input type="checkbox" [id]="tic"/>
+                    <label (click)="seatAction(tic); refresh()" id="seat-label-{{tic.seat.row}}-{{tic.seat.column}}"
+                           class="seat-label" [for]="tic.seat">{{tic.seat.row + ":" + tic.seat.column}}</label>
                   </li>
                 </ol>
               </li>

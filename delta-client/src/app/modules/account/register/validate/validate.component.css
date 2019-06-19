@@ -4,7 +4,11 @@ body {
   background: inherit;
   overflow: hidden;
 }
-* {box-sizing: border-box}
+
+* {
+  box-sizing: border-box
+}
+
 html {
   background: inherit;
   overflow: hidden;
@@ -97,7 +101,6 @@ button:hover {
   color: white;
   left: 0;
 }
-
 
 
 .validatebtn {

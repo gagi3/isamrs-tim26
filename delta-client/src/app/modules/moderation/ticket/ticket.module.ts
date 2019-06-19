@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DiscountTicketsComponent } from './discount-tickets/discount-tickets.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {DiscountTicketsComponent} from './discount-tickets/discount-tickets.component';
 import {MatDialogModule, MatSelectModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoleGuardService} from '../../shared/role-guard.service';
@@ -25,4 +25,5 @@ import {HeaderModule} from "../../shared/modules/header/header.module";
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule, DateTimeFormatPipe]
 })
-export class TicketModule { }
+export class TicketModule {
+}

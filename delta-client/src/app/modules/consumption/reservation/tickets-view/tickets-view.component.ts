@@ -9,7 +9,6 @@ import {DiscountTicketsDTO} from '../../../moderation/ticket/discount-tickets-dt
 import {FlightService} from '../../../moderation/flight/flight.service';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
-import {EditFlightComponent} from '../../../moderation/flight/edit-flight/edit-flight.component';
 import {TicketReservationComponent} from '../ticket-reservation/ticket-reservation.component';
 import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
 
@@ -37,10 +36,13 @@ export class TicketsViewComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: TicketService, private flightService: FlightService, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
+
   cancel() {
     this.dialogRef.close();
   }
+
   ngOnInit() {
     this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
@@ -59,6 +61,7 @@ export class TicketsViewComponent implements OnInit {
     this.reread();
     this.refresh();
   }
+
   reread() {
     this.calcRows();
     this.mapTickets();
@@ -66,10 +69,12 @@ export class TicketsViewComponent implements OnInit {
     // this.refresh();
     // console.log(this.flight);
   }
+
   onSubmit() {
     alert('Reserved.');
     this.router.navigateByUrl('');
   }
+
   mapTickets() {
     console.log(this.flight.tickets);
     console.log(this.flight.airplane.seats);
@@ -141,6 +146,7 @@ export class TicketsViewComponent implements OnInit {
       document.getElementsByClassName('seat').item(0).setAttribute('margin-right', '44.28571428571429%');
     }
   }
+
   seatAction(ticket: Ticket) {
     if (!this.checkPass(ticket)) {
       alert('Ticket already reserved!');
@@ -168,6 +174,7 @@ export class TicketsViewComponent implements OnInit {
       }
     }
   }
+
   reservation(ticket: Ticket) {
     if (this.passenger.id !== undefined) {
       const dialogConfig = new MatDialogConfig();
@@ -190,9 +197,11 @@ export class TicketsViewComponent implements OnInit {
       console.log('Passenger doesn\'t exist.');
     }
   }
+
   checkPass(ticket: Ticket): boolean {
     return ticket.passenger === null;
   }
+
   checkDisc(ticket: Ticket): boolean {
     for (const t of this.discountedTickets) {
       if (t.id === ticket.id) {
@@ -201,6 +210,7 @@ export class TicketsViewComponent implements OnInit {
     }
     return true;
   }
+
   checkDTO(ticket: Ticket): boolean {
     for (const t of this.dto.tickets) {
       if (t.id === ticket.id) {
@@ -209,6 +219,7 @@ export class TicketsViewComponent implements OnInit {
     }
     return true;
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

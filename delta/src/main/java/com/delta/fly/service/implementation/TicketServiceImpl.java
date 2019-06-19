@@ -7,7 +7,6 @@ import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.*;
 import com.delta.fly.repository.PriceListRepository;
 import com.delta.fly.repository.TicketRepository;
-import com.delta.fly.security.TokenUtils;
 import com.delta.fly.service.abstraction.AirlineCompanyService;
 import com.delta.fly.service.abstraction.PassengerService;
 import com.delta.fly.service.abstraction.ReservationService;
@@ -266,7 +265,9 @@ public class TicketServiceImpl implements TicketService {
             quickTicket.get().setPassenger(passenger.get());
             if (passenger.get().getTickets() == null) {
                 Optional<Ticket> finalQuickTicket = quickTicket;
-                passenger.get().setTickets(new ArrayList<Ticket>() {{ add(finalQuickTicket.get()); }} );
+                passenger.get().setTickets(new ArrayList<Ticket>() {{
+                    add(finalQuickTicket.get());
+                }});
             } else {
                 passenger.get().getTickets().add(quickTicket.get());
             }
@@ -328,7 +329,9 @@ public class TicketServiceImpl implements TicketService {
             quickTicket.get().setPassenger(passenger.get());
             if (passenger.get().getTickets() == null) {
                 Optional<Ticket> finalQuickTicket = quickTicket;
-                passenger.get().setTickets(new ArrayList<Ticket>() {{ add(finalQuickTicket.get()); }} );
+                passenger.get().setTickets(new ArrayList<Ticket>() {{
+                    add(finalQuickTicket.get());
+                }});
             } else {
                 passenger.get().getTickets().add(quickTicket.get());
             }

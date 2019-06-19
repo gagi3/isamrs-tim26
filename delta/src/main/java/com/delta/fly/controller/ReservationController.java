@@ -3,7 +3,10 @@ package com.delta.fly.controller;
 import com.delta.fly.dto.BusinessReportDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
-import com.delta.fly.model.*;
+import com.delta.fly.model.Flight;
+import com.delta.fly.model.Passenger;
+import com.delta.fly.model.Reservation;
+import com.delta.fly.model.Ticket;
 import com.delta.fly.service.abstraction.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/reservation")
 public class ReservationController {
-    
+
     @Autowired
     private ReservationService reservationService;
 
@@ -93,5 +96,5 @@ public class ReservationController {
         Reservation reservation = reservationService.getByTicket(ticket);
         return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
-    
+
 }

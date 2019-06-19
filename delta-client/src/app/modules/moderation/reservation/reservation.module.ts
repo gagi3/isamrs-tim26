@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BusinessReportViewComponent } from './business-report-view/business-report-view.component';
-import { BusinessReportSelectComponent } from './business-report-select/business-report-select.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {BusinessReportViewComponent} from './business-report-view/business-report-view.component';
+import {BusinessReportSelectComponent} from './business-report-select/business-report-select.component';
 import {MatDialogModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HeaderModule} from "../../shared/modules/header/header.module";
 
 @NgModule({
@@ -19,4 +18,5 @@ import {HeaderModule} from "../../shared/modules/header/header.module";
     HeaderModule
   ]
 })
-export class ReservationModule { }
+export class ReservationModule {
+}

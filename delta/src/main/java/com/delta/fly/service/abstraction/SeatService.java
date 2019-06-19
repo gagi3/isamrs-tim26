@@ -10,14 +10,17 @@ import java.util.List;
 
 public interface SeatService {
 
-        List<Seat> findAll();
-        Seat getOne(Long id) throws ObjectNotFoundException;
-        Seat create(SeatDTO dto) throws ObjectNotFoundException, InvalidInputException;
+    List<Seat> findAll();
+
+    Seat getOne(Long id) throws ObjectNotFoundException;
+
+    Seat create(SeatDTO dto) throws ObjectNotFoundException, InvalidInputException;
 
     Seat create(SeatDTO dto, Airplane airplane);
 
     Seat update(Seat seat) throws ObjectNotFoundException;
-        boolean delete (Long id) throws ObjectNotFoundException;
-        //List<Seat> filterSearch();
+
+    boolean delete(Long id) throws ObjectNotFoundException;
+    //List<Seat> filterSearch();
 
 }

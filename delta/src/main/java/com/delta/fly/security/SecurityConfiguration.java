@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -86,19 +85,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .cors().and().csrf().ignoringAntMatchers("/api/user/signin").disable()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                    .antMatchers(
-                            "/api/user/signin",
-                            "/api/user/signup/passenger",
-                            "/api/user/validate/*",
-                            "/api/flight",
-                            "/api/ticket/get/discounted",
-                            "/api/flight/search",
-                            "/api/airline-company"
-                    ).permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers(
+                        "/api/user/signin",
+                        "/api/user/signup/passenger",
+                        "/api/user/validate/*",
+                        "/api/flight",
+                        "/api/ticket/get/discounted",
+                        "/api/flight/search",
+                        "/api/airline-company"
+                ).permitAll()
+                .anyRequest().authenticated()
                 .and().headers().cacheControl().disable()
                 .and().requestCache().disable();
 

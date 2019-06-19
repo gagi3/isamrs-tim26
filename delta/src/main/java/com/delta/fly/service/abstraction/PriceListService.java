@@ -10,12 +10,15 @@ import java.util.List;
 public interface PriceListService {
 
     List<PriceList> findAll();
+
     PriceList getOne(Long id) throws ObjectNotFoundException;
 
     PriceList getThis() throws ObjectNotFoundException;
 
     PriceList create(PriceListDTO dto) throws ObjectNotFoundException, InvalidInputException;
+
     PriceList update(PriceList priceList) throws ObjectNotFoundException, InvalidInputException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
     //List<PriceList> filterSearch();
 }

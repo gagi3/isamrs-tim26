@@ -10,18 +10,30 @@ import java.util.Optional;
 public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 
     Optional<Passenger> findByTicketsContains(Ticket ticket);
+
     Optional<Passenger> findByTicketsContainsAndDeletedIsFalse(Ticket ticket);
+
     Optional<Passenger> findByTicketsContainsAndDeletedIsTrue(Ticket ticket);
+
     Optional<Passenger> findByFriendsContains(Passenger friend);
+
     Optional<Passenger> findByFriendsContainsAndDeletedIsFalse(Passenger friend);
+
     Optional<Passenger> findByFriendsContainsAndDeletedIsTrue(Passenger friend);
+
     // TODO: Friends in common.
     List<Passenger> findAllByDeletedIsFalse();
+
     List<Passenger> findAllByDeletedIsTrue();
+
     Optional<Passenger> findByUsername(String email);
+
     Optional<Passenger> findByUsernameAndDeletedIsFalse(String email);
+
     Optional<Passenger> findByUsernameAndDeletedIsTrue(String email);
+
     Boolean existsByPhoneNumber(String number);
+
     Optional<Passenger> findByPassport(String passport);
 
 }

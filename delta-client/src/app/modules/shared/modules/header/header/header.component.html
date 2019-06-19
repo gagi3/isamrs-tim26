@@ -1,14 +1,14 @@
-<nav class = "navbar navbar-default" >
+<nav class="navbar navbar-default">
   <div class="container-fluid">
-<!--    <div class="navbar-header">-->
-<!--      <a class="navbar-brand">Delta</a>-->
-<!--    </div>-->
+    <!--    <div seatClass="navbar-header">-->
+    <!--      <a seatClass="navbar-brand">Delta</a>-->
+    <!--    </div>-->
 
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-left" *ngIf = "(showView) == 'airline-company-admin'">
+      <ul class="nav navbar-nav navbar-left" *ngIf="(showView) == 'airline-company-admin'">
         <ul class="nav navbar-nav">
           <li><a (click)="clickEditCompany()" style="cursor: pointer;">Edit airline company</a></li>
-          <li><a (click) = "clickAddAirplane()" style="cursor: pointer;">Add airplane</a></li>
+          <li><a (click)="clickAddAirplane()" style="cursor: pointer;">Add airplane</a></li>
           <li><a (click)="clickAddFlight()" style="cursor: pointer;">Add flight</a></li>
           <li><a (click)="clickAddPriceList()" style="cursor: pointer;">Add price list</a></li>
           <li><a (click)="clickEditPriceList()" style="cursor: pointer;">Edit price list</a></li>
@@ -18,47 +18,47 @@
 
         </ul>
       </ul>
-      <ul class="nav navbar-nav navbar-left" *ngIf = "(showView) == 'system-admin'">
+      <ul class="nav navbar-nav navbar-left" *ngIf="(showView) == 'system-admin'">
         <ul class="nav navbar-nav">
           <li><a (click)="clickAddCompany()" style="cursor: pointer;">Add airline company</a></li>
 
         </ul>
       </ul>
-      <ul class="nav navbar-nav navbar-left" *ngIf = "(showView) == 'unregistered'">
+      <ul class="nav navbar-nav navbar-left" *ngIf="(showView) == 'unregistered'">
         <ul class="nav navbar-nav">
           <li><a (click)="clickFlights()" style="cursor: pointer;">Flights</a></li>
         </ul>
       </ul>
-      <ul class="nav navbar-nav navbar-right" *ngIf = "(showView) == 'unregistered'">
+      <ul class="nav navbar-nav navbar-right" *ngIf="(showView) == 'unregistered'">
         <ul class="nav navbar-nav">
-          <li><a id ="logInButton" (click)="clickLogin()" style="cursor: pointer;">Login</a></li>
-          <li><a (click) = "clickRegister()" style="cursor: pointer;">Register</a></li>
+          <li><a id="logInButton" (click)="clickLogin()" style="cursor: pointer;">Login</a></li>
+          <li><a (click)="clickRegister()" style="cursor: pointer;">Register</a></li>
         </ul>
       </ul>
-      <ul class="nav navbar-nav navbar-right" *ngIf = "(showView) == 'system-admin'">
-        <li><a (click) = "clickSAProfile()"  style="cursor: pointer;">Profile</a></li>
-        <li><a (click) = "clickLogout()" style="cursor: pointer;">Logout</a></li>
+      <ul class="nav navbar-nav navbar-right" *ngIf="(showView) == 'system-admin'">
+        <li><a (click)="clickSAProfile()" style="cursor: pointer;">Profile</a></li>
+        <li><a (click)="clickLogout()" style="cursor: pointer;">Logout</a></li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right" *ngIf = "(showView) == 'airline-company-admin'">
-        <li><a (click) = "clickACAProfile()"  style="cursor: pointer;">Profile</a></li>
-        <li><a (click) = "clickLogout()" style="cursor: pointer;">Logout</a></li>
+      <ul class="nav navbar-nav navbar-right" *ngIf="(showView) == 'airline-company-admin'">
+        <li><a (click)="clickACAProfile()" style="cursor: pointer;">Profile</a></li>
+        <li><a (click)="clickLogout()" style="cursor: pointer;">Logout</a></li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-left" *ngIf = "(showView) == 'passenger'">
+      <ul class="nav navbar-nav navbar-left" *ngIf="(showView) == 'passenger'">
         <ul class="nav navbar-nav">
-          <li><a (click) = "clickFlights()"  style="cursor: pointer;">Flights</a></li>
-          <li><a (click) = "clickDiscountedTickets()"  style="cursor: pointer;">Discounted tickets</a></li>
-          <li><a (click) = "clickFriends()"  style="cursor: pointer;">Friends</a></li>
-          <li><a (click) = "clickFindFriends()"  style="cursor: pointer;">Find friends</a></li>
-          <li><a (click) = "clickTickets()"  style="cursor: pointer;">Your tickets</a></li>
-          <li><a (click) = "clickRequests()"  style="cursor: pointer;">Friend requests</a></li>
+          <li><a (click)="clickFlights()" style="cursor: pointer;">Flights</a></li>
+          <li><a (click)="clickDiscountedTickets()" style="cursor: pointer;">Discounted tickets</a></li>
+          <li><a (click)="clickFriends()" style="cursor: pointer;">Friends</a></li>
+          <li><a (click)="clickFindFriends()" style="cursor: pointer;">Find friends</a></li>
+          <li><a (click)="clickTickets()" style="cursor: pointer;">Your tickets</a></li>
+          <li><a (click)="clickRequests()" style="cursor: pointer;">Friend requests</a></li>
         </ul>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right" *ngIf = "(showView) == 'passenger'">
-        <li><a (click) = "clickPProfile()"  style="cursor: pointer;">Profile</a></li>
-        <li><a (click) = "clickLogout()" style="cursor: pointer;">Logout</a></li>
+      <ul class="nav navbar-nav navbar-right" *ngIf="(showView) == 'passenger'">
+        <li><a (click)="clickPProfile()" style="cursor: pointer;">Profile</a></li>
+        <li><a (click)="clickLogout()" style="cursor: pointer;">Logout</a></li>
       </ul>
     </div>
   </div>

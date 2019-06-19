@@ -12,10 +12,14 @@ import java.util.List;
 public interface TicketService {
 
     List<Ticket> findAll();
+
     Ticket getOne(Long id) throws ObjectNotFoundException;
+
     Ticket create(Flight flight, Seat seat) throws ObjectNotFoundException, InvalidInputException;
+
     Ticket update(Ticket ticket) throws ObjectNotFoundException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
 
     List<Ticket> discount(List<Ticket> tix) throws ObjectNotFoundException;
 

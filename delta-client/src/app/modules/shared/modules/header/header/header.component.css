@@ -1,6 +1,7 @@
 .nav {
   /*margin-bottom: 30px;*/
 }
+
 .container-fluid {
   background: white;
   border-radius: 25px;
@@ -9,25 +10,39 @@
   display: inline-block;
   width: 100%;
 }
-.navbar-header {}
-.navbar-brand {}
-.collapse {}
-.navbar-collapse {}
-.navbar-nav {}
+
+.navbar-header {
+}
+
+.navbar-brand {
+}
+
+.collapse {
+}
+
+.navbar-collapse {
+}
+
+.navbar-nav {
+}
+
 .navbar-left {
   width: 70%;
   float: left;
 }
+
 .navbar-right {
   width: 20%;
   float: right;
 }
+
 ul {
   display: inline-block;
   padding-inline-start: 20px;
   /*margin: 0 auto;*/
   /*padding-inline-end: 20px;*/
 }
+
 li {
   font-size: 20px;
   display: inline-block;

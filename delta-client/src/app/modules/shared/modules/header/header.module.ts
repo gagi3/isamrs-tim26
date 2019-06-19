@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {HeaderComponent} from './header/header.component';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -9,4 +9,5 @@ import { HeaderComponent } from './header/header.component';
   ],
   exports: [HeaderComponent]
 })
-export class HeaderModule { }
+export class HeaderModule {
+}

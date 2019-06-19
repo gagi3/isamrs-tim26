@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Airplane} from '../../../shared/model/airplane';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Router} from '@angular/router';
@@ -34,12 +34,16 @@ export class EditFlightComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<any>, private router: Router,
               private service: FlightService, private tokenStorage: TokenStorageService,
-              private adminService: ProfileService, private datePipe: DateTimeFormatPipe) { }
+              private adminService: ProfileService, private datePipe: DateTimeFormatPipe) {
+  }
+
   edit() {
   }
+
   cancel() {
     this.dialogRef.close();
   }
+
   plusOne() {
     if (this.DTO.transfers.length < 2) {
       this.DTO.transfers.push(new PlaceAndTime());
@@ -47,6 +51,7 @@ export class EditFlightComponent implements OnInit {
       alert('Can\'t have more than two transfer points.');
     }
   }
+
   ngOnInit() {
     this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('40%', '80%');
@@ -60,24 +65,31 @@ export class EditFlightComponent implements OnInit {
     );
     this.DTO = this.data.flight;
   }
+
   getDestinations(admin: AirlineCompanyAdmin) {
     this.destinations = admin.airlineCompany.destinations;
   }
+
   getAirplanes(admin: AirlineCompanyAdmin) {
     this.airplanes = admin.airlineCompany.airplanes;
   }
+
   deserializeArrival() {
     this.DTO.arrival.theTime = this.datePipe.transform(this.DTO.arrival.theTime);
   }
+
   deserializeDeparture() {
     this.DTO.departure.theTime = this.datePipe.transform(this.DTO.departure.theTime);
   }
+
   deserializeTP1() {
     this.DTO.transfers[0].theTime = this.datePipe.transform(this.DTO.transfers[0].theTime);
   }
+
   deserializeTP2() {
     this.DTO.transfers[1].theTime = this.datePipe.transform(this.DTO.transfers[1].theTime);
   }
+
   onSubmit() {
     const check = this.check();
     console.log(this.DTO);
@@ -105,6 +117,7 @@ export class EditFlightComponent implements OnInit {
       alert('There was en error.');
     }
   }
+
   check(): boolean {
     if (this.DTO.arrival.thePlace === this.DTO.departure.thePlace) {
       alert('Arrival and departure can not be the same.');
@@ -136,6 +149,7 @@ export class EditFlightComponent implements OnInit {
     }
     return false;
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

@@ -3,36 +3,46 @@ body {
   background: inherit;
   color: white;
 }
-* {box-sizing: border-box}
+
+* {
+  box-sizing: border-box
+}
+
 html {
   overflow: auto;
   background: inherit;
   /*filter: blur(95px);*/
 }
+
 .table-cell {
   height: 64px;
   max-height: 64px;
   overflow: hidden;
 }
+
 table, .table-hover {
   width: 100%;
   display: table;
   float: left;
   overflow: scroll;
 }
+
 table, .container-all:before {
   height: 100%;
 }
+
 td {
   display: table-cell;
   text-align: center;
   height: 64px;
   vertical-align: middle;
 }
-.buttons{
+
+.buttons {
   display: inline-block;
   vertical-align: middle;
 }
+
 tr {
   display: table-row;
   max-height: 64px;
@@ -45,7 +55,7 @@ thead, tbody {
   /*height: 100%;*/
 }
 
-.container-all:before ~table {
+.container-all:before ~ table {
   /*height: 100%;*/
   float: left;
 }
@@ -172,7 +182,7 @@ button:hover {
 }
 
 .loginbtn:hover {
-  color:white;
+  color: white;
   transform: perspective(1px) translateZ(0);
   transition-duration: 0.3s;
   transition-property: transform;
@@ -210,7 +220,7 @@ button:hover {
   transition-property: transform;
 }
 
-.cancelbtn:hover{
+.cancelbtn:hover {
   float: left;
   transform: perspective(1px) translateZ(0);
   transition-duration: 0.3s;
@@ -257,6 +267,7 @@ button:hover {
     width: 100%;
     height: inherit;
   }
+
   .container-all:before {
     width: 100%;
     height: inherit;

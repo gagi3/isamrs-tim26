@@ -24,17 +24,20 @@ export class SystemAdminProfileComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'profile-view';
 
-  constructor(private service: ProfileService, private tokenStorage: TokenStorageService, private router: Router) { }
+  constructor(private service: ProfileService, private tokenStorage: TokenStorageService, private router: Router) {
+  }
 
   ngOnInit() {
     this.look();
   }
+
   look() {
     this.findSystemAdmin();
     if (this.systemAdminFound === false) {
       alert('Nobody found with this username. You cheat!');
     }
   }
+
   findSystemAdmin() {
     const username = this.tokenStorage.getUsername();
     this.service.getSystemAdminByUsername(username).subscribe(
@@ -48,6 +51,7 @@ export class SystemAdminProfileComponent implements OnInit {
       }
     );
   }
+
   clickChange() {
     this.show = 'change';
     this.inputEl1.nativeElement.disabled = false;
@@ -56,6 +60,7 @@ export class SystemAdminProfileComponent implements OnInit {
     this.inputEl4.nativeElement.disabled = false;
     this.inputEl5.nativeElement.disabled = false;
   }
+
   clickCancel() {
     this.show = 'profile';
     this.inputEl1.nativeElement.disabled = true;
@@ -64,6 +69,7 @@ export class SystemAdminProfileComponent implements OnInit {
     this.inputEl4.nativeElement.disabled = true;
     this.inputEl5.nativeElement.disabled = true;
   }
+
   clickSave() {
     if (this.systemAdmin.password === this.passwordRepeat) {
       this.service.updateSystemAdmin(this.systemAdmin).subscribe(
@@ -77,6 +83,7 @@ export class SystemAdminProfileComponent implements OnInit {
       alert('Passwords do not match!');
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

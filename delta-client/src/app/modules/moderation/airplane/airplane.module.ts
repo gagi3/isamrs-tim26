@@ -25,4 +25,5 @@ import {HeaderModule} from '../../shared/modules/header/header.module';
   ],
   exports: [AddAirplaneComponent]
 })
-export class AirplaneModule { }
+export class AirplaneModule {
+}

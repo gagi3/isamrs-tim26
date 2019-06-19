@@ -10,11 +10,14 @@ export class AppComponent {
   title = 'delta-client';
   private roles: string[];
   private authority: string;
-  constructor(private tokenStorage: TokenStorageService) {}
+
+  constructor(private tokenStorage: TokenStorageService) {
+  }
+
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
       this.roles = this.tokenStorage.getAuthorities();
-      this.roles.every( role => {
+      this.roles.every(role => {
         if (role === 'ROLE_SYSTEMADMIN') {
           this.authority = 'system-admin';
           return false;

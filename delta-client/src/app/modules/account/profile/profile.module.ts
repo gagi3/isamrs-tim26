@@ -19,4 +19,5 @@ import {HeaderModule} from "../../shared/modules/header/header.module";
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule]
 })
-export class ProfileModule { }
+export class ProfileModule {
+}

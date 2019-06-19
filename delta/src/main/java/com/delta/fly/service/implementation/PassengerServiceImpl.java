@@ -75,7 +75,9 @@ public class PassengerServiceImpl implements PassengerService {
                 passenger.get().setTickets(new ArrayList<>());
                 Optional<Role> role = roleRepository.findByRoleName(RoleName.ROLE_PASSENGER);
                 if (role.isPresent()) {
-                    passenger.get().setRoles(new ArrayList<Role>() {{ add(role.get()); }});
+                    passenger.get().setRoles(new ArrayList<Role>() {{
+                        add(role.get());
+                    }});
                 } else {
                     passenger.get().setRoles(new ArrayList<Role>() {{
                         add(new Role(RoleName.ROLE_PASSENGER));
@@ -216,5 +218,5 @@ public class PassengerServiceImpl implements PassengerService {
             throw new ObjectNotFoundException(ex);
         }
     }
-    
+
 }

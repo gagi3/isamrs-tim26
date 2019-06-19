@@ -6,8 +6,7 @@ import {RoleGuardService} from '../../shared/role-guard.service';
 import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule, MatSelectModule} from '@angular/material';
 import {DateTimeFormatPipe} from '../../shared/date-time-format.pipe';
-import { EditFlightComponent } from './edit-flight/edit-flight.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {EditFlightComponent} from './edit-flight/edit-flight.component';
 import {HeaderModule} from "../../shared/modules/header/header.module";
 
 @NgModule({
@@ -25,4 +24,5 @@ import {HeaderModule} from "../../shared/modules/header/header.module";
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule, DateTimeFormatPipe]
 })
-export class FlightModule { }
+export class FlightModule {
+}

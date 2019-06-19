@@ -43,11 +43,14 @@ export class FlightViewComponent implements OnInit {
 
   constructor(private service: FlightService, private router: Router, private tokenStorage: TokenStorageService,
               private profileService: ProfileService, public dialog: MatDialog, private companyService: AirlineCompanyService,
-              private datePipe: DateTimeFormatPipe) { }
+              private datePipe: DateTimeFormatPipe) {
+  }
+
   ngOnInit() {
     // this.whosInCharge();
     this.loadAll();
   }
+
   loadAll() {
     this.flights = [];
     this.whosInCharge();
@@ -62,6 +65,7 @@ export class FlightViewComponent implements OnInit {
       );
     }
   }
+
   mapCompanies(data: AirlineCompany[]) {
     const fts = [];
     for (const c of data) {
@@ -81,6 +85,7 @@ export class FlightViewComponent implements OnInit {
     }
     this.flights = fts;
   }
+
   whosInCharge() {
     this.username = this.tokenStorage.getUsername();
     if (this.tokenStorage.getAuthorities().includes('ROLE_AIRLINECOMPANYADMIN')) {
@@ -106,6 +111,7 @@ export class FlightViewComponent implements OnInit {
       alert('You are not signed in. You can only browse flights.');
     }
   }
+
   setEmpty() {
     for (const flight of this.flights) {
       if (flight.transfers[0] === undefined) {
@@ -116,6 +122,7 @@ export class FlightViewComponent implements OnInit {
       }
     }
   }
+
   setAdmin(admin: AirlineCompanyAdmin) {
     this.admin = admin;
     this.header.airlineCompanyAdminView();
@@ -132,6 +139,7 @@ export class FlightViewComponent implements OnInit {
     this.read = true;
     this.setEmpty();
   }
+
   setPassenger(passenger: Passenger) {
     this.passenger = passenger;
     this.header.passengerView();
@@ -150,6 +158,7 @@ export class FlightViewComponent implements OnInit {
     );
     this.setEmpty();
   }
+
   setVisitor() {
     this.service.get().subscribe(
       data => {
@@ -167,6 +176,7 @@ export class FlightViewComponent implements OnInit {
     );
     this.setEmpty();
   }
+
   edit(flight: Flight) {
     if (this.admin.airlineCompany !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
       const dialogConfig = new MatDialogConfig();
@@ -189,6 +199,7 @@ export class FlightViewComponent implements OnInit {
       console.log('The flight does not belong to your company.');
     }
   }
+
   delete(flight: Flight) {
     if (this.admin.airlineCompany !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
       this.service.delete(flight.id).subscribe(
@@ -206,6 +217,7 @@ export class FlightViewComponent implements OnInit {
       );
     }
   }
+
   discount(flight: Flight) {
     if (this.admin.airlineCompany !== undefined && this.admin.airlineCompany.flights.includes(flight)) {
       const dialogConfig = new MatDialogConfig();
@@ -228,6 +240,7 @@ export class FlightViewComponent implements OnInit {
       console.log('The flight does not belong to your company.');
     }
   }
+
   reserveTickets(flight: Flight) {
     if (this.passenger !== undefined) {
       const dialogConfig = new MatDialogConfig();
@@ -250,9 +263,11 @@ export class FlightViewComponent implements OnInit {
       console.log('The flight does not belong to your company.');
     }
   }
+
   loadSearchFilter(filtered: Flight[]) {
     this.flights = filtered;
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;
@@ -262,18 +277,23 @@ export class FlightViewComponent implements OnInit {
       window.alert('Successfully Logged out!');
     }
   }
+
   changeDep() {
     this.filterDeparture(this.dep);
   }
+
   changeArr() {
     this.filterArrival(this.arr);
   }
+
   changeDepDate() {
     this.filterDepDate(this.depDate);
   }
+
   changeArrTime() {
     this.filterArrDate(this.arrDate);
   }
+
   filterDeparture(city: string) {
     console.log('filtering');
     const flights = [];
@@ -284,6 +304,7 @@ export class FlightViewComponent implements OnInit {
     }
     this.flights = flights;
   }
+
   filterDepDate(date: Date) {
     date = new Date(date);
     const flights = [];
@@ -297,13 +318,14 @@ export class FlightViewComponent implements OnInit {
       console.log(date);
       console.log(dd.getFullYear());
       if (dd.getFullYear() === date.getFullYear() &&
-      dd.getMonth() === date.getMonth() &&
-      dd.getDate() === date.getDate()) {
+        dd.getMonth() === date.getMonth() &&
+        dd.getDate() === date.getDate()) {
         flights.push(f);
       }
     }
     this.flights = flights;
   }
+
   filterArrival(city: string) {
     const flights = [];
     for (const f of this.flights) {
@@ -313,6 +335,7 @@ export class FlightViewComponent implements OnInit {
     }
     this.flights = flights;
   }
+
   filterArrDate(date: Date) {
     date = new Date(date);
     const flights = [];
@@ -331,9 +354,11 @@ export class FlightViewComponent implements OnInit {
     }
     this.flights = flights;
   }
+
   changePriceFrom() {
     this.filterPriceFrom(this.priceFrom);
   }
+
   filterPriceFrom(price: number) {
     const flights = [];
     for (const f of this.flights) {
@@ -345,9 +370,11 @@ export class FlightViewComponent implements OnInit {
     }
     this.flights = flights;
   }
+
   changePriceTo() {
     this.filterPriceTo(this.priceTo);
   }
+
   filterPriceTo(price: number) {
     const flights = [];
     for (const f of this.flights) {
@@ -359,9 +386,11 @@ export class FlightViewComponent implements OnInit {
     }
     this.flights = flights;
   }
+
   changeDistance() {
     this.filterDistance(this.distance);
   }
+
   filterDistance(distance: number) {
     const flights = [];
     for (const f of this.flights) {
@@ -371,6 +400,7 @@ export class FlightViewComponent implements OnInit {
     }
     this.flights = flights;
   }
+
   reset() {
     this.flights = [];
     this.whosInCharge();

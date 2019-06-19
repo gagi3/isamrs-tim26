@@ -22,10 +22,12 @@ export class FlightSearchComponent implements OnInit {
   showView = 'edit-flight';
 
   constructor(private service: FlightService, private router: Router, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
   }
+
   loadFlights() {
     this.service.filterSearch(this.filterSearch).subscribe(
       data => {
@@ -35,6 +37,7 @@ export class FlightSearchComponent implements OnInit {
       }
     );
   }
+
   reset() {
     this.filterSearch = new FlightSearchDTO(null, null, null, null, null, null, null, null);
   }

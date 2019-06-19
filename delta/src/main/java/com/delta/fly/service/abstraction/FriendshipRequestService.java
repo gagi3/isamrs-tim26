@@ -11,10 +11,14 @@ import java.util.List;
 public interface FriendshipRequestService {
 
     List<FriendshipRequest> findAll();
+
     FriendshipRequest getOne(Long id) throws ObjectNotFoundException;
+
     FriendshipRequest create(FriendshipRequestDTO dto) throws ObjectNotFoundException, InvalidInputException;
+
     FriendshipRequest update(FriendshipRequest request) throws ObjectNotFoundException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
 
     Boolean accept(FriendshipRequest request) throws ObjectNotFoundException;
 
@@ -28,5 +32,5 @@ public interface FriendshipRequestService {
 
     Boolean removeFriend(Passenger remove) throws ObjectNotFoundException;
     //List<FriendshipRequest> filterSearch();
-    
+
 }

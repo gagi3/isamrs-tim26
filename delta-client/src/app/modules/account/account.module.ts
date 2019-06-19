@@ -16,4 +16,5 @@ import {MatDialogModule} from '@angular/material';
   exports: [],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule]
 })
-export class AccountModule { }
+export class AccountModule {
+}

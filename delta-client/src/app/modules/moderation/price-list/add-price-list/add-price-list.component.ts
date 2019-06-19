@@ -17,14 +17,17 @@ export class AddPriceListComponent implements OnInit {
   @ViewChild('header') header: HeaderComponent;
   showView = 'add-price-list';
 
-  constructor(private router: Router, private priceListService: PriceListService) { }
+  constructor(private router: Router, private priceListService: PriceListService) {
+  }
 
   cancel() {
     this.router.navigateByUrl('');
   }
+
   ngOnInit() {
     this.header.airlineCompanyAdminView();
   }
+
   onSubmit() {
     this.priceListService.create(this.DTO).subscribe(
       data => {
@@ -40,6 +43,7 @@ export class AddPriceListComponent implements OnInit {
       }
     );
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

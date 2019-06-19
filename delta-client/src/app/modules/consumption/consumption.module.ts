@@ -19,4 +19,5 @@ import {InteractionModule} from './interaction/interaction.module';
     BrowserAnimationsModule
   ]
 })
-export class ConsumptionModule { }
+export class ConsumptionModule {
+}

@@ -12,10 +12,14 @@ import java.util.List;
 
 public interface ReservationService {
     List<Reservation> findAll();
+
     Reservation getOne(Long id) throws ObjectNotFoundException;
+
     Reservation create(Ticket ticket, Passenger passenger) throws InvalidInputException;
+
     Reservation update(Reservation reservation) throws ObjectNotFoundException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
 
     List<Reservation> businessReport(BusinessReportDTO dto) throws ObjectNotFoundException;
 

@@ -10,10 +10,14 @@ import java.util.List;
 public interface AirlineCompanyService {
 
     List<AirlineCompany> findAll();
+
     AirlineCompany getOne(Long id) throws ObjectNotFoundException;
+
     AirlineCompany create(AirlineCompanyRegistrationDTO dto) throws ObjectNotFoundException, InvalidInputException;
+
     AirlineCompany update(AirlineCompany company) throws ObjectNotFoundException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
     //List<AirlineCompany> filterSearch();
 
 }

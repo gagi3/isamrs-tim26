@@ -31,10 +31,13 @@ export class AddFlightComponent implements OnInit {
   showView = 'add-flight';
 
   constructor(private router: Router, private service: FlightService, private tokenStorage: TokenStorageService,
-              private adminService: ProfileService, private datePipe: DateTimeFormatPipe) { }
+              private adminService: ProfileService, private datePipe: DateTimeFormatPipe) {
+  }
+
   cancel() {
     this.router.navigateByUrl('');
   }
+
   plusOne() {
     console.log(this.DTO.generateTickets);
     if (this.DTO.transfers.length < 2) {
@@ -43,6 +46,7 @@ export class AddFlightComponent implements OnInit {
       alert('Can\'t have more than two transfer points.');
     }
   }
+
   ngOnInit() {
     this.header.airlineCompanyAdminView();
     this.DTO.transfers = [];
@@ -56,12 +60,15 @@ export class AddFlightComponent implements OnInit {
       }
     );
   }
+
   getDestinations(admin: AirlineCompanyAdmin) {
     this.destinations = admin.airlineCompany.destinations;
   }
+
   getAirplanes(admin: AirlineCompanyAdmin) {
     this.airplanes = admin.airlineCompany.airplanes;
   }
+
   onSubmit() {
     const check = this.check();
     this.DTO.arrival.theTime = this.datePipe.transform(this.DTO.arrival.theTime);
@@ -86,6 +93,7 @@ export class AddFlightComponent implements OnInit {
       alert('There was en error.');
     }
   }
+
   check(): boolean {
     if (this.DTO.arrival.thePlace === this.DTO.departure.thePlace) {
       alert('Arrival and departure can not be the same.');
@@ -117,6 +125,7 @@ export class AddFlightComponent implements OnInit {
     }
     return false;
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

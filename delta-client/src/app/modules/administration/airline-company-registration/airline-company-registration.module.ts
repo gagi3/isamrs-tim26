@@ -16,4 +16,5 @@ import {HeaderModule} from "../../shared/modules/header/header.module";
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule]
 })
-export class AirlineCompanyRegistrationModule { }
+export class AirlineCompanyRegistrationModule {
+}

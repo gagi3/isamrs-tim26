@@ -26,7 +26,8 @@ export class DiscountedTicketsViewComponent implements OnInit {
   showView = 'discounted-tickets-view';
 
   constructor(private service: TicketService, private router: Router, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog, private flightService: FlightService) { }
+              private profileService: ProfileService, public dialog: MatDialog, private flightService: FlightService) {
+  }
 
   ngOnInit() {
     this.username = this.tokenStorage.getUsername();
@@ -47,15 +48,18 @@ export class DiscountedTicketsViewComponent implements OnInit {
       }
     );
   }
+
   setFlights(flights: Flight[]) {
     this.flights = flights;
     this.mapTF();
     this.setEmpty();
     console.log(this.discountedTickets);
   }
+
   setData(tickets: Ticket[]) {
     this.discountedTickets = tickets;
   }
+
   mapTF() {
     for (const flight of this.flights) {
       for (const t of flight.tickets) {
@@ -68,6 +72,7 @@ export class DiscountedTicketsViewComponent implements OnInit {
     }
     this.setEmpty();
   }
+
   setEmpty() {
     for (const ticket of this.discountedTickets) {
       if (ticket.flight.transfers[0] === undefined) {
@@ -78,6 +83,7 @@ export class DiscountedTicketsViewComponent implements OnInit {
       }
     }
   }
+
   quickReserve(ticket: Ticket) {
     const dto = new ReservationDTO();
     dto.ticket = ticket;
@@ -99,6 +105,7 @@ export class DiscountedTicketsViewComponent implements OnInit {
       );
     }
   }
+
   onNavigate(feature: string) {
     console.log(feature);
     this.showView = feature;

@@ -10,13 +10,16 @@ import java.util.List;
 public interface SystemAdminService {
 
     List<SystemAdmin> findAll();
+
     SystemAdmin getOne(Long id) throws ObjectNotFoundException;
 
     SystemAdmin getByUsername(String username) throws ObjectNotFoundException;
 
     SystemAdmin create(RegisterDTO dto) throws InvalidInputException;
+
     SystemAdmin update(SystemAdmin admin) throws ObjectNotFoundException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
     //List<SystemAdmin> filterSearch();
 
 }

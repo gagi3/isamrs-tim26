@@ -10,7 +10,10 @@ import com.delta.fly.service.abstraction.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -124,7 +127,7 @@ public class ReservationServiceImpl implements ReservationService {
         List<Reservation> reservations = new ArrayList<>();
         for (AirlineCompany company : airlineCompanyService.findAll()) {
             for (Flight flight : company.getFlights()) {
-                for (Ticket ticket: flight.getTickets()) {
+                for (Ticket ticket : flight.getTickets()) {
                     if (ticket.getPassenger() != null && ticket.getConfirmed()) {
                         reservations.add(create(ticket, ticket.getPassenger()));
                     }
