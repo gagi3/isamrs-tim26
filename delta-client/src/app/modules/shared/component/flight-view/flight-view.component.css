@@ -114,7 +114,7 @@ thead, tbody {
 /* Full-width input fields */
 input[type=text], input[type=password], input[type=email], input[type = number], input [type=datetime-local],
 input[type=checkbox], select, option {
-  width: 100%;
+  width: 100px;
   border-radius: 25px;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -199,8 +199,8 @@ button:hover {
 
 /* Float cancel and signup buttons and add an equal width */
 .cancelbtn, .signupbtn, .loginbtn {
-  float: left;
-  width: 80px;
+  /*float: left;*/
+  width: 90px;
   height: 50px;
   transition-delay: 0.1s;
   transform: perspective(1px) translateZ(0);

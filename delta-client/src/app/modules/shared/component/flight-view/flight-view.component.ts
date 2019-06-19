@@ -9,9 +9,12 @@ import {EditFlightComponent} from '../../../moderation/flight/edit-flight/edit-f
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {PlaceAndTime} from '../../model/place-and-time';
-import {DiscountTicketsComponent} from "../../../moderation/ticket/discount-tickets/discount-tickets.component";
-import {TicketsViewComponent} from "../../../consumption/reservation/tickets-view/tickets-view.component";
-import {HeaderComponent} from "../../modules/header/header/header.component";
+import {DiscountTicketsComponent} from '../../../moderation/ticket/discount-tickets/discount-tickets.component';
+import {TicketsViewComponent} from '../../../consumption/reservation/tickets-view/tickets-view.component';
+import {HeaderComponent} from '../../modules/header/header/header.component';
+import {AirlineCompany} from '../../model/airline-company';
+import {AirlineCompanyService} from '../../airline-company.service';
+import {DateTimeFormatPipe} from "../../date-time-format.pipe";
 
 @Component({
   selector: 'app-flight-view',
@@ -22,15 +25,25 @@ export class FlightViewComponent implements OnInit {
   admin: AirlineCompanyAdmin;
   passenger: Passenger;
   flights: Flight[] = [];
+  companies: AirlineCompany[] = [];
+  destinations: string[] = [];
   read = false;
   errorMessage = '';
   username = '';
   @Input() flightSearch: any;
   @ViewChild('header') header: HeaderComponent;
   showView = 'flights';
+  arr = '';
+  dep = '';
+  arrDate: Date = new Date();
+  depDate: Date = new Date();
+  distance = 0;
+  priceFrom = 0;
+  priceTo = 0;
 
   constructor(private service: FlightService, private router: Router, private tokenStorage: TokenStorageService,
-              private profileService: ProfileService, public dialog: MatDialog) { }
+              private profileService: ProfileService, public dialog: MatDialog, private companyService: AirlineCompanyService,
+              private datePipe: DateTimeFormatPipe) { }
   ngOnInit() {
     // this.whosInCharge();
     this.loadAll();
@@ -38,20 +51,35 @@ export class FlightViewComponent implements OnInit {
   loadAll() {
     this.flights = [];
     this.whosInCharge();
-    // if (this.admin !== undefined) {
-    //   // this.flights = this.admin.airlineCompany.flights;
-    //   this.read = true;
-    // } else {
-    //   this.service.get().subscribe(
-    //     data => {
-    //       this.flights = data;
-    //       this.read = true;
-    //     }, error => {
-    //       this.errorMessage = error.errorMessage;
-    //       alert(this.errorMessage);
-    //     }
-    //   );
-    // }
+    if (this.admin !== undefined) {
+      this.companies.push(this.admin.airlineCompany);
+    } else {
+      this.companyService.getAll().subscribe(
+        data => {
+          this.companies = data;
+          this.mapCompanies(data);
+        }
+      );
+    }
+  }
+  mapCompanies(data: AirlineCompany[]) {
+    const fts = [];
+    for (const c of data) {
+      for (const f of this.flights) {
+        for (const ff of c.flights) {
+          if (ff.id === f.id) {
+            f.airlineCompany = c;
+            fts.push(f);
+          }
+        }
+      }
+      for (const d of c.destinations) {
+        if (!this.destinations.includes(d)) {
+          this.destinations.push(d);
+        }
+      }
+    }
+    this.flights = fts;
   }
   whosInCharge() {
     this.username = this.tokenStorage.getUsername();
@@ -234,5 +262,117 @@ export class FlightViewComponent implements OnInit {
       window.alert('Successfully Logged out!');
     }
   }
-
+  changeDep() {
+    this.filterDeparture(this.dep);
+  }
+  changeArr() {
+    this.filterArrival(this.arr);
+  }
+  changeDepDate() {
+    this.filterDepDate(this.depDate);
+  }
+  changeArrTime() {
+    this.filterArrDate(this.arrDate);
+  }
+  filterDeparture(city: string) {
+    console.log('filtering');
+    const flights = [];
+    for (const f of this.flights) {
+      if (f.departure.thePlace === city) {
+        flights.push(f);
+      }
+    }
+    this.flights = flights;
+  }
+  filterDepDate(date: Date) {
+    date = new Date(date);
+    const flights = [];
+    for (const f of this.flights) {
+      console.log(f.departure.theTime);
+      console.log(f.departure);
+      let dd = this.datePipe.transform(f.departure.theTime);
+      console.log(dd);
+      dd = new Date(f.departure.theTime);
+      console.log(dd);
+      console.log(date);
+      console.log(dd.getFullYear());
+      if (dd.getFullYear() === date.getFullYear() &&
+      dd.getMonth() === date.getMonth() &&
+      dd.getDate() === date.getDate()) {
+        flights.push(f);
+      }
+    }
+    this.flights = flights;
+  }
+  filterArrival(city: string) {
+    const flights = [];
+    for (const f of this.flights) {
+      if (f.arrival.thePlace === city) {
+        flights.push(f);
+      }
+    }
+    this.flights = flights;
+  }
+  filterArrDate(date: Date) {
+    date = new Date(date);
+    const flights = [];
+    for (const f of this.flights) {
+      console.log(f.arrival.theTime);
+      console.log(f.arrival);
+      const dd = new Date(f.arrival.theTime);
+      console.log(dd);
+      console.log(date);
+      console.log(dd.getFullYear());
+      if (dd.getFullYear() === date.getFullYear() &&
+        dd.getMonth() === date.getMonth() &&
+        dd.getDate() === date.getDate()) {
+        flights.push(f);
+      }
+    }
+    this.flights = flights;
+  }
+  changePriceFrom() {
+    this.filterPriceFrom(this.priceFrom);
+  }
+  filterPriceFrom(price: number) {
+    const flights = [];
+    for (const f of this.flights) {
+      for (const t of f.tickets) {
+        if (t.price >= price && !flights.includes(f)) {
+          flights.push(f);
+        }
+      }
+    }
+    this.flights = flights;
+  }
+  changePriceTo() {
+    this.filterPriceTo(this.priceTo);
+  }
+  filterPriceTo(price: number) {
+    const flights = [];
+    for (const f of this.flights) {
+      for (const t of f.tickets) {
+        if (t.price <= price && !flights.includes(f)) {
+          flights.push(f);
+        }
+      }
+    }
+    this.flights = flights;
+  }
+  changeDistance() {
+    this.filterDistance(this.distance);
+  }
+  filterDistance(distance: number) {
+    const flights = [];
+    for (const f of this.flights) {
+      if (distance === f.distance && !flights.includes(f)) {
+        flights.push(f);
+      }
+    }
+    this.flights = flights;
+  }
+  reset() {
+    this.flights = [];
+    this.whosInCharge();
+  }
 }

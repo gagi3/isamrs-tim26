@@ -2,8 +2,28 @@
 
 <html>
 <body>
-
   <div class="container-all">
+    <div class="search-container">
+      <button *ngIf="passenger !== undefined" class="loginbtn btn" (click)="reset()">RESET</button>
+      <label>
+        <select [(ngModel)]="dep" *ngIf="passenger !== undefined" name="dep" (change)="changeDep();" required>
+          <option *ngFor="let dep of destinations" [value]="dep" (click)="filterDeparture(dep);" >{{dep}}</option>
+        </select>
+      </label>
+      <label>
+        <select [(ngModel)]="arr" *ngIf="passenger !== undefined" name="arr" (change)="changeArr();" required>
+          <option *ngFor="let arr of destinations" [value]="arr" (click)="filterArrival(arr);" >{{arr}}</option>
+        </select>
+      </label>
+      <input type="datetime-local" class="form-control" name="arrDate" [(ngModel)]="depDate" required />
+      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changeDepDate();">APPLY</button>
+      <input type="datetime-local" class="form-control" name="arrDate" [(ngModel)]="arrDate" required />
+      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changeArrTime();">APPLY</button>
+      <input type="number" class="form-control" name="arrDate" [(ngModel)]="priceFrom" required />
+      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changePriceFrom();">APPLY</button>
+      <input type="number" class="form-control" name="arrDate" [(ngModel)]="priceTo" required />
+      <button *ngIf="passenger !== undefined" class="signupbtn btn" (click)="changePriceTo();">APPLY</button>
+    </div>
     <table class="table table-hover">
       <thead>
         <tr>
