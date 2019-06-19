@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-confirmation',

@@ -274,10 +274,8 @@ public class FlightServiceImpl implements FlightService {
         if (dto.getPriceFrom() != null) {
             for (Flight f : distanceFilter) {
                 for (Ticket t : f.getTickets()) {
-                    if (t.getPrice() > dto.getPriceFrom()) {
-                        if (!priceFromFilter.contains(f)) {
-                            priceFromFilter.add(f);
-                        }
+                    if (t.getPrice() > dto.getPriceFrom() && !priceFromFilter.contains(f)) {
+                        priceFromFilter.add(f);
                     }
                 }
             }
@@ -288,10 +286,8 @@ public class FlightServiceImpl implements FlightService {
         if (dto.getPriceFrom() != null) {
             for (Flight f : priceFromFilter) {
                 for (Ticket t : f.getTickets()) {
-                    if (t.getPrice() < dto.getPriceTo()) {
-                        if (!priceToFilter.contains(f)) {
-                            priceToFilter.add(f);
-                        }
+                    if (t.getPrice() < dto.getPriceTo() && !priceToFilter.contains(f)) {
+                        priceToFilter.add(f);
                     }
                 }
             }

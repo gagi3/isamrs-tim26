@@ -245,10 +245,8 @@ public class TicketServiceImpl implements TicketService {
                 throw new ObjectNotFoundException("No passenger.");
             }
             for (Ticket t : quickTicket.get().getFlight().getTickets()) {
-                if (t.getPassenger() != null) {
-                    if (t.getPassenger().equals(passenger.get())) {
-                        throw new ObjectNotFoundException("You cannot reserve more than one ticket for a flight!");
-                    }
+                if (t.getPassenger() != null && t.getPassenger().equals(passenger.get())) {
+                    throw new ObjectNotFoundException("You cannot reserve more than one ticket for a flight!");
                 }
             }
             priceList = priceListRepository.findByAirlineCompany(quickTicket.get().getFlight().getAirlineCompany());

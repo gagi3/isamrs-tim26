@@ -6,7 +6,7 @@ import {FriendshipRequestService} from '../../../account/profile/shared/service/
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {MatDialog} from '@angular/material';
 import {FriendshipRequestDTO} from '../friendship-request-dto';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-find-friends',

@@ -8,7 +8,7 @@ import {Airplane} from '../../../shared/model/airplane';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {DateTimeFormatPipe} from '../../../shared/date-time-format.pipe';
 import {PlaceAndTimeDTO} from '../place-and-time-dto';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-add-flight',

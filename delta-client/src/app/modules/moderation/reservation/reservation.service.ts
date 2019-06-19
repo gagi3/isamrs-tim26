@@ -5,7 +5,7 @@ import {BusinessReportDTO} from './business-report-dto';
 import {AirlineCompanyAdmin} from '../../account/profile/shared/model/airline-company-admin';
 import {Observable} from 'rxjs';
 import {Reservation} from '../../shared/model/reservation';
-import {Flight} from "../../shared/model/flight";
+import {Flight} from '../../shared/model/flight';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})

@@ -7,7 +7,7 @@ import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-ticket-reservation',

@@ -141,11 +141,6 @@ public class PassengerServiceImpl implements PassengerService {
         }
     }
 
-    private void remove(String email) {
-        Optional<Passenger> passenger = passengerRepository.findByUsername(email);
-        passenger.ifPresent(value -> passengerRepository.delete(value));
-    }
-
     @Override
     public boolean activate(String token) throws InvalidInputException, ObjectNotFoundException {
         String username = tokenUtils.getUsernameFromToken(token);

@@ -8,7 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FriendsViewComponent} from './friends-view/friends-view.component';
 import {FindFriendsComponent} from './find-friends/find-friends.component';
 import {FriendshipRequestsComponent} from './friendship-requests/friendship-requests.component';
-import {HeaderModule} from "../../shared/modules/header/header.module";
+import {HeaderModule} from '../../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [FriendsViewComponent, FindFriendsComponent, FriendshipRequestsComponent],

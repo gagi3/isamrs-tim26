@@ -9,7 +9,7 @@ import {ProfileService} from '../../../account/profile/shared/service/profile.se
 import {MatDialog} from '@angular/material';
 import {FlightService} from '../../../moderation/flight/flight.service';
 import {PlaceAndTime} from '../../../shared/model/place-and-time';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-view-tickets',

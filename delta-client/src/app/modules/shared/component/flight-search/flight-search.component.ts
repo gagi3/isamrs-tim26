@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FlightSearchDTO} from '../../flight-search-dto';
-import {Flight} from "../../model/flight";
-import {FlightService} from "../../../moderation/flight/flight.service";
-import {Router} from "@angular/router";
-import {TokenStorageService} from "../../token-storage.service";
-import {ProfileService} from "../../../account/profile/shared/service/profile.service";
-import {MatDialog} from "@angular/material";
-import {HeaderComponent} from "../../modules/header/header/header.component";
+import {Flight} from '../../model/flight';
+import {FlightService} from '../../../moderation/flight/flight.service';
+import {Router} from '@angular/router';
+import {TokenStorageService} from '../../token-storage.service';
+import {ProfileService} from '../../../account/profile/shared/service/profile.service';
+import {MatDialog} from '@angular/material';
+import {HeaderComponent} from '../../modules/header/header/header.component';
 
 @Component({
   selector: 'app-flight-search',

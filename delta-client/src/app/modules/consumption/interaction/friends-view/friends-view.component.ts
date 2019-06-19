@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Passenger} from "../../../account/profile/shared/model/passenger";
-import {Router} from "@angular/router";
-import {TokenStorageService} from "../../../shared/token-storage.service";
-import {ProfileService} from "../../../account/profile/shared/service/profile.service";
-import {MatDialog} from "@angular/material";
-import {FriendshipRequestService} from "../../../account/profile/shared/service/friendship-request.service";
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {Passenger} from '../../../account/profile/shared/model/passenger';
+import {Router} from '@angular/router';
+import {TokenStorageService} from '../../../shared/token-storage.service';
+import {ProfileService} from '../../../account/profile/shared/service/profile.service';
+import {MatDialog} from '@angular/material';
+import {FriendshipRequestService} from '../../../account/profile/shared/service/friendship-request.service';
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-friends-view',

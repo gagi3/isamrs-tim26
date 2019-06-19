@@ -6,7 +6,7 @@ import {RoleGuardService} from '../../shared/role-guard.service';
 import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule} from '@angular/material';
 import {EditPriceListComponent} from './edit-price-list/edit-price-list.component';
-import {HeaderModule} from "../../shared/modules/header/header.module";
+import {HeaderModule} from '../../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [AddPriceListComponent, EditPriceListComponent],

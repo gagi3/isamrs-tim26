@@ -4,7 +4,7 @@ import {BusinessReportViewComponent} from './business-report-view/business-repor
 import {BusinessReportSelectComponent} from './business-report-select/business-report-select.component';
 import {MatDialogModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
-import {HeaderModule} from "../../shared/modules/header/header.module";
+import {HeaderModule} from '../../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [BusinessReportViewComponent, BusinessReportSelectComponent],

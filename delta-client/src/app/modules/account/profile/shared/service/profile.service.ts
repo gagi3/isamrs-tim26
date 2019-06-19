@@ -5,7 +5,7 @@ import {AirlineCompanyAdmin} from '../model/airline-company-admin';
 import {SystemAdmin} from '../model/system-admin';
 import {Observable} from 'rxjs';
 import {TokenStorageService} from '../../../../shared/token-storage.service';
-import {Ticket} from "../../../../shared/model/ticket";
+import {Ticket} from '../../../../shared/model/ticket';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json', AuthToken: ''})

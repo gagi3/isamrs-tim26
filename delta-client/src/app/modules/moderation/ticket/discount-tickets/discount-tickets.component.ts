@@ -9,7 +9,7 @@ import {FlightService} from '../../flight/flight.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
 import {ProfileService} from '../../../account/profile/shared/service/profile.service';
 import {Ticket} from '../../../shared/model/ticket';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-discount-tickets',

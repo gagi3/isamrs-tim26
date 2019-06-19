@@ -7,7 +7,7 @@ import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule, MatSelectModule} from '@angular/material';
 import {DateTimeFormatPipe} from '../../shared/date-time-format.pipe';
 import {EditFlightComponent} from './edit-flight/edit-flight.component';
-import {HeaderModule} from "../../shared/modules/header/header.module";
+import {HeaderModule} from '../../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [AddFlightComponent, EditFlightComponent],

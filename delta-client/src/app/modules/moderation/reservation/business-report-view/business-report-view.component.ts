@@ -6,7 +6,7 @@ import {ProfileService} from '../../../account/profile/shared/service/profile.se
 import {ReservationService} from '../reservation.service';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
 import {Reservation} from '../../../shared/model/reservation';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-business-report-view',

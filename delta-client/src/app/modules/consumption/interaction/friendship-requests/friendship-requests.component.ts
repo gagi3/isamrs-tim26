@@ -7,7 +7,7 @@ import {ProfileService} from '../../../account/profile/shared/service/profile.se
 import {MatDialog} from '@angular/material';
 import {FriendshipRequest} from '../../../shared/model/friendship-request';
 import {FriendshipDTO} from '../friendship-dto';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-friendship-requests',

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TokenStorageService} from "../../../../shared/token-storage.service";
-import {Observable} from "rxjs";
-import {FriendshipRequest} from "../../../../shared/model/friendship-request";
-import {FriendshipRequestDTO} from "../../../../consumption/interaction/friendship-request-dto";
-import {FriendshipDTO} from "../../../../consumption/interaction/friendship-dto";
-import {Passenger} from "../model/passenger";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {TokenStorageService} from '../../../../shared/token-storage.service';
+import {Observable} from 'rxjs';
+import {FriendshipRequest} from '../../../../shared/model/friendship-request';
+import {FriendshipRequestDTO} from '../../../../consumption/interaction/friendship-request-dto';
+import {FriendshipDTO} from '../../../../consumption/interaction/friendship-dto';
+import {Passenger} from '../model/passenger';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json', AuthToken: ''})

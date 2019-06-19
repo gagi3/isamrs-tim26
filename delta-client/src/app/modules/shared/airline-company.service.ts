@@ -1,8 +1,8 @@
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {TokenStorageService} from "./token-storage.service";
-import {Observable} from "rxjs";
-import {AirlineCompany} from "./model/airline-company";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {TokenStorageService} from './token-storage.service';
+import {Observable} from 'rxjs';
+import {AirlineCompany} from './model/airline-company';
 
 
 const httpOptions = {

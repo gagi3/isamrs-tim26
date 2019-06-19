@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AirlineCompanyRegistrationDTO} from '../airline-company-registration-dto';
 import {Router} from '@angular/router';
 import {AirlineCompanyRegistrationService} from '../airline-company-registration.service';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-airline-company-registration',

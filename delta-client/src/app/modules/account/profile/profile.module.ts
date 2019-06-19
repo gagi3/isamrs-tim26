@@ -8,7 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {RoleGuardService} from '../../shared/role-guard.service';
 import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule} from '@angular/material';
-import {HeaderModule} from "../../shared/modules/header/header.module";
+import {HeaderModule} from '../../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [ProfileComponent, AirlineCompanyAdminProfileComponent, SystemAdminProfileComponent, PassengerProfileComponent],

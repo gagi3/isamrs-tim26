@@ -9,9 +9,6 @@ public class PriceListDTO {
     private Double firstClassPriceCoefficient;
     private Double discountPercentage;
 
-    public PriceListDTO() {
-    }
-
     public Double getPriceByKm() {
         return priceByKm;
     }

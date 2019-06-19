@@ -9,7 +9,7 @@ import {DateTimeFormatPipe} from '../../../shared/date-time-format.pipe';
 import {Flight} from '../../../shared/model/flight';
 import {PlaceAndTime} from '../../../shared/model/place-and-time';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-edit-flight',

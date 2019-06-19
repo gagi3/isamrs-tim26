@@ -9,8 +9,8 @@ import {Ticket} from '../../../shared/model/ticket';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {PlaceAndTime} from '../../../shared/model/place-and-time';
 import {Flight} from '../../../shared/model/flight';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
-import {ReservationDTO} from "../reservation-dto";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
+import {ReservationDTO} from '../reservation-dto';
 
 @Component({
   selector: 'app-discounted-tickets-view',

@@ -2,8 +2,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Passenger} from '../shared/model/passenger';
 import {ProfileService} from '../shared/service/profile.service';
 import {TokenStorageService} from '../../../shared/token-storage.service';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
-import {Router} from "@angular/router";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-passenger-profile',

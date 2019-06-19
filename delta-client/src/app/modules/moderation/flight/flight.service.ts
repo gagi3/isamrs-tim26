@@ -5,7 +5,7 @@ import {TokenStorageService} from '../../shared/token-storage.service';
 import {Observable} from 'rxjs';
 import {Flight} from '../../shared/model/flight';
 import {FlightDTO} from './flight-dto';
-import {FlightSearchDTO} from "../../shared/flight-search-dto";
+import {FlightSearchDTO} from '../../shared/flight-search-dto';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})

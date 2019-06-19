@@ -17,7 +17,7 @@ import {FlightViewComponent} from './modules/shared/component/flight-view/flight
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TicketViewComponent} from './modules/shared/component/ticket-view/ticket-view.component';
 import {FlightSearchComponent} from './modules/shared/component/flight-search/flight-search.component';
-import {HeaderModule} from "./modules/shared/modules/header/header.module";
+import {HeaderModule} from './modules/shared/modules/header/header.module';
 
 @NgModule({
   declarations: [

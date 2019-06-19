@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TicketReservationComponent} from './ticket-reservation/ticket-reservation.component';
 import {ConfirmationComponent} from './confirmation/confirmation.component';
 import {ViewTicketsComponent} from './view-tickets/view-tickets.component';
-import {HeaderModule} from "../../shared/modules/header/header.module";
+import {HeaderModule} from '../../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [TicketsViewComponent, DiscountedTicketsViewComponent, TicketReservationComponent, ConfirmationComponent, ViewTicketsComponent],

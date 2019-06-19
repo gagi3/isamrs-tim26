@@ -8,8 +8,8 @@ import {BusinessReportDTO} from '../business-report-dto';
 import {ReservationService} from '../reservation.service';
 import {Reservation} from '../../../shared/model/reservation';
 import {BusinessReportViewComponent} from '../business-report-view/business-report-view.component';
-import {DateTimeFormatPipe} from "../../../shared/date-time-format.pipe";
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {DateTimeFormatPipe} from '../../../shared/date-time-format.pipe';
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-business-report-select',

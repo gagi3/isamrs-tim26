@@ -10,7 +10,7 @@ import {FlightService} from '../../../moderation/flight/flight.service';
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
 import {TicketReservationComponent} from '../ticket-reservation/ticket-reservation.component';
-import {HeaderComponent} from "../../../shared/modules/header/header/header.component";
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-tickets-view',

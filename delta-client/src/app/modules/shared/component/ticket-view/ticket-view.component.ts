@@ -7,7 +7,7 @@ import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline
 import {Passenger} from '../../../account/profile/shared/model/passenger';
 import {Ticket} from '../../model/ticket';
 import {TicketService} from '../../../moderation/ticket/ticket.service';
-import {HeaderComponent} from "../../modules/header/header/header.component";
+import {HeaderComponent} from '../../modules/header/header/header.component';
 
 @Component({
   selector: 'app-ticket-view',

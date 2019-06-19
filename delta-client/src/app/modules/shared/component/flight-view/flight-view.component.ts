@@ -14,7 +14,7 @@ import {TicketsViewComponent} from '../../../consumption/reservation/tickets-vie
 import {HeaderComponent} from '../../modules/header/header/header.component';
 import {AirlineCompany} from '../../model/airline-company';
 import {AirlineCompanyService} from '../../airline-company.service';
-import {DateTimeFormatPipe} from "../../date-time-format.pipe";
+import {DateTimeFormatPipe} from '../../date-time-format.pipe';
 
 @Component({
   selector: 'app-flight-view',
