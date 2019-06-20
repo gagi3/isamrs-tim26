@@ -68,13 +68,13 @@ export class FriendshipRequestService {
     return this.http.post<FriendshipRequest>(this.URL + '/get/exact', req, httpOptions);
   }
 
-  reject(req: FriendshipDTO): Observable<boolean> {
+  reject(dto: FriendshipDTO): Observable<boolean> {
     httpOptions.headers.set('AuthToken', this.token);
-    return this.http.post<boolean>(this.URL + '/reject', req, httpOptions);
+    return this.http.post<boolean>(this.URL + '/reject', dto, httpOptions);
   }
 
-  remove(who: Passenger): Observable<boolean> {
+  remove(remove: Passenger): Observable<boolean> {
     httpOptions.headers.set('AuthToken', this.token);
-    return this.http.post<boolean>(this.URL + '/remove', who, httpOptions);
+    return this.http.post<boolean>(this.URL + '/remove', remove, httpOptions);
   }
 }

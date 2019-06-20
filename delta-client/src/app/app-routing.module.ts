@@ -23,6 +23,7 @@ import {ViewTicketsComponent} from './modules/consumption/reservation/view-ticke
 import {FriendsViewComponent} from './modules/consumption/interaction/friends-view/friends-view.component';
 import {FindFriendsComponent} from './modules/consumption/interaction/find-friends/find-friends.component';
 import {FriendshipRequestsComponent} from './modules/consumption/interaction/friendship-requests/friendship-requests.component';
+import {EditCompanyComponent} from './modules/moderation/company/edit-company/edit-company.component';
 
 const routes: Routes = [
   // {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'airline-company/add',
     component: AirlineCompanyRegistrationComponent
+  },
+  {
+    path: 'airline-company/edit',
+    component: EditCompanyComponent
   },
   {
     path: 'flight/add',

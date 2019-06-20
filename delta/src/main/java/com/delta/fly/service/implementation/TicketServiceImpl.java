@@ -310,7 +310,7 @@ public class TicketServiceImpl implements TicketService {
                 throw new ObjectNotFoundException("You are not friends!");
             }
             for (Ticket t : quickTicket.get().getFlight().getTickets()) {
-                if (t.getPassenger().equals(passenger.get())) {
+                if (t.getPassenger() != null && t.getPassenger().equals(passenger.get())) {
                     throw new ObjectNotFoundException("You cannot reserve more than one ticket for a flight!");
                 }
             }

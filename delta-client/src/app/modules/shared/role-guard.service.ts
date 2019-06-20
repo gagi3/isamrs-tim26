@@ -19,13 +19,13 @@ export class RoleGuardService implements CanActivate {
     const token = this.tokenStorage.getToken();
     if (!token) {
       window.alert('Please log in!');
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('flight/view');
     }
     if (sessionStorage.getItem(TOKEN_KEY)) {
       JSON.parse(sessionStorage.getItem(AUTHORITIES_KEY)).forEach(authority => {
         if (authority.authority !== expectedRole) {
           window.alert('You do not have the authority to access this page.');
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl('flight/view');
           return false;
         }
       });

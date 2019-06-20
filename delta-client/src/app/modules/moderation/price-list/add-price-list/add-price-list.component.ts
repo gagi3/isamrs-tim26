@@ -21,7 +21,7 @@ export class AddPriceListComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class AddPriceListComponent implements OnInit {
         window.alert('Price list added successfully!');
         this.success = true;
         this.failed = false;
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('flight/view');
       }, error => {
         console.log(error);
         this.errorMessage = error.errorMessage;

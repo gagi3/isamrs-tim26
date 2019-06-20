@@ -25,4 +25,9 @@ export class AirlineCompanyService {
     httpOptions.headers.set('AuthToken', this.token);
     return this.http.get<AirlineCompany[]>(this.URL, httpOptions);
   }
+
+  update(company: AirlineCompany): Observable<AirlineCompany> {
+    httpOptions.headers.set('AuthToken', this.token);
+    return this.http.post<AirlineCompany>(this.URL + '/update', company, httpOptions);
+  }
 }

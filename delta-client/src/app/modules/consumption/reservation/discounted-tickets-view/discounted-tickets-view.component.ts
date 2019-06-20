@@ -96,7 +96,7 @@ export class DiscountedTicketsViewComponent implements OnInit {
         data => {
           if (data.passenger.id === this.passenger.id) {
             alert('Reservation successful!');
-            this.router.navigateByUrl('');
+            this.router.navigateByUrl('flight/view');
           } else {
             console.log(data);
             alert('Reservation unsuccessful!');

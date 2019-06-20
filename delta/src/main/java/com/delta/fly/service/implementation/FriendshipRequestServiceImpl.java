@@ -191,12 +191,16 @@ public class FriendshipRequestServiceImpl implements FriendshipRequestService {
             if (!pFrom.isPresent() || !pTo.isPresent() || !you.isPresent()) {
                 throw new ObjectNotFoundException("No passenger!");
             }
-            if (!pTo.get().equals(you.get())) {
+            System.out.println(you.get().getUsername() + pFrom.get().getUsername() + pTo.get().getUsername());
+            if (!pTo.get().getUsername().equals(you.get().getUsername()) && !pFrom.get().getUsername().equals(you.get().getUsername())) {
                 throw new ObjectNotFoundException("You can not see others' requests.");
             }
             request = friendshipRequestRepository.findBySentFromAndSentTo(pFrom.get(), pTo.get());
             if (!request.isPresent()) {
-                throw new ObjectNotFoundException("No request found!");
+                request = friendshipRequestRepository.findBySentFromAndSentTo(pTo.get(), pFrom.get());
+                if (!request.isPresent()) {
+                    throw new ObjectNotFoundException("No request found!");
+                }
             }
             return request.get();
         } catch (ObjectNotFoundException ex) {

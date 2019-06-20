@@ -1,5 +1,109 @@
 <app-header #header (featureSelected)="onNavigate($event)"></app-header>
 
-<p>
-  edit-company works!
-</p>
+<html>
+
+<body>
+
+<div *ngIf="isUpdated; else editForm">
+  Your company registration is successful.
+</div>
+
+
+<ng-template #editForm>
+  <div class="container-all">
+    <div class="row col-sm-6" style="max-width:350px;">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+        <div class="form-group">
+          <div class="text-desc">
+            EDIT
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Company name</label>
+          <input type="text" class="form-control" name="name" [(ngModel)]="company.name" #name="ngModel"
+                 required/>
+          <div *ngIf="f.submitted && name.invalid">
+            <div *ngIf="name.errors.required">Company name is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Company address</label>
+          <input type="text" class="form-control" name="address" [(ngModel)]="company.address"
+                 #address="ngModel" required/>
+          <div *ngIf="f.submitted && address.invalid">
+            <div *ngIf="address.errors.required">Address is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">About the company</label>
+          <input type="text" class="form-control" name="description" [(ngModel)]="company.description"
+                 #description="ngModel" required/>
+          <div *ngIf="f.submitted && description.invalid">
+            <div *ngIf="description.errors.required">Description is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="destination0">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="company.destinations[0]"
+                 #destinations="ngModel" required/>
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="destination1">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="company.destinations[1]"
+                 #destinations="ngModel" required/>
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="destination2">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="company.destinations[2]"
+                 #destinations="ngModel" required/>
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="destination3">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="company.destinations[3]"
+                 #destinations="ngModel" required/>
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="destination4">Destination</label>
+          <input type="text" class="form-control" name="destinations" [(ngModel)]="company.destinations[4]"
+                 #destinations="ngModel" required/>
+          <div *ngIf="f.submitted && destinations.invalid">
+            <div *ngIf="destinations.errors.required">Destination is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="signupbtn btn">EDIT</button>
+          <div *ngIf="f.submitted && failed" class="alert alert-warning">
+            Update failed!<br/>
+          </div>
+          <button class="cancelbtn btn" (click)="cancel()">CANCEL</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+</body>
+
+</html>

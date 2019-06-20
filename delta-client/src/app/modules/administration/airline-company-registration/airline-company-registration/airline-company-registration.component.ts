@@ -25,7 +25,7 @@ export class AirlineCompanyRegistrationComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
 
   onSubmit() {
@@ -34,7 +34,7 @@ export class AirlineCompanyRegistrationComponent implements OnInit {
         window.alert('Registration was successful!');
         this.isRegistered = true;
         this.failed = false;
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('flight/view');
       }, error => {
         console.log(error);
         this.errorMessage = error.errorMessage;

@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
 
   clickEditCompany() {
     this.featureSelected.emit('edit-company');
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('airline-company/edit');
   }
 
   clickAddCompany() {

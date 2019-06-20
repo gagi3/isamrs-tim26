@@ -19,7 +19,7 @@ export class RegisterService {
   }
 
   register(info: RegisterDTO, type: string): Observable<string> {
-    return this.http.post<string>(this.signupURL + type, info, httpOptions);
+    return this.http.post<string>(this.signupURL + type, info, {responseType: 'text' as 'json'});
   }
 
   validate(token: string) {

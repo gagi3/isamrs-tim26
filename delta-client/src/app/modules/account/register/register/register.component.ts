@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
 
   login() {
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
     this.type = this.router.url.substr(8);
     this.registerService.register(this.registerDTO, this.type).subscribe(
       data => {
-        window.alert('Registration was successful! Please check your email.');
+        window.alert(data);
         this.isRegistered = true;
         this.failed = false;
       }, error => {

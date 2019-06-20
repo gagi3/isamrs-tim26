@@ -53,7 +53,7 @@ export class EditFlightComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.header.airlineCompanyAdminView();
+    // this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
     this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
@@ -104,7 +104,7 @@ export class EditFlightComponent implements OnInit {
         data => {
           this.added = true;
           window.alert('Update was successful!');
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl('flight/view');
           this.dialogRef.close();
         }, error => {
           this.errorMessage = error.errorMessage;

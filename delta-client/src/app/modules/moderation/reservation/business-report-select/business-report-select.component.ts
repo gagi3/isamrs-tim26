@@ -46,7 +46,7 @@ export class BusinessReportSelectComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
 
   onSubmit() {

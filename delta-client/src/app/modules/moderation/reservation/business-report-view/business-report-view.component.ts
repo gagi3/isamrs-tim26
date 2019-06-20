@@ -31,7 +31,7 @@ export class BusinessReportViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.header.airlineCompanyAdminView();
+    // this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('100%', '100%');
     this.username = this.tokenStorage.getUsername();
     this.profileService.getAirlineCompanyAdminByUsername(this.username).subscribe(

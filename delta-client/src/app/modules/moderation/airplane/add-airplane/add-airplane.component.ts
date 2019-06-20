@@ -31,7 +31,7 @@ export class AddAirplaneComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class AddAirplaneComponent implements OnInit {
         window.alert('Registration was successful!');
         this.added = true;
         this.failed = false;
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('flight/view');
       }, error => {
         console.log(error);
         this.errorMessage = error.errorMessage;

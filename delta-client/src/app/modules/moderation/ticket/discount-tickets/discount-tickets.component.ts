@@ -40,7 +40,7 @@ export class DiscountTicketsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.header.airlineCompanyAdminView();
+    // this.header.airlineCompanyAdminView();
     this.dialogRef.updateSize('40%', '80%');
     this.username = this.tokenStorage.getUsername();
     this.adminService.getAirlineCompanyAdminByUsername(this.username).subscribe(
@@ -65,7 +65,7 @@ export class DiscountTicketsComponent implements OnInit {
         alert('Discounting tickets was successful!');
         this.added = true;
         this.failed = false;
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('flight/view');
       }, error => {
         console.log(error);
         this.errorMessage = error.errorMessage;

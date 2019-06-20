@@ -72,7 +72,7 @@ export class TicketsViewComponent implements OnInit {
 
   onSubmit() {
     alert('Reserved.');
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
 
   mapTickets() {

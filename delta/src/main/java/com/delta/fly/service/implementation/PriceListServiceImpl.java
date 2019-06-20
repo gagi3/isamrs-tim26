@@ -59,27 +59,30 @@ public class PriceListServiceImpl implements PriceListService {
         Optional<AirlineCompanyAdmin> admin;
         try {
             admin = Optional.ofNullable(userDetailsService.getAdmin());
-            company = Optional.ofNullable(admin.get().getAirlineCompany());
             if (!admin.isPresent()) {
                 throw new ObjectNotFoundException("Admin not found!");
-            } else if (!company.isPresent()) {
-                throw new ObjectNotFoundException("Company not found!");
-            } else if (repository.findByAirlineCompanyId(company.get().getId()) != null) {
-                throw new InvalidInputException("Price List for company with ID: " + company.get().getId() + " already exists!");
-            } else if (admin.get().getAirlineCompany() != company.get()) {
-                throw new InvalidInputException("This admin doesn't moderate this company: " + company.get().getName() + "!");
-            } else {
-                priceList = Optional.of(new PriceList());
-                priceList.get().setAirlineCompany(company.get());
-                priceList.get().setDeleted(false);
-                priceList.get().setPriceByKm(dto.getPriceByKm());
-                priceList.get().setPriceByLuggageItem(dto.getPriceByLuggageItem());
-                priceList.get().setBusinessClassPriceCoefficient(dto.getBusinessClassPriceCoefficient());
-                priceList.get().setEconomyClassPriceCoefficient(dto.getEconomyClassPriceCoefficient());
-                priceList.get().setFirstClassPriceCoefficient(dto.getFirstClassPriceCoefficient());
-                priceList.get().setDiscountPercentage(dto.getDiscountPercentage());
-                return repository.save(priceList.get());
             }
+            company = Optional.ofNullable(admin.get().getAirlineCompany());
+            if (!company.isPresent()) {
+                throw new ObjectNotFoundException("Company not found!");
+            }
+            priceList = repository.findByAirlineCompanyId(company.get().getId());
+            if (priceList.isPresent()) {
+                throw new InvalidInputException("Price List for company with ID: " + company.get().getId() + " already exists!");
+            }
+            if (admin.get().getAirlineCompany() != company.get()) {
+                throw new InvalidInputException("This admin doesn't moderate this company: " + company.get().getName() + "!");
+            }
+            priceList = Optional.of(new PriceList());
+            priceList.get().setAirlineCompany(company.get());
+            priceList.get().setDeleted(false);
+            priceList.get().setPriceByKm(dto.getPriceByKm());
+            priceList.get().setPriceByLuggageItem(dto.getPriceByLuggageItem());
+            priceList.get().setBusinessClassPriceCoefficient(dto.getBusinessClassPriceCoefficient());
+            priceList.get().setEconomyClassPriceCoefficient(dto.getEconomyClassPriceCoefficient());
+            priceList.get().setFirstClassPriceCoefficient(dto.getFirstClassPriceCoefficient());
+            priceList.get().setDiscountPercentage(dto.getDiscountPercentage());
+            return repository.save(priceList.get());
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException(ex);
