@@ -7,10 +7,7 @@ import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.*;
 import com.delta.fly.repository.PriceListRepository;
 import com.delta.fly.repository.TicketRepository;
-import com.delta.fly.service.abstraction.AirlineCompanyService;
-import com.delta.fly.service.abstraction.PassengerService;
-import com.delta.fly.service.abstraction.ReservationService;
-import com.delta.fly.service.abstraction.TicketService;
+import com.delta.fly.service.abstraction.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +39,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private FlightService flightService;
 
     @Override
     public List<Ticket> findAll() {
@@ -278,6 +278,29 @@ public class TicketServiceImpl implements TicketService {
             return update(quickTicket.get());
         } catch (ObjectNotFoundException | InvalidInputException ex) {
             ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public List<Ticket> generate(Long id) throws ObjectNotFoundException, InvalidInputException {
+        Optional<Flight> fl;
+        try {
+            fl = Optional.ofNullable(flightService.getOne(id));
+            if (!fl.isPresent()) {
+                throw new ObjectNotFoundException("Flight not found!");
+            }
+            List<Ticket> tix = new ArrayList<>();
+            if (fl.get().getTickets() == null || fl.get().getTickets().isEmpty()) {
+                fl.get().setTickets(tix);
+                for (Seat s: fl.get().getAirplane().getSeats()) {
+                    Ticket t = create(fl.get(), s);
+                    fl.get().getTickets().add(t);
+                }
+            }
+            flightService.update(fl.get());
+            return fl.get().getTickets();
+        } catch (ObjectNotFoundException | InvalidInputException ex) {
             throw new ObjectNotFoundException(ex);
         }
     }

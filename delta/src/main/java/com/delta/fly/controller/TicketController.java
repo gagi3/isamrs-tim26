@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -48,6 +49,13 @@ public class TicketController {
         Ticket newTicket = ticketService.create(flight, seat);
 
         return new ResponseEntity<>(newTicket, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")
+    @RequestMapping(value = "/generate/{id}", method = RequestMethod.POST)
+    public ResponseEntity<List<Ticket>> generate(@PathVariable Long id) throws ObjectNotFoundException, InvalidInputException {
+        List<Ticket> tickets = ticketService.generate(id);
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_AIRLINECOMPANYADMIN')")

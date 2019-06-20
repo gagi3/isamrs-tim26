@@ -27,6 +27,8 @@ public interface TicketService {
 
     Ticket reserve(Ticket ticket, Boolean quick, Integer luggage) throws ObjectNotFoundException;
 
+    List<Ticket> generate(Long id) throws ObjectNotFoundException, InvalidInputException;
+
     Ticket friendReserve(FriendReservationDTO dto, Integer luggage) throws ObjectNotFoundException;
 
     Boolean confirm(Long ticketID) throws ObjectNotFoundException;
