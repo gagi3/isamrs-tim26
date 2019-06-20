@@ -1,5 +1,6 @@
 package com.delta.fly.security;
 
+import com.delta.fly.service.implementation.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -29,11 +29,12 @@ import java.util.Arrays;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+//        authenticationManagerBuilder.inMemoryAuthentication().withUser("").roles("PASSENGER", "AIRLINECOMPANYADMIN");
         authenticationManagerBuilder.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -82,13 +83,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors().and().csrf().disable()
+                .cors().and().csrf().ignoringAntMatchers("/api/user/signin").disable()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                    .antMatchers("/api/user/signin", "/api/user/signup/passenger", "/api/user/validate/*").permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers(
+                        "/api/user/signin",
+                        "/api/user/signup/passenger",
+                        "/api/user/validate/*",
+                        "/api/flight",
+                        "/api/ticket/get/discounted",
+                        "/api/flight/search",
+                        "/api/airline-company"
+                ).permitAll()
+                .anyRequest().authenticated()
                 .and().headers().cacheControl().disable()
                 .and().requestCache().disable();
 

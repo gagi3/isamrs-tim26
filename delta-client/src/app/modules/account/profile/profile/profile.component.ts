@@ -20,11 +20,13 @@ export class ProfileComponent implements OnInit {
   passRepeat: string;
   show = 'profile';
 
-  constructor(private service: ProfileService, private tokenStorage: TokenStorageService) { }
+  constructor(private service: ProfileService, private tokenStorage: TokenStorageService) {
+  }
 
   ngOnInit() {
     this.look();
   }
+
   look() {
     this.findPassenger();
     if (this.passengerFound === false) {
@@ -37,6 +39,7 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
+
   findPassenger() {
     const username = this.tokenStorage.getUsername();
     this.service.getPassengerByUsername(username).subscribe(
@@ -49,6 +52,7 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+
   findAirlineCompanyAdmin() {
     const username = this.tokenStorage.getUsername();
     this.service.getAirlineCompanyAdminByUsername(username).subscribe(
@@ -61,6 +65,7 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+
   findSystemAdmin() {
     const username = this.tokenStorage.getUsername();
     this.service.getSystemAdminByUsername(username).subscribe(

@@ -44,9 +44,6 @@ public class PriceList {
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
 
-    public PriceList() {
-    }
-
     public Long getId() {
         return id;
     }

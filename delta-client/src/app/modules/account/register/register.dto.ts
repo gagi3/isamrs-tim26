@@ -6,5 +6,6 @@ export class RegisterDTO {
   lastName = '';
   city = '';
   phoneNumber = '';
+  passport = '';
 
 }

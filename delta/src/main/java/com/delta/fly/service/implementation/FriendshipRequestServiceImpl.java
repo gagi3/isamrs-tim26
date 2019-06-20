@@ -23,6 +23,9 @@ public class FriendshipRequestServiceImpl implements FriendshipRequestService {
     @Autowired
     private PassengerService passengerService;
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     @Override
     public List<FriendshipRequest> findAll() {
         return friendshipRequestRepository.findAllByDeletedIsFalse();
@@ -97,6 +100,160 @@ public class FriendshipRequestServiceImpl implements FriendshipRequestService {
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
             throw new ObjectNotFoundException("Friendship request with ID: " + id + " doesn't exist!", ex);
+        }
+    }
+
+    @Override
+    public Boolean accept(FriendshipRequest request) throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        Optional<Passenger> from;
+        Optional<Passenger> to;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            FriendshipRequest accepted = getOne(request.getId());
+            accepted.setAccepted(true);
+            from = Optional.ofNullable(accepted.getSentFrom());
+            to = Optional.ofNullable(accepted.getSentTo());
+            if (!from.isPresent() || !to.isPresent() || !you.isPresent()) {
+                throw new ObjectNotFoundException("No passenger!");
+            }
+            if (!to.get().equals(you.get())) {
+                throw new ObjectNotFoundException("You can not accept others' requests.");
+            }
+            from.get().getFriends().add(to.get());
+            to.get().getFriends().add(from.get());
+            passengerService.update(from.get());
+            passengerService.update(to.get());
+            update(accepted);
+            return accepted.getAccepted();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public List<FriendshipRequest> getSent() throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        Optional<List<FriendshipRequest>> requests;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!you.isPresent()) {
+                throw new ObjectNotFoundException("No passenger!");
+            }
+            requests = Optional.ofNullable(friendshipRequestRepository.findAllBySentFrom(you.get()));
+            if (!requests.isPresent()) {
+                throw new ObjectNotFoundException("You have not sent any requests!");
+            }
+            if (requests.get().isEmpty()) {
+                return null;
+            }
+            return requests.get();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public List<FriendshipRequest> getReceived() throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        Optional<List<FriendshipRequest>> requests;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            if (!you.isPresent()) {
+                throw new ObjectNotFoundException("No passenger!");
+            }
+            requests = Optional.ofNullable(friendshipRequestRepository.findAllBySentTo(you.get()));
+            if (!requests.isPresent()) {
+                throw new ObjectNotFoundException("You have not sent any requests!");
+            }
+            if (requests.get().isEmpty()) {
+                return null;
+            }
+            return requests.get();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public FriendshipRequest getExact(Passenger from, Passenger to) throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        Optional<Passenger> pFrom;
+        Optional<Passenger> pTo;
+        Optional<FriendshipRequest> request;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            pFrom = Optional.ofNullable(passengerService.getOne(from.getId()));
+            pTo = Optional.ofNullable(passengerService.getOne(to.getId()));
+            if (!pFrom.isPresent() || !pTo.isPresent() || !you.isPresent()) {
+                throw new ObjectNotFoundException("No passenger!");
+            }
+            System.out.println(you.get().getUsername() + pFrom.get().getUsername() + pTo.get().getUsername());
+            if (!pTo.get().getUsername().equals(you.get().getUsername()) && !pFrom.get().getUsername().equals(you.get().getUsername())) {
+                throw new ObjectNotFoundException("You can not see others' requests.");
+            }
+            request = friendshipRequestRepository.findBySentFromAndSentTo(pFrom.get(), pTo.get());
+            if (!request.isPresent()) {
+                request = friendshipRequestRepository.findBySentFromAndSentTo(pTo.get(), pFrom.get());
+                if (!request.isPresent()) {
+                    throw new ObjectNotFoundException("No request found!");
+                }
+            }
+            return request.get();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public Boolean reject(Passenger from, Passenger to) throws ObjectNotFoundException {
+        Optional<FriendshipRequest> request;
+        try {
+            request = Optional.ofNullable(getExact(from, to));
+            if (!request.isPresent()) {
+                throw new ObjectNotFoundException("No request!");
+            }
+            request.get().setAccepted(false);
+            request.get().setDeleted(true);
+            return request.get().getAccepted();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        }
+    }
+
+    @Override
+    public Boolean removeFriend(Passenger remove) throws ObjectNotFoundException {
+        Optional<Passenger> you;
+        Optional<Passenger> other;
+        Optional<FriendshipRequest> request;
+        try {
+            you = Optional.ofNullable(userDetailsService.getPassenger());
+            other = Optional.ofNullable(passengerService.getOne(remove.getId()));
+            if (!other.isPresent() || !you.isPresent()) {
+                throw new ObjectNotFoundException("No passenger!");
+            }
+            request = Optional.ofNullable(getExact(you.get(), other.get()));
+            if (!request.isPresent()) {
+                request = Optional.ofNullable(getExact(other.get(), you.get()));
+                if (!request.isPresent()) {
+                    throw new ObjectNotFoundException("No request!");
+                }
+            }
+            you.get().getFriends().remove(other.get());
+            other.get().getFriends().remove(you.get());
+            passengerService.update(you.get());
+            passengerService.update(other.get());
+            request.get().setAccepted(false);
+            request.get().setDeleted(true);
+            return request.get().getDeleted();
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
         }
     }
 }

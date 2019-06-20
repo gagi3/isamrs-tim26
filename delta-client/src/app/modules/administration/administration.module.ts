@@ -13,4 +13,5 @@ import {MatDialogModule} from '@angular/material';
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule]
 })
-export class AdministrationModule { }
+export class AdministrationModule {
+}

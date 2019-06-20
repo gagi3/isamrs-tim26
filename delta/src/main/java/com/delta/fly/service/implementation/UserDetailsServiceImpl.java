@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -37,16 +38,35 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public String getUsername() {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass() == String.class) {
+            return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }
         UserPrinciple user = (UserPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getUsername();
     }
 
     public AirlineCompanyAdmin getAdmin() throws ObjectNotFoundException {
-        return airlineCompanyAdminService.getByUsername(getUsername());
+        Optional<AirlineCompanyAdmin> admin = Optional.empty();
+        try {
+            admin = Optional.ofNullable(airlineCompanyAdminService.getByUsername(getUsername()));
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        } finally {
+            return admin.orElse(null);
+        }
     }
 
     public Passenger getPassenger() throws ObjectNotFoundException {
-        return passengerService.getByUsername(getUsername());
+        Optional<Passenger> passenger = Optional.empty();
+        try {
+            passenger = Optional.ofNullable(passengerService.getByUsername(getUsername()));
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ObjectNotFoundException(ex);
+        } finally {
+            return passenger.orElse(null);
+        }
     }
 
 }

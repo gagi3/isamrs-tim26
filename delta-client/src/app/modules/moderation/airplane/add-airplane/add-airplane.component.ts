@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AirplaneDTO} from '../airplane-dto';
 import {Router} from '@angular/router';
 import {AirplaneService} from '../airplane.service';
 import {SeatDTO} from '../seat-dto';
 import {SeatClass} from '../../../shared/enumeration/seat-class.enum';
 import {AirlineCompanyAdmin} from '../../../account/profile/shared/model/airline-company-admin';
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
+
 
 @Component({
   selector: 'app-add-airplane',
@@ -22,14 +24,20 @@ export class AddAirplaneComponent implements OnInit {
   row = [];
   seatClass: SeatClass;
   errorMessage = '';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'add-airplane';
 
-  constructor(private router: Router, private service: AirplaneService) { }
+  constructor(private router: Router, private service: AirplaneService) {
+  }
 
   cancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
+
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
   }
+
   create() {
     const row = [];
     let rowSeats = [];
@@ -49,14 +57,14 @@ export class AddAirplaneComponent implements OnInit {
       this.row = row;
     }
   }
+
   onSubmit() {
     this.service.add(this.dto).subscribe(
       data => {
         window.alert('Registration was successful!');
-        console.log(data);
         this.added = true;
         this.failed = false;
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('flight/view');
       }, error => {
         console.log(error);
         this.errorMessage = error.errorMessage;
@@ -66,6 +74,7 @@ export class AddAirplaneComponent implements OnInit {
       }
     );
   }
+
   refresh() {
     if (this.cols === 6) {
       document.getElementsByClassName('seat').item(2).setAttribute('margin-right', '11.1%');
@@ -84,6 +93,7 @@ export class AddAirplaneComponent implements OnInit {
       document.getElementsByClassName('seat').item(0).setAttribute('margin-right', '44.28571428571429%');
     }
   }
+
   seatAction(seat, seatClass) {
     if (seatClass.toString() === 'ECONOMY') {
       seat.seatClass = SeatClass.ECONOMY;
@@ -99,4 +109,13 @@ export class AddAirplaneComponent implements OnInit {
     }
   }
 
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
+  }
 }

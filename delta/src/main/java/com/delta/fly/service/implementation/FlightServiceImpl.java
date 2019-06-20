@@ -1,6 +1,7 @@
 package com.delta.fly.service.implementation;
 
 import com.delta.fly.dto.FlightDTO;
+import com.delta.fly.dto.FlightSearchFilterDTO;
 import com.delta.fly.dto.PlaceAndTimeDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
@@ -37,7 +38,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<Flight> findAll() {
-        return flightRepository.findAllByDeletedIsFalse();
+        return flightRepository.findFlightsByDeletedFalse();
     }
 
     @Override
@@ -78,6 +79,8 @@ public class FlightServiceImpl implements FlightService {
             PlaceAndTime arrival = placeAndTimeService.create(dto.getArrival());
             flight.get().setArrival(arrival);
             flight.get().setTransfers(new ArrayList<>());
+            flight.get().setAirplane(airplane.get());
+            flight.get().setAirlineCompany(company.get());
             if (dto.getTransfers().size() > 0) {
                 for (PlaceAndTimeDTO pat : dto.getTransfers()) {
                     PlaceAndTime transfer = placeAndTimeService.create(pat);
@@ -105,14 +108,25 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Flight update(Flight flight) throws ObjectNotFoundException, InvalidInputException {
         Optional<Flight> uFlight;
+        Optional<Airplane> airplane;
+        Optional<AirlineCompany> company;
         try {
             uFlight = Optional.ofNullable(getOne(flight.getId()));
-            if (uFlight.isPresent()) {
-                checks(flight.getArrival(), flight.getDeparture(), flight.getTransfers(), flight.getAirlineCompany(), flight.getAirplane());
-                uFlight.get().setAirlineCompany(flight.getAirlineCompany());
-                uFlight.get().setAirplane(flight.getAirplane());
-                uFlight.get().setArrival(flight.getArrival());
-                uFlight.get().setDeparture(flight.getDeparture());
+            airplane = Optional.ofNullable(airplaneService.getOne(flight.getAirplane().getId()));
+            company = Optional.ofNullable(userDetailsService.getAdmin().getAirlineCompany());
+            if (uFlight.isPresent() && airplane.isPresent() && company.isPresent()) {
+                if (!company.get().getFlights().contains(uFlight.get())) {
+                    throw new InvalidInputException("Admin's company doesn't have this flight.");
+                }
+                if (!company.get().getAirplanes().contains(airplane.get())) {
+                    System.out.println(userDetailsService.getAdmin().getAirlineCompany().getAirplanes());
+                    throw new InvalidInputException("Admin's company doesn't have this airplane.");
+                }
+                checks(flight.getArrival(), flight.getDeparture(), flight.getTransfers(), company.get(), airplane.get());
+                uFlight.get().setAirlineCompany(company.get());
+                uFlight.get().setAirplane(airplane.get());
+                uFlight.get().setArrival(placeAndTimeService.update(flight.getArrival()));
+                uFlight.get().setDeparture(placeAndTimeService.update(flight.getDeparture()));
                 uFlight.get().setDistance(flight.getDistance());
                 uFlight.get().setTickets(flight.getTickets());
                 uFlight.get().setTransfers(flight.getTransfers());
@@ -135,12 +149,24 @@ public class FlightServiceImpl implements FlightService {
     public boolean delete(Long id) throws ObjectNotFoundException {
         try {
             Flight flight = getOne(id);
-            // TODO: Check if tickets were sold.
+            if (!userDetailsService.getAdmin().getAirlineCompany().getFlights().contains(flight)) {
+                throw new ObjectNotFoundException("This admin's company doesn't have that flight!");
+            }
+            // Checking if tickets were sold.
+            for (Ticket ticket : flight.getTickets()) {
+                if (ticket.getPassenger() != null) {
+                    throw new ObjectNotFoundException("Tickets were sold for this flight!");
+                }
+            }
+            for (Ticket ticket : new ArrayList<>(flight.getTickets())) {
+                ticketService.delete(ticket.getId());
+            }
             flight.setDeleted(true);
+            flightRepository.save(flight);
             return flight.getDeleted();
         } catch (ObjectNotFoundException ex) {
             ex.printStackTrace();
-            throw new ObjectNotFoundException("Flight with ID: " + id + " not found!", ex);
+            throw new ObjectNotFoundException(ex);
         }
     }
 
@@ -170,6 +196,106 @@ public class FlightServiceImpl implements FlightService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<Flight> filterSearch(FlightSearchFilterDTO dto) {
+        // Filter chain.
+        List<Flight> allFlights = findAll();
+        List<Flight> companyFilter = new ArrayList<>();
+        List<Flight> depPlaceFilter = new ArrayList<>();
+        List<Flight> depTimeFilter = new ArrayList<>();
+        List<Flight> arrPlaceFilter = new ArrayList<>();
+        List<Flight> arrTimeFilter = new ArrayList<>();
+        List<Flight> distanceFilter = new ArrayList<>();
+        List<Flight> priceFromFilter = new ArrayList<>();
+        List<Flight> priceToFilter = new ArrayList<>();
+        // Search by company name.
+        if (dto.getCompanyName() != null) {
+            for (Flight f : allFlights) {
+                if (f.getAirlineCompany().getName().contains(dto.getCompanyName())) {
+                    companyFilter.add(f);
+                }
+            }
+        } else {
+            companyFilter = allFlights;
+        }
+        // Search by departure place.
+        if (dto.getDeparturePlace() != null) {
+            for (Flight f : companyFilter) {
+                if (f.getDeparture().getThePlace().contains(dto.getDeparturePlace())) {
+                    depPlaceFilter.add(f);
+                }
+            }
+        } else {
+            depPlaceFilter = companyFilter;
+        }
+        // Search by departure time.
+        if (dto.getDepartureTime() != null) {
+            for (Flight f : depPlaceFilter) {
+                if (f.getDeparture().getTheTime().equals(dto.getDepartureTime())) {
+                    depTimeFilter.add(f);
+                }
+            }
+        } else {
+            depTimeFilter = depPlaceFilter;
+        }
+        // Search by arrival place.
+        if (dto.getArrivalPlace() != null) {
+            for (Flight f : depTimeFilter) {
+                if (f.getArrival().getThePlace().contains(dto.getArrivalPlace())) {
+                    arrPlaceFilter.add(f);
+                }
+            }
+        } else {
+            arrPlaceFilter = depTimeFilter;
+        }
+        // Search by arrival time.
+        if (dto.getArrivalTime() != null) {
+            for (Flight f : arrPlaceFilter) {
+                if (f.getArrival().getTheTime().equals(dto.getArrivalTime())) {
+                    arrTimeFilter.add(f);
+                }
+            }
+        } else {
+            arrTimeFilter = arrPlaceFilter;
+        }
+        // Search by distance.
+        if (dto.getDistance() != null) {
+            for (Flight f : arrTimeFilter) {
+                if (f.getDistance().equals(dto.getDistance())) {
+                    distanceFilter.add(f);
+                }
+            }
+        } else {
+            distanceFilter = arrTimeFilter;
+        }
+        // Search by ticket price - lower.
+        if (dto.getPriceFrom() != null) {
+            for (Flight f : distanceFilter) {
+                for (Ticket t : f.getTickets()) {
+                    if (t.getPrice() > dto.getPriceFrom() && !priceFromFilter.contains(f)) {
+                        priceFromFilter.add(f);
+                    }
+                }
+            }
+        } else {
+            priceFromFilter = distanceFilter;
+        }
+        // Search by ticket price - upper.
+        if (dto.getPriceFrom() != null) {
+            for (Flight f : priceFromFilter) {
+                for (Ticket t : f.getTickets()) {
+                    if (t.getPrice() < dto.getPriceTo() && !priceToFilter.contains(f)) {
+                        priceToFilter.add(f);
+                    }
+                }
+            }
+        } else {
+            priceToFilter = priceFromFilter;
+        }
+
+        return priceToFilter;
     }
 
 }

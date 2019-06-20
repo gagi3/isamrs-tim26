@@ -19,4 +19,5 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material'
   ],
   exports: [LoginComponent]
 })
-export class LoginModule { }
+export class LoginModule {
+}

@@ -39,7 +39,7 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
         Optional<AirlineCompany> company;
         try {
             if (airlineCompanyRepository.findByAddress(dto.getAddress()).isPresent()) {
-                throw new InvalidInputException("Address " + dto.getAddress() +  " is occupied!");
+                throw new InvalidInputException("Address " + dto.getAddress() + " is occupied!");
             } else if (airlineCompanyRepository.findByName(dto.getName()).isPresent()) {
                 throw new InvalidInputException("Name " + dto.getName() + " in use!");
             } else {

@@ -71,5 +71,5 @@ public class PriceListController {
 
         return new ResponseEntity<>(delete, HttpStatus.OK);
     }
-    
+
 }

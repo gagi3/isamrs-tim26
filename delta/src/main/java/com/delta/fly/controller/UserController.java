@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PostMapping("/signup/{type}")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDTO request, @PathVariable String type) throws InvalidInputException, ObjectNotFoundException {
+    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterDTO request, @PathVariable String type) throws InvalidInputException, ObjectNotFoundException {
         Optional<User> user;
         switch (type) {
             case "system-admin":
@@ -70,7 +70,8 @@ public class UserController {
             default:
                 return new ResponseEntity<>("Invalid link!", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("User " + user.get().getUsername() + " registered successfully! Check your email address to verify your account.", HttpStatus.OK);
+        String s = "User registered successfully! Check your email address to verify your account.";
+        return new ResponseEntity<>(s, HttpStatus.OK);
     }
 
     @GetMapping("/validate/token={token}")

@@ -1,6 +1,7 @@
 package com.delta.fly.model;
 
 import com.delta.fly.enumeration.Class;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class Seat implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)/*(optional = false)*/
     @JoinColumn(name = "airplane", referencedColumnName = "id", nullable = true)
+    @JsonIgnore
     private Airplane airplane;
 
     @Column(name = "deleted", unique = false, nullable = false)

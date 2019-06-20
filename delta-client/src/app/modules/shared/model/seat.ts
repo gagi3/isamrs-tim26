@@ -3,9 +3,9 @@ import {Airplane} from './airplane';
 
 export class Seat {
   id: BigInteger;
-  row: BigInteger;
-  column: BigInteger;
-  class: SeatClass;
+  row: number;
+  column: number;
+  seatClass: SeatClass;
   airplane: Airplane;
   deleted: boolean;
 }

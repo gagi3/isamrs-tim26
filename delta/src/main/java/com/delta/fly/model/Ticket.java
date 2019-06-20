@@ -1,5 +1,8 @@
 package com.delta.fly.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -14,8 +17,9 @@ public class Ticket implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "flight", referencedColumnName = "id")
+    @JsonIgnore
     private Flight flight;
 
     @OneToOne(targetEntity = Seat.class)
@@ -25,12 +29,16 @@ public class Ticket implements Serializable {
     @Column(name = "price", unique = false, nullable = false)
     private Double price;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "passenger", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "passenger", referencedColumnName = "id", nullable = true, columnDefinition = "BIGINT(20) NULL")
+    @ColumnDefault("BIGINT(20) NULL")
     private Passenger passenger;
 
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
+
+    @Column(name = "confirmed", unique = false, nullable = false)
+    private Boolean confirmed;
 
     public Ticket() {
     }
@@ -92,5 +100,13 @@ public class Ticket implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
     }
 }

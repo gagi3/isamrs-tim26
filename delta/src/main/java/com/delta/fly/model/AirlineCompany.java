@@ -1,7 +1,6 @@
 package com.delta.fly.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,6 +34,7 @@ public class AirlineCompany implements Serializable {
 
     // Flight - owner
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airlineCompany", cascade = CascadeType.ALL)
+//    @JsonIgnore
     private List<Flight> flights = new ArrayList<>();
 
     // New table
@@ -44,7 +44,7 @@ public class AirlineCompany implements Serializable {
 
     // Airplane - owner
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airlineCompany", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
     private List<Airplane> airplanes = new ArrayList<>();
 
     @Column(name = "deleted", unique = false, nullable = false)

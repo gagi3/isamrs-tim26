@@ -1,3 +1,5 @@
+<app-header #header (featureSelected)="onNavigate($event)"></app-header>
+
 <html>
 
 <body>
@@ -14,7 +16,8 @@
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" [(ngModel)]="passenger.password" #password="ngModel" minlength="6" [disabled]="true" #inputEl1 />
+      <input type="password" class="form-control" name="password" [(ngModel)]="passenger.password" #password="ngModel"
+             minlength="6" [disabled]="true" #inputEl1/>
       <div *ngIf="password.invalid">
         <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
       </div>
@@ -30,19 +33,22 @@
 
     <div class="form-group">
       <label for="firstName">Your name</label>
-      <input type="text" class="form-control" name="firstName" [(ngModel)]="passenger.firstName" [disabled]="true" #inputEl2 />
+      <input type="text" class="form-control" name="firstName" [(ngModel)]="passenger.firstName" [disabled]="true"
+             #inputEl2/>
     </div>
     <div class="form-group">
       <label for="lastName">Your last name</label>
-      <input type="text" class="form-control" name="lastName" [(ngModel)]="passenger.lastName" [disabled]="true" #inputEl3 />
+      <input type="text" class="form-control" name="lastName" [(ngModel)]="passenger.lastName" [disabled]="true"
+             #inputEl3/>
     </div>
     <div class="form-group">
       <label for="city">Your city</label>
-      <input type="text" class="form-control" name="city" [(ngModel)]="passenger.city" [disabled]="true" #inputEl4 />
+      <input type="text" class="form-control" name="city" [(ngModel)]="passenger.city" [disabled]="true" #inputEl4/>
     </div>
     <div class="form-group">
       <label for="phoneNumber">Phone Number</label>
-      <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="passenger.phoneNumber" minlength="9" [disabled]="true" #inputEl5 />
+      <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="passenger.phoneNumber" minlength="9"
+             [disabled]="true" #inputEl5/>
     </div>
 
     <div class="form-group">

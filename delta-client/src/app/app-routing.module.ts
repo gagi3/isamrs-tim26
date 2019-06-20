@@ -10,6 +10,20 @@ import {AirlineCompanyRegistrationComponent} from './modules/administration/airl
 import {AddAirplaneComponent} from './modules/moderation/airplane/add-airplane/add-airplane.component';
 import {AddPriceListComponent} from './modules/moderation/price-list/add-price-list/add-price-list.component';
 import {EditPriceListComponent} from './modules/moderation/price-list/edit-price-list/edit-price-list.component';
+import {AddFlightComponent} from './modules/moderation/flight/add-flight/add-flight.component';
+import {EditFlightComponent} from './modules/moderation/flight/edit-flight/edit-flight.component';
+import {FlightViewComponent} from './modules/shared/component/flight-view/flight-view.component';
+import {DiscountTicketsComponent} from './modules/moderation/ticket/discount-tickets/discount-tickets.component';
+import {DiscountedTicketsViewComponent} from './modules/consumption/reservation/discounted-tickets-view/discounted-tickets-view.component';
+import {TicketsViewComponent} from './modules/consumption/reservation/tickets-view/tickets-view.component';
+import {ConfirmationComponent} from './modules/consumption/reservation/confirmation/confirmation.component';
+import {BusinessReportSelectComponent} from './modules/moderation/reservation/business-report-select/business-report-select.component';
+import {BusinessReportViewComponent} from './modules/moderation/reservation/business-report-view/business-report-view.component';
+import {ViewTicketsComponent} from './modules/consumption/reservation/view-tickets/view-tickets.component';
+import {FriendsViewComponent} from './modules/consumption/interaction/friends-view/friends-view.component';
+import {FindFriendsComponent} from './modules/consumption/interaction/find-friends/find-friends.component';
+import {FriendshipRequestsComponent} from './modules/consumption/interaction/friendship-requests/friendship-requests.component';
+import {EditCompanyComponent} from './modules/moderation/company/edit-company/edit-company.component';
 
 const routes: Routes = [
   // {
@@ -19,6 +33,50 @@ const routes: Routes = [
   {
     path: 'airline-company/add',
     component: AirlineCompanyRegistrationComponent
+  },
+  {
+    path: 'airline-company/edit',
+    component: EditCompanyComponent
+  },
+  {
+    path: 'flight/add',
+    component: AddFlightComponent
+  },
+  {
+    path: 'flight/update',
+    component: EditFlightComponent
+  },
+  {
+    path: 'flight/view',
+    component: FlightViewComponent
+  },
+  {
+    path: 'ticket/discount',
+    component: DiscountTicketsComponent
+  },
+  {
+    path: 'ticket/discounted',
+    component: DiscountedTicketsViewComponent
+  },
+  {
+    path: 'ticket/view',
+    component: TicketsViewComponent
+  },
+  {
+    path: 'tickets',
+    component: ViewTicketsComponent
+  },
+  {
+    path: 'ticket/confirm/:ID',
+    component: ConfirmationComponent
+  },
+  {
+    path: 'report/select',
+    component: BusinessReportSelectComponent
+  },
+  {
+    path: 'report/view',
+    component: BusinessReportViewComponent
   },
   {
     path: 'price-list/add',
@@ -48,10 +106,6 @@ const routes: Routes = [
     path: 'signin',
     component: LoginComponent
   },
-  // {
-  //   path: 'validate/token',
-  //   component: ValidateComponent
-  // },
   {
     path: 'validate/token/:tkn',
     component: ValidateComponent
@@ -67,6 +121,18 @@ const routes: Routes = [
   {
     path: 'profile/system-admin',
     component: SystemAdminProfileComponent
+  },
+  {
+    path: 'friends',
+    component: FriendsViewComponent
+  },
+  {
+    path: 'find-friends',
+    component: FindFriendsComponent,
+  },
+  {
+    path: 'friendship-requests',
+    component: FriendshipRequestsComponent
   }
 ];
 
@@ -74,4 +140,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

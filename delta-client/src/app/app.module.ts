@@ -12,10 +12,20 @@ import {FormsModule} from '@angular/forms';
 import {RoleGuardService} from './modules/shared/role-guard.service';
 import {httpInterceptorProviders} from './modules/shared/auth-interceptor';
 import {MatDialogModule} from '@angular/material';
+import {DateTimeFormatPipe} from './modules/shared/date-time-format.pipe';
+import {FlightViewComponent} from './modules/shared/component/flight-view/flight-view.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TicketViewComponent} from './modules/shared/component/ticket-view/ticket-view.component';
+import {FlightSearchComponent} from './modules/shared/component/flight-search/flight-search.component';
+import {HeaderModule} from './modules/shared/modules/header/header.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DateTimeFormatPipe,
+    FlightViewComponent,
+    TicketViewComponent,
+    FlightSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -25,9 +35,12 @@ import {MatDialogModule} from '@angular/material';
     AdministrationModule,
     ConsumptionModule,
     ModerationModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    HeaderModule
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

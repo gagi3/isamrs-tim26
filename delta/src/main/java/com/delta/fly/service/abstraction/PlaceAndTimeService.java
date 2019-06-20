@@ -10,10 +10,14 @@ import java.util.List;
 public interface PlaceAndTimeService {
 
     List<PlaceAndTime> findAll();
+
     PlaceAndTime getOne(Long id) throws ObjectNotFoundException;
+
     PlaceAndTime create(PlaceAndTimeDTO dto) throws InvalidInputException;
+
     PlaceAndTime update(PlaceAndTime placeAndTime) throws ObjectNotFoundException, InvalidInputException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
     //List<PlaceAndTime> filterSearch();
-    
+
 }

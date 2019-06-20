@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {PriceListService} from '../price-list.service';
 import {PriceList} from '../../../shared/model/price-list';
+import {HeaderComponent} from '../../../shared/modules/header/header/header.component';
 
 @Component({
   selector: 'app-edit-price-list',
@@ -21,12 +22,16 @@ export class EditPriceListComponent implements OnInit {
   failed = false;
   success = false;
   errorMessage = '';
+  @ViewChild('header') header: HeaderComponent;
+  showView = 'edit-price-list';
 
-  constructor(private router: Router, private priceListService: PriceListService) { }
+  constructor(private router: Router, private priceListService: PriceListService) {
+  }
 
   setPriceList(data: PriceList) {
     this.priceList = data;
   }
+
   getPriceList() {
     this.priceListService.getThis().subscribe(
       data => {
@@ -38,9 +43,12 @@ export class EditPriceListComponent implements OnInit {
       }
     );
   }
+
   ngOnInit() {
+    this.header.airlineCompanyAdminView();
     this.getPriceList();
   }
+
   onSubmit() {
     this.priceListService.update(this.priceList).subscribe(
       data => {
@@ -56,6 +64,7 @@ export class EditPriceListComponent implements OnInit {
       }
     );
   }
+
   edit() {
     this.show = 'change';
     this.inputEl1.nativeElement.disabled = false;
@@ -65,6 +74,7 @@ export class EditPriceListComponent implements OnInit {
     this.inputEl5.nativeElement.disabled = false;
     this.inputEl6.nativeElement.disabled = false;
   }
+
   cancel() {
     this.show = 'priceList';
     this.inputEl1.nativeElement.disabled = true;
@@ -73,6 +83,16 @@ export class EditPriceListComponent implements OnInit {
     this.inputEl4.nativeElement.disabled = true;
     this.inputEl5.nativeElement.disabled = true;
     this.inputEl6.nativeElement.disabled = true;
+  }
+
+  onNavigate(feature: string) {
+    console.log(feature);
+    this.showView = feature;
+    if (feature === 'logout') {
+      window.sessionStorage.clear();
+      this.router.navigate(['']);
+      window.alert('Successfully Logged out!');
+    }
   }
 
 }

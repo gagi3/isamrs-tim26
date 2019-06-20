@@ -1,5 +1,7 @@
 package com.delta.fly.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +14,15 @@ public class Passenger extends User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Passenger> friends = new ArrayList<>();
+
+    @Column(name = "passport", unique = true, nullable = false)
+    private String passport;
 
     @Column(name = "deleted", unique = false, nullable = false)
     private Boolean deleted;
@@ -69,4 +76,11 @@ public class Passenger extends User implements Serializable {
         this.friends = friends;
     }
 
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
 }

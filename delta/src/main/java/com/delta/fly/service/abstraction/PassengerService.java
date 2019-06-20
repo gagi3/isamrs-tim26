@@ -4,20 +4,31 @@ import com.delta.fly.dto.RegisterDTO;
 import com.delta.fly.exception.InvalidInputException;
 import com.delta.fly.exception.ObjectNotFoundException;
 import com.delta.fly.model.Passenger;
+import com.delta.fly.model.Ticket;
 
 import java.util.List;
 
 public interface PassengerService {
 
     List<Passenger> findAll();
+
     Passenger getOne(Long id) throws ObjectNotFoundException;
 
     Passenger getByUsername(String username) throws ObjectNotFoundException;
 
     Passenger create(RegisterDTO dto) throws InvalidInputException;
+
     Passenger update(Passenger passenger) throws ObjectNotFoundException;
+
     boolean delete(Long id) throws ObjectNotFoundException;
+
     boolean activate(String token) throws InvalidInputException, ObjectNotFoundException;
+
+    List<Passenger> getFriends() throws ObjectNotFoundException;
+
+    List<Passenger> getNonFriends() throws ObjectNotFoundException;
+
+    List<Ticket> getTickets() throws ObjectNotFoundException;
     //List<Passenger> filterSearch();
-    
+
 }

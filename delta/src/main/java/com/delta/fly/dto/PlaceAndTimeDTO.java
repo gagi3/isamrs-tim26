@@ -1,10 +1,14 @@
 package com.delta.fly.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class PlaceAndTimeDTO {
 
     private String thePlace;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy. HH:mm")
     private Date theTime;
 
     public String getThePlace() {
@@ -15,6 +19,7 @@ public class PlaceAndTimeDTO {
         this.thePlace = thePlace;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy. HH:mm")
     public Date getTheTime() {
         return theTime;
     }

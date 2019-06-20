@@ -10,13 +10,16 @@ import java.util.List;
 public interface AirlineCompanyAdminService {
 
     List<AirlineCompanyAdmin> findAll();
+
     AirlineCompanyAdmin getOne(Long id) throws ObjectNotFoundException;
 
     AirlineCompanyAdmin getByUsername(String username) throws ObjectNotFoundException;
 
     AirlineCompanyAdmin create(RegisterDTO dto) throws ObjectNotFoundException, InvalidInputException;
+
     AirlineCompanyAdmin update(AirlineCompanyAdmin admin) throws ObjectNotFoundException;
-    boolean delete (Long id) throws ObjectNotFoundException;
+
+    boolean delete(Long id) throws ObjectNotFoundException;
     //List<AirlineCompanyAdmin> filterSearch();
 
 }

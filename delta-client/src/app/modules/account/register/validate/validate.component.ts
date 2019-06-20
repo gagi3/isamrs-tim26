@@ -13,7 +13,9 @@ export class ValidateComponent implements OnInit {
   token: string;
   validated = false;
 
-  constructor(private router: Router, private registerService: RegisterService) { }
+  constructor(private router: Router, private registerService: RegisterService) {
+  }
+
   validate() {
     this.location = this.router.url;
     this.token = this.location.substr(16);
@@ -26,6 +28,7 @@ export class ValidateComponent implements OnInit {
       }
     );
   }
+
   reroute() {
     this.router.navigateByUrl('/');
   }

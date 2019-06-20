@@ -1,11 +1,12 @@
+<app-header #header (featureSelected)="onNavigate($event)"></app-header>
+
 <html>
 
 <body>
 
-<div *ngIf = "success; else priceListForm">
+<div *ngIf="success; else priceListForm">
   Price list added successfully.
 </div>
-
 
 
 <ng-template #priceListForm>
@@ -21,7 +22,8 @@
 
         <div class="form-group">
           <label for="priceByKm">Price by 1 km</label>
-          <input type="number" class="form-control" name="priceByKm" [(ngModel)]="DTO.priceByKm" #priceByKm="ngModel" required />
+          <input type="number" class="form-control" name="priceByKm" [(ngModel)]="DTO.priceByKm" #priceByKm="ngModel"
+                 required/>
           <div *ngIf="f.submitted && (priceByKm.invalid || priceByKm < 0)">
             <div *ngIf="priceByKm.errors.required">This field is required</div>
             <div *ngIf="priceByKm < 0">The value must be greater than or equal to 0</div>
@@ -30,7 +32,8 @@
 
         <div class="form-group">
           <label for="priceByLuggageItem">Price per 1 luggage item</label>
-          <input type="number" class="form-control" name="priceByLuggageItem" [(ngModel)]="DTO.priceByLuggageItem" #priceByLuggageItem="ngModel" required />
+          <input type="number" class="form-control" name="priceByLuggageItem" [(ngModel)]="DTO.priceByLuggageItem"
+                 #priceByLuggageItem="ngModel" required/>
           <div *ngIf="f.submitted && (priceByLuggageItem.invalid || priceByLuggageItem < 0)">
             <div *ngIf="priceByLuggageItem.errors.required">This field is required</div>
             <div *ngIf="priceByLuggageItem < 0">The value must be greater than or equal to 0</div>
@@ -39,7 +42,8 @@
 
         <div class="form-group">
           <label for="businessClassPriceCoefficient">Business class price coefficient</label>
-          <input type="number" class="form-control" name="businessClassPriceCoefficient" [(ngModel)]="DTO.businessClassPriceCoefficient" #businessClassPriceCoefficient="ngModel" required />
+          <input type="number" class="form-control" name="businessClassPriceCoefficient"
+                 [(ngModel)]="DTO.businessClassPriceCoefficient" #businessClassPriceCoefficient="ngModel" required/>
           <div *ngIf="f.submitted && (businessClassPriceCoefficient.invalid || businessClassPriceCoefficient < 1)">
             <div *ngIf="businessClassPriceCoefficient.errors.required">This field is required</div>
             <div *ngIf="businessClassPriceCoefficient < 1">The value must be greater than or equal to 1</div>
@@ -48,7 +52,8 @@
 
         <div class="form-group">
           <label for="economyClassPriceCoefficient">Economy class price coefficient</label>
-          <input type="number" class="form-control" name="economyClassPriceCoefficient" [(ngModel)]="DTO.economyClassPriceCoefficient" #economyClassPriceCoefficient="ngModel" required />
+          <input type="number" class="form-control" name="economyClassPriceCoefficient"
+                 [(ngModel)]="DTO.economyClassPriceCoefficient" #economyClassPriceCoefficient="ngModel" required/>
           <div *ngIf="f.submitted && (economyClassPriceCoefficient.invalid || economyClassPriceCoefficient < 1)">
             <div *ngIf="economyClassPriceCoefficient.errors.required">This field is required</div>
             <div *ngIf="economyClassPriceCoefficient < 1">The value must be greater than or equal to 1</div>
@@ -57,7 +62,8 @@
 
         <div class="form-group">
           <label for="firstClassPriceCoefficient">First class price coefficient</label>
-          <input type="number" class="form-control" name="firstClassPriceCoefficient" [(ngModel)]="DTO.firstClassPriceCoefficient" #firstClassPriceCoefficient="ngModel" required />
+          <input type="number" class="form-control" name="firstClassPriceCoefficient"
+                 [(ngModel)]="DTO.firstClassPriceCoefficient" #firstClassPriceCoefficient="ngModel" required/>
           <div *ngIf="f.submitted && (firstClassPriceCoefficient.invalid || firstClassPriceCoefficient < 1)">
             <div *ngIf="firstClassPriceCoefficient.errors.required">This field is required</div>
             <div *ngIf="firstClassPriceCoefficient < 1">The value must be greater than or equal to 1</div>
@@ -66,15 +72,17 @@
 
         <div class="form-group">
           <label for="discountPercentage">Discount percentage</label>
-          <input type="number" class="form-control" name="discountPercentage" [(ngModel)]="DTO.discountPercentage" #discountPercentage="ngModel" required />
-          <div *ngIf="f.submitted && (discountPercentage.invalid || (discountPercentage < 0 || discountPercentage > 100))">
+          <input type="number" class="form-control" name="discountPercentage" [(ngModel)]="DTO.discountPercentage"
+                 #discountPercentage="ngModel" required/>
+          <div
+            *ngIf="f.submitted && (discountPercentage.invalid || (discountPercentage < 0 || discountPercentage > 100))">
             <div *ngIf="discountPercentage.errors.required">This field is required</div>
             <div *ngIf="discountPercentage < 0 || discountPercentage > 100">The value must be between 0 and 100</div>
           </div>
         </div>
 
         <div class="form-group">
-          <button class="signupbtn btn" >ADD</button>
+          <button class="signupbtn btn">ADD</button>
           <div *ngIf="f.submitted && failed" class="alert alert-warning">
             Failed!<br/>{{errorMessage}}
           </div>

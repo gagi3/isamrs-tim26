@@ -6,13 +6,20 @@ import {RoleGuardService} from '../../shared/role-guard.service';
 import {httpInterceptorProviders} from '../../shared/auth-interceptor';
 import {MatDialogModule} from '@angular/material';
 import {EditPriceListComponent} from './edit-price-list/edit-price-list.component';
+import {HeaderModule} from '../../shared/modules/header/header.module';
 
 @NgModule({
   declarations: [AddPriceListComponent, EditPriceListComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    HeaderModule
+  ],
+  exports: [
+    EditPriceListComponent,
+    AddPriceListComponent
   ],
   providers: [RoleGuardService, httpInterceptorProviders, MatDialogModule]
 })
-export class PriceListModule { }
+export class PriceListModule {
+}

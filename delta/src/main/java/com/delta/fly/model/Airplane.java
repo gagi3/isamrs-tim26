@@ -20,13 +20,14 @@ public class Airplane implements Serializable {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "airline_company", referencedColumnName = "id")
+    @JsonIgnore
     private AirlineCompany airlineCompany;
 
     @Column(name = "airplane_name", unique = true, nullable = false)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airplane", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
     private List<Seat> seats = new ArrayList<>();
 
     @Column(name = "deleted", unique = false, nullable = false)

@@ -13,6 +13,7 @@ export class Passenger {
   roles: string[];
   tickets: Ticket[];
   friends: Passenger[];
+  passport = '';
   deleted: false;
   token: '';
 }

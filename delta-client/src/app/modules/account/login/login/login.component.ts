@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any, private dialogRef: MatDialogRef<any>,
               private loginService: LoginService, private tokenStorage: TokenStorageService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
       this.roles = this.tokenStorage.getAuthorities();
     }
   }
+
   onSubmit() {
     this.loginService.attemptAuth(this.loginDTO).subscribe(
       data => {
@@ -36,15 +38,18 @@ export class LoginComponent implements OnInit {
         this.isLoggedIn = true;
         this.failed = false;
         this.roles = this.tokenStorage.getAuthorities();
-        this.roles.every( role => {
+        this.roles.every(role => {
           if (role === 'ROLE_AIRLINECOMPANYADMIN') {
-            this.router.navigateByUrl('administration');
+            this.router.navigateByUrl('profile/airline-company-admin');
             return true;
           } else if (role === 'ROLE_PASSENGER') {
-            this.router.navigateByUrl('consumption');
+            this.router.navigateByUrl('tickets');
+            return true;
+          } else if (role === 'ROLE_SYSTEMADMIN') {
+            this.router.navigateByUrl('airline-company/add');
             return true;
           } else {
-            this.router.navigateByUrl('moderation');
+            this.router.navigateByUrl('flight/view');
             return true;
           }
         });
@@ -60,11 +65,13 @@ export class LoginComponent implements OnInit {
   reload() {
     window.location.reload();
   }
+
   cancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('flight/view');
   }
+
   register() {
-    this.router.navigateByUrl('/signup/passenger');
+    this.router.navigateByUrl('signup/passenger');
   }
 
 }
